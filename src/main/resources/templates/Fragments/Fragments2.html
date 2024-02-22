@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--Registration Number verification fragment Start-->
+<div class="row m-2" th:fragment="Student_registration">
+    <div class="col-md-6 offset-md-3 rounded loginContainer p-5">
+        <h3 class="text-center text-Success">REGISTRATION</h3>
+        <form th:action="@{/home/student/registration/verification}" method="post">
+            <div class="form-floating mb-2">
+                <input type="email" name="stEmail" id="stEmail" class="form-control" placeholder="example@gmail.com">
+                <label for="stEmail">Enter Your Email</label>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6 text-center">
+                    <button type="submit" class="btn btn-primary ">Submit</button>
+                </div>
+                <div class="col-6 text-center">
+                    <a th:href="@{/home/login}" class="btn btn-secondary text-decoration-none">Login</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Student Registration Number verification fragment End-->
+
+
+
+
+
+
+<!--Student Registration fragment Start-->
+<div class="row m-2" th:fragment="Student_registration2">
+    <div class="col-md-6 offset-md-3 rounded loginContainer p-5">
+        <h3 class="text-center text-Success">REGISTRATION</h3>
+        <form th:action="@{/home/student/registrationDetails}" method="post" th:object="${student}">
+            <div class="form-floating mb-2">
+                <input type="text" name="regNumber" id="regNumber" class="form-control" placeholder="BT24F06F006" th:field="*{universityNo}">
+                <label for="regNumber">Enter University Registration Number</label>
+            </div>
+            <div class="form-floating mb-2">
+                <input type="text" name="name" id="name" class="form-control" placeholder="FullName" th:field="*{name}">
+                <label for="name">Enter Your Full Name</label>
+            </div>
+            <div class="form-floating mb-2">
+                <input type="email" name="email" id="email" class="form-control" placeholder="example@gmail.com" th:field="*{email}">
+                <label for="email">Enter Your  Email</label>
+            </div>
+            <select class="form-select mb-2" aria-label="Default select example" name="studyYear" th:field="*{studyingYear}">
+                <option th:value="Select_Year" selected>Select Year</option>
+                <option th:value="First_Year">First Year</option>
+                <option th:value="Second_Year">Second Year</option>
+                <option th:value="Third_Year">Third Year</option>
+                <option th:value="Fourth_Year">Fourth Year</option>
+            </select>
+            <div class="form-floating">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password" th:field="*{password}">
+                <label for="password">Enter Password</label>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6 text-center">
+                    <button type="submit" class="btn btn-primary ">Submit</button>
+                </div>
+                <div class="col-6 text-center">
+                    <a th:href="@{/home/login}" class="btn btn-secondary text-decoration-none">Login</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Student Registration  fragment End-->
+
+
+
+
+
+<!--Student Registration OTP verification fragment Start-->
+<div class="row m-2" th:fragment="Student_registration_verification">
+    <div class="col-md-6 offset-md-3 rounded loginContainer p-5">
+        <h3 class="text-center text-Success">REGISTRATION</h3>
+        <form th:action="@{/home/student/registration/otpVerification}" method="post">
+            <div class="form-floating mb-2">
+                <input type="text" name="otp" id="otp" class="form-control" placeholder="123456">
+                <label for="regNumber">Enter OTP send to your university registered email</label>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6 text-center">
+                    <button type="submit" class="btn btn-primary ">Submit</button>
+                </div>
+                <div class="col-6 text-center">
+                    <a th:href="@{/home/login}" class="btn btn-secondary text-decoration-none">Login</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Student Registration OTP verification fragment End-->
+
+
+
+
+
+
+<!--Faculty login fragment Start-->
+<div th:fragment="Faculty_login" class="row m-2">
+    <div class="col-md-6 offset-md-3 rounded loginContainer p-5">
+        <h3 class="text-center text-Success">LOGIN</h3>
+        <form>
+            <div class="form-floating mb-2">
+                <input type="text" name="username" id="regNumber" class="form-control" placeholder="BT24F06F006">
+                <label for="regNumber">Enter Faculty Id</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+                <label for="password">Enter Password</label>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6 text-center">
+                    <button type="submit" class="btn btn-primary ">Login</button>
+                </div>
+                <div class="col-6 text-center">
+                    <a th:href="@{/home/login}" class="btn btn-secondary text-decoration-none">Login</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Faculty login fragment End-->
+
+
+
+
+
+
+<!--Faculty email verification fragment Start-->
+<div class="row m-2" th:fragment="faculty_registration">
+    <div class="col-md-6 offset-md-3 rounded loginContainer p-5">
+        <h3 class="text-center text-Success">REGISTRATION</h3>
+        <form th:action="@{/home/faculty/registration/verification}" method="post">
+            <div class="form-floating mb-2">
+                <input type="email" name="facEmail" id="facEmail" class="form-control" placeholder="example@gmail.com">
+                <label for="facEmail">Enter Your Email</label>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6 text-center">
+                    <button type="submit" class="btn btn-primary ">Submit</button>
+                </div>
+                <div class="col-6 text-center">
+                    <a th:href="@{/home/login}" class="btn btn-secondary text-decoration-none">Login</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Faculty email verification fragment End-->
+
+
+
+
+
+
+<!--Faculty Registration fragment Start-->
+<div class="row m-2" th:fragment="Faculty_registration2">
+    <div class="col-md-6 offset-md-3 rounded loginContainer p-5">
+        <h3 class="text-center text-Success">REGISTRATION</h3>
+        <form th:action="@{/home/faculty/registrationDetails}" method="post">
+            <div class="form-floating mb-2">
+                <input type="text" name="facId" id="facId" class="form-control" placeholder="BT24F06F006">
+                <label for="facId">Enter faculty Id</label>
+            </div>
+            <div class="form-floating mb-2">
+                <input type="text" name="name" id="name" class="form-control" placeholder="FullName">
+                <label for="name">Enter Your Full Name</label>
+            </div>
+            <div class="form-floating mb-2">
+                <input type="email" name="email" id="email" class="form-control" placeholder="example@gmail.com">
+                <label for="email">Enter Your University Registered Email</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+                <label for="password">Enter Password</label>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6 text-center">
+                    <button type="submit" class="btn btn-primary ">Submit</button>
+                </div>
+                <div class="col-6 text-center">
+                    <a th:href="@{/home/login}" class="btn btn-secondary text-decoration-none">Login</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Faculty Registration  fragment End-->
+
+
+
+
+
+<!--Faculty Registration OTP verification fragment Start-->
+<div class="row m-2" th:fragment="Faculty_registration_verification">
+    <div class="col-md-6 offset-md-3 rounded loginContainer p-5">
+        <h3 class="text-center text-Success">REGISTRATION</h3>
+        <form th:action="@{/home/faculty/registration/otpVerification}" method="post">
+            <div class="form-floating mb-2">
+                <input type="text" name="otp" id="otp" class="form-control" placeholder="123456">
+                <label for="regNumber">Enter OTP send to your university registered email</label>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6 text-center">
+                    <button type="submit" class="btn btn-primary ">Submit</button>
+                </div>
+                <div class="col-6 text-center">
+                    <a th:href="@{/home/login}" class="btn btn-secondary text-decoration-none">Login</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Faculty Registration OTP verification fragment End-->
+
+
+
+
+</body>
+</html>

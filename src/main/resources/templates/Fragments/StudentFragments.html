@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<!--Student Profile Fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="StudentProfile">
+    <div class="row ">
+        <div class="col-md-4">
+            <form action="">
+                <div class="profilePic d-flex justify-content-center align-items-center">
+                    <img th:src="@{/Images/logocsn.png}" alt=""  class="img-thumbnail profile_img">
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <input style="display:none" type="file" id="my-file" name="profile_img">
+                    <button type="button" onclick="document.getElementById('my-file').click()" class="myButton mt-2 mx-1 w-40">Select New</button>
+                </div>
+                <div class="profilePicB row mt-1 mb-2">
+                    <div class="col-6 text-center">
+                        <a href="" class="btn btn-danger">Remove</a>
+                    </div>
+                    <div class="col-6 text-center">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-8 ">
+            <form action="">
+                <div class="info">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name" placeholder="Full Name">
+                        <label for="name">Full Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="regNumber" placeholder="Registration Number">
+                        <label for="regNumber">University registration Number</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <label for="email">Email your email</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="age" placeholder="000">
+                        <label for="age">Email your age</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="bdate" placeholder="00/0/0000">
+                        <label for="bdate">Email your birth date</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="city" placeholder="mumbai">
+                        <label for="city">Email your city</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="state" placeholder="maharashtra">
+                        <label for="state">Email your state</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="address" placeholder="something">
+                        <label for="address">Email your address</label>
+                    </div>
+                    <select class="form-select mb-3" aria-label="Default select example" name="course">
+                        <option selected>Select Course</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                    <select class="form-select mb-3" aria-label="Default select example" name="semester">
+                        <option selected>Select Semester</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button type="submit" class="btn btn-primary w-50">Update</button>
+                </div>
+            </form>
+            <p class="text-center m-1"><a class="text-decoration-none text-danger" href="">Password Update</a></p>
+        </div>
+    </div>
+    <div class="container rounded border border-1 border-dark p-2 ">
+        <h3 class="text-center text-dark">MENU</h3>
+        <div class="d-flex justify-content-center align-items-center flex-wrap">
+            <div class="text-center mx-1 mb-1"><a th:href="@{/student/subjects}" class="btn btn-success">Subjects</a></div>
+            <div class="text-center mx-1 mb-1"><a th:href="@{/student/exams}" class="btn btn-success">Exams</a></div>
+            <div class="text-center mx-1 mb-1"><a th:href="@{/student/attendance}" class="btn btn-success">Attendance</a></div>
+            <div class="text-center mx-1 mb-1"><a th:href="@{/student/query}" class="btn btn-success">Query</a></div>
+        </div>
+    </div>
+    <div class="container rounded border border-1 border-dark p-2 mt-2">
+        <h3 class="text-center text-dark">DEPARTMENT DETAILS</h3>
+        <div >
+            <p class="m-1">Department Name : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            <p class="m-1">Head Of The Department : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            <p class="m-1">Class Teacher : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+
+        </div>
+    </div>
+</div>
+<!--Student Profile Fragment End-->
+
+
+
+
+
+<!--Student Subject fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="StudentSubjects">
+    <p class="text-warning bg-dark">&nbsp; Note : You can registere upto 6 subjects for this semester.</p>
+    <div>
+        <h3 class="text-center text-primary">AVAILABLE SUBJECTS</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Id</th>
+                <th scope="col">Credits</th>
+                <th scope="col">Register</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <td>1</td>
+                <td>CMS</td>
+                <td>IT002</td>
+                <td>4</td>
+                <td><a href="" class="btn btn-primary">Add</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <hr>
+    <div class="mt-2">
+        <h3 class="text-center text-primary">REGISTERED SUBJECTS</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Id</th>
+                <th scope="col">Credits</th>
+                <th scope="col">Registration Date</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <td>1</td>
+                <td>CMS</td>
+                <td>IT002</td>
+                <td>4</td>
+                <td>15/02/2024</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Student Subject fragment End-->
+
+
+
+
+
+<!--Student exam fragment start-->
+<div class="divContainer m-4 p-3" th:fragment="StudentExams">
+    <div class="table-responsive">
+        <h3 class="text-center text-primary">EXAM DATA</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Subject Name</th>
+                <th scope="col">Subject Id</th>
+                <th scope="col">Class Test 1<br> <span class="fw-lighter fs-6">Out Of 15</span></th>
+                <th scope="col">Class Test 2<br> <span class="fw-lighter fs-6">Out Of 15</span></th>
+                <th scope="col">Internal<br> <span class="fw-lighter fs-6">Out Of 10</span></th>
+                <th scope="col">End Semester<br> <span class="fw-lighter fs-6">Out Of 60</span></th>
+                <th scope="col">Grade</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <td>1</td>
+                <td>CMS</td>
+                <td>IT0002</td>
+                <td>13</td>
+                <td>12</td>
+                <td>9</td>
+                <td>45</td>
+                <td>A</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Student exam fragment End-->
+
+
+
+
+
+<!--Student attendance fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="StudentAttendance">
+    <div class="table-responsive">
+        <h3 class="text-center text-primary">ATTENDANCE DATA</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Subject Name</th>
+                <th scope="col">Subject Id</th>
+                <th scope="col">Total Clases</th>
+                <th scope="col">Classes Attended</th>
+                <th scope="col">% Attendance</th>
+                <th scope="col">Updated On</th>
+                <th scope="col">Updated By</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <td>1</td>
+                <td>CMS</td>
+                <td>IT0002</td>
+                <td>13</td>
+                <td>12</td>
+                <td>80</td>
+                <td>04/02/2024</td>
+                <td>Abc</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Student Attendance fragment End-->
+
+
+
+
+
+<!--Student query fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="StudentQuery">
+    <div class="container">
+        <h3 class="text-center text-primary">ENTER YOUR QUERY</h3>
+        <P class="text-center text-dark">Your query will be sent to your respective class teacher.</P>
+        <form action="">
+            <div class="mb-3">
+                <label for="querySubject" class="form-label">Enter Subject</label>
+                <input type="text" class="form-control" id="querySubject" placeholder="Enter Query Subject">
+            </div>
+            <div class="mb-3">
+                <label for="query" class="form-label">Enter Query</label>
+                <textarea class="form-control" id="query" rows="4"></textarea>
+            </div>
+            <div class="row my-2">
+                <div class="col-6 text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="col-6 text-center">
+                    <button type="reset" class="btn btn-danger">Reset</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <hr>
+    <div class="table-responsive">
+        <h3 class="text-center text-primary">QUERY DATA</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Query Subject</th>
+                <th scope="col">Raised On</th>
+                <th scope="col">Status</th>
+                <th scope="col">Resolved on</th>
+                <th scope="col">Remark</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <td>1</td>
+                <td><a th:href="@{/student/query/view(qId=1)}" class="text-decoration-none">CMS</a></td>
+                <td>IT0002</td>
+                <td>13</td>
+                <td>12</td>
+                <td>80</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Student query fragment End-->
+
+
+
+
+
+<!--Student view query fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="viewQuery">
+    <div class="container">
+        <h3 class="text-center text-primary"> QUERY DATA</h3>
+        <p class="text-primary fw-bold">Query Subject : <span class="font-monospace text-dark fst-normal">dfdgsdfgsdfg</span></p>
+        <p class="text-primary fw-bold">Query : <span class="font-monospace text-dark fst-normal">dfgdfgdfgdfg</span></p>
+        <p class="text-primary fw-bold">Raised On : <span class="font-monospace text-dark fst-normal">sdfgsdfgsdfgdfg</span></p>
+        <p class="text-primary fw-bold">Status : <span class="font-monospace text-dark fst-normal">dhdghfgj</span></p>
+        <p class="text-primary fw-bold">Resolved on : <span class="font-monospace text-dark fst-normal">ghjdrthg</span></p>
+        <p class="text-primary fw-bold">Remark : <span class="font-monospace text-dark fst-normal">fghfghfghfgf</span></p>
+        <p class="text-primary fw-bold">Resolved By : <span class="font-monospace text-dark fst-normal">gffjghjhgjhjjhhjhj</span></p>
+    </div>
+</div>
+<!--Student view query fragment End-->
+
+</body>
+</html>

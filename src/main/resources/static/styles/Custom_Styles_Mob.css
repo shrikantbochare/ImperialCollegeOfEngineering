@@ -1,0 +1,40 @@
+@media screen and (min-width: 200px) and (max-width:700px) {
+
+    .logo {
+        height: 100px;
+    }
+
+    #header h1 {
+        font-size: 17px;
+        font-weight: 600;
+        line-height: 22px;
+        margin-bottom: 0;
+        margin-top: 10px;
+        color: #274686;
+    }
+    #header h4{
+        font-size:13px
+    }
+    #menu
+    {
+        padding:4px;
+    }
+    #topnav .navbar-expand {
+        flex-wrap:wrap;
+    }
+    .navbar-brand
+    {
+        color:white;
+    }
+    .navbar .nav-link {
+
+        border-right:none;
+        border-bottom: 1px dotted silver !important;
+        padding: 10px 18px !important;
+        font-size: 13px;
+    }
+    #banner .img-fluid {
+        height: auto !important;
+    }
+
+}

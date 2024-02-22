@@ -1,0 +1,281 @@
+#wrapper {
+    background-color: white;
+}
+
+.arsenal {
+    font-family: 'Oxygen', sans-serif;
+}
+
+
+.logo {
+    height: 130px;
+}
+
+#header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 34px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    color: #274686;
+}
+
+.pageTitle {
+    color: #274686;
+}
+
+h2,
+h3,
+h4 {
+    color: #274686;
+    font-size: 20px;
+
+}
+
+#header h4 {
+    margin-top: 0;
+    font-size: 18px;
+    color: gray;
+}
+
+#topnav {
+    background-color: beige;
+}
+
+#topnav .nav-link {
+    color: darkslategray;
+    font-size: 14px;
+}
+
+#menu {
+    background: rgb(39, 70, 134);
+    background: linear-gradient(90deg, rgba(39, 70, 134, 0.8018557764902836) 0%, rgba(240, 152, 50, 0.8046568969384629) 100%);
+    box-shadow: 0 0 10px rgb(0 0 0 / 15%), 0 3px 3px rgb(0 0 0 / 15%);
+}
+
+.navbar {
+    padding: 0;
+}
+
+.navbar .nav-link {
+    color: white;
+    border-right: 1px dotted silver;
+    padding: 10px 18px !important;
+    font-size: 13px;
+}
+
+.dropdown-menu {
+    width: 300px;
+}
+
+.dropdown-menu .nav-link {
+    color: #274686;
+    border-bottom: 1px dotted silver;
+}
+
+#banner .img-fluid {
+    height: 530px !important;
+    width: 100% !important;
+}
+
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.heading_fourth {
+    background: linear-gradient(to bottom, #EF761F, #FFB17A);
+    box-shadow: 0px 0px 5px #eeeeee;
+    color: white;
+}
+
+.heading_first {
+    background: linear-gradient(to bottom, #ae3b36, #f27b76);
+    box-shadow: 0px 0px 5px #eeeeee;
+    color: white;
+}
+
+.body_first {
+    box-shadow: 0px 0px 5px #eeeeee;
+    background: #fff;
+    margin-top: 3px;
+    padding: 10px;
+}
+
+.heading_second {
+    background: linear-gradient(to bottom, #348d93, #a0f1f7);
+    box-shadow: 0px 0px 5px #eeeeee;
+}
+
+.body_second {
+    box-shadow: 0px 0px 5px #eeeeee;
+    background: #fff;
+    margin-top: 3px;
+    padding: 10px 20px;
+}
+
+.footer_second {
+    background: linear-gradient(to bottom, #348d93, #a0f1f7);
+}
+
+.heading_third {
+    background: linear-gradient(to bottom, #deac33, #fae8bd);
+    box-shadow: 0px 0px 5px #eeeeee;
+}
+
+.footer_third {
+    background: linear-gradient(to bottom, #deac33, #fae8bd);
+}
+
+
+
+.heading_fourth {
+    background: linear-gradient(to bottom, #EF761F, #FFB17A);
+    box-shadow: 0px 0px 5px #eeeeee;
+    color: white;
+}
+
+
+
+.body_fourth {
+    box-shadow: 0px 0px 5px #eeeeee;
+    background: #fff;
+    margin-top: 3px;
+    padding: 10px;
+}
+
+.heading_fifth {
+    background: linear-gradient(to bottom, #33de6f, #b3f3ca);
+    box-shadow: 0px 0px 5px #eeeeee;
+}
+
+.my_panel .panel-heading {
+    text-align: center;
+    font-family: 'Arsenal', sans-serif;
+    font-weight: bold;
+}
+
+.body_third {
+    box-shadow: 0px 0px 5px #eeeeee;
+    background: #fff;
+    margin-top: 3px;
+    padding: 10px 20px;
+}
+
+.heading_fourth {
+    background: linear-gradient(to bottom, #EF761F, #FFB17A);
+    box-shadow: 0px 0px 5px #eeeeee;
+    color: white;
+}
+
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.my_body ul li {
+    list-style: none;
+    line-height: 22px;
+}
+
+.my_body ul li {
+    margin-left: -8%;
+}
+
+.my_body ul li:before {
+    content: "";
+    border-color: transparent #888;
+    border-style: solid;
+    border-width: 0.35em 0 0.35em 0.45em;
+    display: block;
+    height: 0;
+    width: 0;
+    left: -1em;
+    top: 0.9em;
+    position: relative;
+}
+
+.newsUl li {
+    border-bottom: 1px dotted silver;
+    padding: 5px 0;
+    font-size: 14px;
+}
+
+.my_body ul li {
+    line-height: 22px;
+}
+
+.my_body ul li {
+    margin-left: -8%;
+}
+
+.my_body ul li a {
+    color: black;
+    text-decoration: none;
+}
+
+
+.carousel-caption {
+    background-color: dimgray;
+    font-family: 'Arsenal', sans-serif;
+    font-size: 20px;
+    text-align: left;
+    padding: 10px 20px;
+}
+
+.carousel-caption h4 {
+    color: white;
+}
+
+#intro {
+    padding: 80px 20px;
+}
+
+#intro h1 {
+    color: #8b001a;
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+#intro p {
+    font-family: 'Oxygen', sans-serif;
+    font-size: 14px;
+}
+
+#content {
+    padding: 40px 10px;
+    background-color: #f5f5f5;
+}
+
+#footer {
+    background-color: dimgray;
+    color: white;
+    padding: 20px
+}
+
+.loginContainer
+{
+    background-color: rgba(0, 0, 0, 0.258);
+}
+
+.divContainer
+{
+    background-color: rgba(0, 0, 0, 0.258);
+}
+
+.profile_img
+{
+    max-height : 50vh;
+}
+
+.myButton
+{
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 10px;
+    border: none;
+}

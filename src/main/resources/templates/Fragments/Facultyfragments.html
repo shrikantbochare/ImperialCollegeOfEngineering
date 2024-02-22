@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<!--Faculty profile fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="FacultyProfile">
+    <div class="row ">
+        <div class="col-md-4">
+            <form action="">
+                <div class="profilePic d-flex justify-content-center align-items-center">
+                    <img th:src="@{/Images/logocsn.png}" alt=""  class="img-thumbnail profile_img">
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <input style="display:none" type="file" id="my-file" name="profile_img">
+                    <button type="button" onclick="document.getElementById('my-file').click()" class="myButton mt-2 mx-1 w-40">Select New</button>
+                </div>
+                <div class="profilePicB row mt-1 mb-2">
+                    <div class="col-6 text-center">
+                        <a href="" class="btn btn-danger">Remove</a>
+                    </div>
+                    <div class="col-6 text-center">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-8 ">
+            <form action="">
+                <div class="info">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name" placeholder="Full Name">
+                        <label for="name">Full Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="regNumber" placeholder="Registration Number">
+                        <label for="regNumber">University registration Number</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <label for="email">Email your email</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="age" placeholder="000">
+                        <label for="age">Email your age</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="bdate" placeholder="00/0/0000">
+                        <label for="bdate">Email your birth date</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="city" placeholder="mumbai">
+                        <label for="city">Email your city</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="state" placeholder="maharashtra">
+                        <label for="state">Email your state</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="address" placeholder="something">
+                        <label for="address">Email your address</label>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button type="submit" class="btn btn-primary w-50">Update</button>
+                </div>
+            </form>
+            <p class="text-center m-1"><a class="text-decoration-none text-danger" href="">Password Update</a></p>
+        </div>
+    </div>
+    <div class="container rounded border border-1 border-dark p-2 mt-3">
+        <h3 class="text-center text-dark">MENU</h3>
+        <div class="d-flex justify-content-center align-items-center flex-wrap">
+            <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/subjects}" class="btn btn-success">Subjects</a></div>
+            <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/exams}" class="btn btn-success">Exams</a></div>
+            <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/attendance}" class="btn btn-success">Attendance</a></div>
+            <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/query}" class="btn btn-success">Query</a></div>
+            <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/requests}" class="btn btn-success">Registration Request</a></div>
+        </div>
+    </div>
+    <div class="container rounded border border-1 border-dark p-2 mt-3">
+        <h3 class="text-center text-dark">DEPARTMENT DETAILS</h3>
+        <div class="fw-bold pt-2">
+            <p class="m-1">Department Name : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            <p class="m-1">Head Of The Department : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            <p class="m-1">Your Designation : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            <p class="m-1">Allocated Class : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            <p class="m-1">Allocated Subjects : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+        </div>
+        <div class="text-center">
+            <a th:href="@{/faculty/updateDeptdetails}" class="btn btn-primary">Update Details</a>
+        </div>
+    </div>
+</div>
+<!--Faculty profile fragment End-->
+
+
+
+
+
+
+<!--Faculty Dept details update fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="FacultyDeptUpdate">
+    <div class=" row rounded border border-1 border-dark p-2 ">
+        <h3 class="text-center text-dark m-1">PROFILE DETAILS</h3>
+        <div class="col-md-4">
+            <div class="profilePic d-flex justify-content-center align-items-center">
+                <img th:src="@{/Images/logocsn.png}" alt=""  class="img-thumbnail profile_img">
+            </div>
+        </div>
+        <div class="col-md-8 ">
+            <div class="p-3">
+                <p class="m-1">Full Name : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+                <p class="m-1">Email : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+                <p class="m-1">University Registration Number : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+                <p class="m-1">Age : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+                <p class="m-1">Birthdate : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+                <p class="m-1">City : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+                <p class="m-1">State : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+                <p class="m-1">Address : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="container rounded border border-1 border-dark p-2 mt-3">
+        <h3 class="text-center text-dark">MENU</h3>
+        <div class="d-flex justify-content-center align-items-center flex-wrap">
+            <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/subjects}" class="btn btn-success">Subjects</a></div>
+            <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/exams}" class="btn btn-success">Exams</a></div>
+            <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/attendance}" class="btn btn-success">Attendance</a></div>
+            <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/query}" class="btn btn-success">Query</a></div>
+            <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/requests}" class="btn btn-success">Registration Request</a></div>
+        </div>
+    </div>
+    <div class="container rounded border border-1 border-dark p-5 mt-3" th:fragment="DeptView">
+        <h3 class="text-center text-dark">DEPARTMENT DETAILS</h3>
+        <form action="">
+            <select class="form-select mb-3" aria-label="Default select example" name="deptName">
+                <option selected>Select Department</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            <select class="form-select mb-3" aria-label="Default select example" name="designation">
+                <option selected>Select Designation</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            <select class="form-select mb-3" aria-label="Default select example" name="allocatedClass">
+                <option selected>Select class</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            <div class="mb-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" name="subjects">
+                    <label class="form-check-label" for="inlineCheckbox1">1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" name="subjects">
+                    <label class="form-check-label" for="inlineCheckbox2">2</label>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Faculty Dept details update fragment Start-->
+
+
+
+
+<!--Faculty allocated subject fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="FacultySubjects">
+    <div class="table-responsive">
+        <h3 class="text-center text-primary mb-3">AllOCATED SUBJECT DATA</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Subject Name</th>
+                <th scope="col">Subject ID</th>
+                <th scope="col">Total Students</th>
+                <th th:unless="${attendanceUpdate == 'update'}" scope="col">List of Students</th>
+                <th th:if="${attendanceUpdate == 'update'}" scope="col">Update Attendance</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <td>1</td>
+                <td>IT0002</td>
+                <td>13</td>
+                <td>12</td>
+                <td th:if="${attendanceView == 'view'}"><a th:href="@{/faculty/subjects/attendance/view(sId=1)}" class="btn btn-success">Go</a>
+                <td th:if="${attendanceUpdate == 'update'}"><a th:href="@{/faculty/subjects/attendance/update(sId=1)}" class="btn btn-success">Go</a>
+                <td th:if="${studentMarks == 'studentMarks'}">
+                <div class="row">
+                    <div class="col-sm-6 text-center">
+                        <a th:href="@{/faculty/exams/view(sId=1)}" class="btn btn-success">View</a>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <a th:href="@{/faculty/exams/update(sId=1)}" class="btn btn-warning">Update</a>
+                    </div>
+                </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Faculty allocated subject fragment End-->
+
+
+
+
+
+
+<!--Faculty Subject Attendance fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="FacultyAttendance">
+    <div class="table-responsive">
+        <h3 class="text-center text-primary mb-3">STUDENT WISE ATTENDANCE FOR SUBJECT</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Total Lectures</th>
+                <th scope="col">Attended Lectures</th>
+                <th scope="col">Percentage</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                    <td>1</td>
+                    <td><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
+                    <td>13</td>
+                    <td>12</td>
+                    <td>50</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Faculty Subject Attendance fragment End-->
+
+
+
+
+
+<!--Faculty Subject Attendance fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="FacultyAttendanceUpdate">
+    <div class="table-responsive">
+        <h3 class="text-center text-primary mb-3">STUDENT WISE ATTENDANCE FOR SUBJECT</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Total Lectures</th>
+                <th scope="col">Attended Lectures</th>
+                <th scope="col">Percentage</th>
+                <th scope="col">Update Attendance</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <form>
+                    <td>1</td>
+                    <td><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
+                    <td>13</td>
+                    <td><input type="number" name="attendedLectures" id="attendedLectures"></td>
+                    <td>50</td>
+                    <td><button type="submit" class="btn btn-warning">Update</button></td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Faculty Subject Attendance fragment End-->
+
+
+
+
+
+
+<!--Faculty Student Marks for Subject fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="StudentMarksView">
+    <div class="table-responsive">
+        <h3 class="text-center text-primary mb-3">STUDENT WISE MARKS OF SUBJECT</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">CT-1</th>
+                <th scope="col">CT-2</th>
+                <th scope="col">INTERNAL</th>
+                <th scope="col">END SEMESTER</th>
+                <th scope="col">GRADE</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <td>1</td>
+                <td><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
+                <td>13</td>
+                <td>12</td>
+                <td>50</td>
+                <td>50</td>
+                <td>A</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Faculty Student Marks for Subject fragment End-->
+
+
+
+
+
+
+<!--Faculty Student Marks update for Subject  fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="StudentMarksUpdate">
+    <div class="table-responsive">
+        <h3 class="text-center text-primary mb-3">STUDENT WISE ATTENDANCE FOR SUBJECT</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">CT-1</th>
+                <th scope="col">CT-2</th>
+                <th scope="col">INTERNAL</th>
+                <th scope="col">END SEMESTER</th>
+                <th scope="col">GRADE</th>
+                <th scope="col">UPDATE</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <form>
+                    <td>1</td>
+                    <td><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
+                    <td><input type="number" name="ct1" id="ct1"></td>
+                    <td><input type="number" name="ct2" id="ct2"></td>
+                    <td><input type="number" name="internal" id="internal"></td>
+                    <td><input type="number" name="endSem" id="endSem"></td>
+                    <td><input type="text" name="grade" id="grade"></td>
+                    <td><button type="submit" class="btn btn-warning">Update</button></td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Faculty Student Marks update for Subject fragment End-->
+
+
+
+
+
+<!--Faculty Student query fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="StudentQueriesView">
+    <div class="table-responsive">
+        <h3 class="text-center text-primary mb-3">STUDENT WISE MARKS OF SUBJECT</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Query Subject</th>
+                <th scope="col">Query ID</th>
+                <th scope="col">Raised On</th>
+                <th scope="col">Resolve</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <td>1</td>
+                <td><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
+                <td>13</td>
+                <td>12</td>
+                <td>50///</td>
+                <td><a th:href="@{/faculty/query/resolve(aId=1)}" class="btn btn-primary">Resolve</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Faculty Student query fragment End-->
+
+
+
+
+
+<!--Faculty Student query resolve fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="FacultyQueryResolve">
+    <div class="container">
+        <h3 class="text-center text-primary">Query</h3>
+        <div class="p-2 fw-bold">
+            <p class="m-1">Raised by : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            <p class="m-1">Query Subject : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            <p class="m-1">Query Data : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            <p class="m-1">Raised On : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+        </div>
+        <div class="m-1 p-1">
+            <form action="">
+                <div class="mb-3">
+                    <label for="query" class="form-label">Enter Remark</label>
+                    <textarea class="form-control" id="query" rows="4"></textarea>
+                </div>
+                <div class="row my-2">
+                    <div class="col-sm-6 text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Faculty Student query resolve fragment End-->
+
+
+
+
+
+<!--Faculty allocated subject fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="FacultyRequests">
+    <div class="table-responsive">
+        <h3 class="text-center text-primary mb-3">AllOCATED SUBJECT DATA</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Subject ID</th>
+                <th scope="col">Subject Name</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <td>1</td>
+                <td>IT0002</td>
+                <td>13</td>
+                <td>12</td>
+                <td>
+                    <div class="row">
+                        <div class="col-sm-6 text-center">
+                            <a th:href="@{/faculty/requests/approve(sId=1)}" class="btn btn-success">Approve</a>
+                        </div>
+                        <div class="col-sm-6 text-center">
+                            <a th:href="@{/faculty/request/reject(sId=1)}" class="btn btn-danger">Reject</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Faculty allocated subject fragment End-->
+
+
+</body>
+</html>

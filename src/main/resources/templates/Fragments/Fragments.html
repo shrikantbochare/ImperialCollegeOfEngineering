@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<!--Home fragment start-->
+<div  th:fragment="Home" id="intro" class="container">
+    <h1>Government College of Engineering, Chhatrapati Sambhajinagar</h1>
+    <div class="row">
+        <div class="col-md-5">
+            <img src="Images/DSC_0008.jpeg" class="img-fluid" />
+        </div>
+        <div class="col-md-7">
+
+            <p>
+                Government College of Engineering, Chhatrapati Sambhajinagar (GECA) is an autonomous engineering Institute in Maharashtra state of India. It is affiliated to the Dr. Babasaheb Ambedkar Marathwada University and was established in 1960. The construction of the college was started in 1957 and was completed in 1960. Intially it had three Courses Civil, Mechanical and Electrical Engineering.
+                <br />
+                <br />
+                Later on, it included the extension building that presently houses the Electronics and Telecommunication Department, Computer Science Engineering Department & Master of Computer Application Department. The recently constructed classroom complex houses the IT Department, Examination Cell and classes of first year students of all branches.
+            </p>
+
+            <p>
+                The institute has been granted autonomous status since 2006. Institute runs 6 undergraduate full-time programmes, 7 post graduate full-time programmes, 4 undergraduate part-time
+                programmes, 8 post graduate part-time programmes and 5 Ph.D programmes.
+                <br />
+
+            </p>
+        </div>
+
+    </div>
+</div>
+<!--Home fragment End-->
+
+
+
+
+
+
+<!--Courses fragment Start-->
+<div class="row course_bg" th:fragment="courses">
+    <div class="col-md-12">
+        <h3 class="heading"><strong>Courses</strong>:<span></span></h3>
+        <p>We have Following Courses :</p>
+
+        <div class="span7">
+            <div class="widget stacked widget-table action-table">
+
+                <div class="widget-header">
+                    <i class="icon-th-list"></i>
+
+                </div>
+                <!-- /widget-header -->
+
+                <div class="widget-content">
+
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>SR.NO</th>
+                            <th>Course</th>
+                            <th>Course Category</th>
+                            <th>Starting Year</th>
+                            <th>Duration Year</th>
+                            <th>Full/Part Time</th>
+                            <th>Intake Capcity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>01</td>
+                            <td>BE(civil)</td>
+                            <td>UG</td>
+                            <td>1995</td>
+                            <td>4</td>
+                            <td>Part Time</td>
+                            <td>30</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /widget-content -->
+                <div class="widget-header">
+                </div>
+                <!-- /widget-header -->
+            </div>
+            <!-- /widget -->
+        </div>
+    </div>
+</div>
+<!--Courses fragment End-->
+
+
+
+
+
+
+<!--Dept fragment Start-->
+<div th:fragment="dept">
+    <div id="content" style="box-shadow: 10px 10px 10px 10px  #fbfbfb; margin-bottom: 20px;">
+        <div class="container">
+
+            <h2><span th:text="${DeptName}"></span> Department</h2>
+
+        </div>
+    </div>
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-md-7 free-text-center">
+
+
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Motto
+
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show"
+                             aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <p>To Build Strong Nation through Dedication.</p>
+                                <h4>Vision</h4>
+                                <p>To create, preserve and promulgate knowledge of civil engineering and
+                                    thereby, contribute to the social, cultural, and economic well being of the
+                                    society.</p>
+                                <h4>Mission</h4>
+                                <ol type="1">
+                                    <li>To maintain highest possible quality of civil engineering courses for
+                                        developing competent, cultured, and responsible human resource.</li>
+                                    <li>To design, develop and direct activities of civil engineering
+                                        discipline.</li>
+                                    <li>To extend civil engineering facilities to stakeholders. </li>
+                                    <li>To undertake Research & Development activities in civil engineering.
+                                    </li>
+                                    <li>To develop entrepreneurship amongst the students.</li>
+                                </ol>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                About Department
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                             data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <p>Civil Engineering is traditional branch of Engineering and is amongst the
+                                    founding courses when the institution was started. The department is located
+                                    in the 'Annexe' building of the college. The Department of Civil Engineering
+                                    conducts both full time and part time undergraduate courses in Civil
+                                    Engineering. It also conducts postgraduate programme in Water Resources
+                                    Engineering and a part time Post-Graduate programme in Soil Engineering.</p>
+                                <h2>ACTIVITIES</h2>
+                                <p>The department has been engaged in various activities involving industry -
+                                   osure to the students. Under TEQIP scheme i) Training
+                                    programs are arranged for faculty. ii) Faculty members are deputed for
+                                    various training programmes arranged by reputed organisations. iii) Various
+                                    programs / workshops are organized. In addition, all the routine civil
+                                    maintenance works in college campus are carried out by the supporting staff.
+                                </p>
+                                <h2>STRENGTH</h2>
+                                <p>Civil Engineering Department is working right from the inception of the
+                                    college in 1960. Since then the department has made continuous progress and
+                                    development. 1.Department is having highly qualified, experienced faculty.
+                                    The faculty is dedicated. Faculty has contribution to technical journals and
+                                    cus placement cell in reputed Construction
+                                    companies and organizations.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="images/Civil/1.jpg" class="img-thumbnail">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/Civil/2.jpg" class="img-thumbnail">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/Civil/3.jpg" class="img-thumbnail">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/Civil/4.jpg" class="img-thumbnail">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button"
+                            data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button"
+                            data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div th:replace="~{Fragments/Fragments :: courses}">
+        </div>
+        <br />
+        <div th:replace="~{Fragments/Fragments :: faculty}">
+        </div>
+        <br />
+    </div>
+</div>
+<!--Dept fragment End-->
+
+
+
+
+
+
+
+<!--Faculty fragment Start-->
+<div class="row" th:fragment="faculty">
+    <div class="col-md-12">
+        <h3 class="heading"><strong>Faculty and </strong>Staff :<span></span></h3>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>SR.NO</th>
+                <th>Name of the Teaching Staff </th>
+                <th>Designation</th>
+                <th>Qualification /[expertise]</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>01</td>
+                <td><a href="pdf/resume/civil/dgr.pdf"
+                       style="color: blue; text-decoration: underline;">Dr. D. G. Regulwar</a>
+                    <br />
+                    <a href="http://www.regulwar.com" target="_blank"
+                       style="color: blue; text-decoration: underline;">www.regulwar.com</a>
+                </td>
+                <td>Professor & HOD</td>
+                <td>Ph.D. Civil Engineering, Specialization: Water Resources Engineering</td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Faculty fragment End-->
+
+
+
+
+
+
+<!-- login fragment Start-->
+<div th:fragment="login" class="row m-2">
+    <div class="col-md-6 offset-md-3 rounded loginContainer p-5">
+        <h3 class="text-center text-Success">LOGIN</h3>
+        <form>
+            <div class="form-floating mb-2">
+                <input type="text" name="username" id="regNumber" class="form-control" placeholder="BT24F06F006">
+                <label for="regNumber">Enter University Registration Number</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+                <label for="password">Enter Password</label>
+            </div>
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary ">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- login fragment End-->
+
+
+
+
+
+
+<!--Contact fragment Start-->
+<div th:fragment="contact">
+    <script type="text/javascript">
+        var map;
+        var mapOptions;
+        function initialize() {
+            mapOptions = {
+                zoom: 15,
+                center: new google.maps.LatLng(19.866417, 75.323652)
+            }
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            PlotMap();
+        }
+
+        function PlotMap() {
+            //map.clearOverlays();
+            var all_vehicle_detail = document.getElementById("hdnMapList").value;
+            //alert(all_vehicle_detail);
+            var single_vehicle_detail = all_vehicle_detail.split("#");
+            //alert(single_vehicle_detail.length);
+            for (var veh_count = 0; veh_count < single_vehicle_detail.length; veh_count++) {
+                var indivisual_entry = single_vehicle_detail[veh_count].split("$");
+                //alert(indivisual_entry);
+                // var latlong = new GLatLng(indivisual_entry[0], indivisual_entry[1]);
+                var property = indivisual_entry[2];
+                var address = indivisual_entry[3];
+                var propertytype = indivisual_entry[4];
+
+                var htmlC = "html" + veh_count;
+
+                htmlC = '<b>' + property + '</b><br>' +
+                    '<b>Address:</b>' + address + '<br>' +
+                    '<br>';
+
+                //<b>Contact Number:</b>' + propertytype + '<br>
+
+                CreateMarker(indivisual_entry[0], indivisual_entry[1], htmlC);
+            }
+        }
+
+        //creates the marker on map using point and html
+        function CreateMarker(lat, lng, html) {
+
+            var infowindow = new google.maps.InfoWindow({
+                content: html
+            });
+            //var markerC = "marker" + veh_count;
+            var myLatLng = new google.maps.LatLng(lat, lng);
+            var markerC = new google.maps.Marker({
+                position: myLatLng,
+                map: map
+            });
+
+            google.maps.event.addListener(markerC, 'click', function () {
+                infowindow.open(map, markerC);
+            });
+
+            return;
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <div id="content" style="box-shadow: 10px 10px 10px 10px  #fbfbfb; margin-bottom: 20px;">
+        <div class="container">
+
+
+        </div>
+    </div>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="contact_form">
+                    <h3 class="heading"><strong>Office </strong>Address<span></span></h3>
+                    <address>
+                        <strong>Government College Of Engineering</strong>
+                        <br>
+                        Railway Station Road, Osmanpura
+                        <br>
+                        Chhatrapati Sambhajinagar, Maharashtra,
+                        <br>
+                        India - 431005.
+                    </address>
+                    <p>Phone No: 0240-2366101</p>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <h4 id="google_map_Id">Google MAP</h4>
+                <div class="thumbnail">
+                    <div id="map-canvas" style="width: 100%; height: 300px;"></div>
+                    <input type="hidden" id="hdnMapList"
+                           value="19.868058$75.323922$Government College of Engineering$Osmanpura, Station Road, Aurangabad$0240-2366101" />
+                </div>
+            </div>
+        </div>
+        <br /><br />
+
+    </div>
+</div>
+<!--Contact fragment End-->
+
+</body>
+</html>
