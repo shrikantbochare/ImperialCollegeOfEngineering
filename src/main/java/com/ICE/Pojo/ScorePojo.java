@@ -1,15 +1,8 @@
-package com.ICE.Entities;
+package com.ICE.Pojo;
 
-import jakarta.persistence.*;
+public class ScorePojo {
 
-
-@Entity
-public class Score {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
 
     private int ct1;
 
@@ -17,22 +10,12 @@ public class Score {
 
     private int internal;
 
-
     private int endSem;
-
 
     private String grade;
 
 
-    @ManyToOne
-    private Subject subject;
-
-
-    @ManyToOne
-    private Student student;
-
-
-    public Score(int ct1, int ct2, int internal, int endSem, String grade) {
+    public ScorePojo(int ct1, int ct2, int internal, int endSem, String grade) {
         this.ct1 = ct1;
         this.ct2 = ct2;
         this.internal = internal;
@@ -41,16 +24,12 @@ public class Score {
     }
 
 
-    public Score() {
+    public ScorePojo() {
     }
 
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getCt1() {
@@ -91,21 +70,5 @@ public class Score {
 
     public void setGrade(String grade) {
         this.grade = grade;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
     }
 }

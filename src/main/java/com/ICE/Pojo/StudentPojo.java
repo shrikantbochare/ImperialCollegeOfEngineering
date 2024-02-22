@@ -1,28 +1,24 @@
-package com.ICE.Entities;
+package com.ICE.Pojo;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.sql.Date;
-import java.util.List;
 
-@Entity
-public class Faculty {
+public class StudentPojo {
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
 
     private String name;
 
-    private String facultyId;
-
     private String email;
 
-    private String password;
+    private String universityNo;
 
+    private String password;
 
     private Date birthdate;
 
@@ -34,36 +30,27 @@ public class Faculty {
 
     private String department;
 
-    @OneToMany(mappedBy = "faculty")
-    private List<Student> students;
+    private String course;
 
-    @OneToMany(mappedBy = "faculty")
-    private List<Subject> subjects;
+    private String semester;
 
 
-    @OneToMany(mappedBy = "faculty")
-    private List<Query> queries;
+    public StudentPojo() {
+    }
 
-
-    @OneToOne
-    private ProfilePic profilePic;
-
-
-    public Faculty(String name, String facultyId, String email, String password) {
+    public StudentPojo(String name, String email, String universityNo, String password, String department, String course) {
         this.name = name;
-        this.facultyId = facultyId;
         this.email = email;
+        this.universityNo = universityNo;
         this.password = password;
+        this.department = department;
+        this.course = course;
     }
 
-    public Faculty() {
-    }
 
     public int getId() {
         return id;
     }
-
-
 
     public String getName() {
         return name;
@@ -73,20 +60,20 @@ public class Faculty {
         this.name = name;
     }
 
-    public String getFacultyId() {
-        return facultyId;
-    }
-
-    public void setFacultyId(String facultyId) {
-        this.facultyId = facultyId;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUniversityNo() {
+        return universityNo;
+    }
+
+    public void setUniversityNo(String universityNo) {
+        this.universityNo = universityNo;
     }
 
     public String getPassword() {
@@ -137,35 +124,19 @@ public class Faculty {
         this.department = department;
     }
 
-    public List<Student> getStudents() {
-        return students;
+    public String getCourse() {
+        return course;
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
+    public void setCourse(String course) {
+        this.course = course;
     }
 
-    public List<Subject> getSubjects() {
-        return subjects;
+    public String getSemester() {
+        return semester;
     }
 
-    public void setSubjects(List<Subject> subjects) {
-        this.subjects = subjects;
-    }
-
-    public List<Query> getQueries() {
-        return queries;
-    }
-
-    public void setQueries(List<Query> queries) {
-        this.queries = queries;
-    }
-
-    public ProfilePic getProfilePic() {
-        return profilePic;
-    }
-
-    public void setProfilePic(ProfilePic profilePic) {
-        this.profilePic = profilePic;
+    public void setSemester(String semester) {
+        this.semester = semester;
     }
 }

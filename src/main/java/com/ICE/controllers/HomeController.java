@@ -1,6 +1,8 @@
 package com.ICE.controllers;
 
+import com.ICE.DAO.FacultyRepository;
 import com.ICE.DAO.StudentRepository;
+import com.ICE.Entities.Faculty;
 import com.ICE.Entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,11 +20,15 @@ public class HomeController {
 
 
     private StudentRepository studentRepository;
+    private FacultyRepository facultyRepository;
 
     @Autowired
-    public HomeController(StudentRepository studentRepository) {
+    public HomeController(StudentRepository studentRepository, FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
+        this.facultyRepository = facultyRepository;
     }
+
+
 
     @GetMapping("/")
     public String test(Model model)
@@ -195,6 +201,8 @@ public class HomeController {
     public String otpVerification2(Model model)
     {
         model.addAttribute("PageName","Faculty_registration2");
+        Faculty faculty = new Faculty();
+        model.addAttribute("faculty",faculty);
         return "Template";
     }
 
@@ -204,9 +212,10 @@ public class HomeController {
 
 
     @PostMapping("/faculty/registrationDetails")
-    public String FacultyRegDetails(Model model)
+    public String FacultyRegDetails(@ModelAttribute("faculty") Faculty faculty)
     {
-        return "redirect:/login";
+        facultyRepository.save(faculty);
+        return "redirect:/home/login";
     }
 
 // <================ Faculty Registration End <=================

@@ -1,45 +1,29 @@
-package com.ICE.Entities;
+package com.ICE.Pojo;
 
-import jakarta.persistence.*;
-
-@Entity
-public class Attendance {
+public class AttendancePojo {
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private int totalClasses;
 
-
     private int presentClasses;
-
 
     private int presentPercentage;
 
-    @ManyToOne
-    private Subject subject;
 
-
-    @ManyToOne
-    private Student student;
-
-
-    public Attendance() {
+    public AttendancePojo() {
     }
 
-    public Attendance(int totalClasses, int presentClasses, int presentPercentage) {
+    public AttendancePojo(int totalClasses, int presentClasses, int presentPercentage) {
         this.totalClasses = totalClasses;
         this.presentClasses = presentClasses;
         this.presentPercentage = presentPercentage;
     }
 
-
     public int getId() {
         return id;
     }
-
 
 
     public int getTotalClasses() {
@@ -65,22 +49,4 @@ public class Attendance {
     public void setPresentPercentage(int presentPercentage) {
         this.presentPercentage = presentPercentage;
     }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
 }
-
-

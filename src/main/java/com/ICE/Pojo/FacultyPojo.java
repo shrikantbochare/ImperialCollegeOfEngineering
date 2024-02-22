@@ -1,17 +1,9 @@
-package com.ICE.Entities;
-
-
-import jakarta.persistence.*;
+package com.ICE.Pojo;
 
 import java.sql.Date;
-import java.util.List;
 
-@Entity
-public class Faculty {
+public class FacultyPojo {
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
 
@@ -34,35 +26,22 @@ public class Faculty {
 
     private String department;
 
-    @OneToMany(mappedBy = "faculty")
-    private List<Student> students;
 
-    @OneToMany(mappedBy = "faculty")
-    private List<Subject> subjects;
+    public FacultyPojo() {
+    }
 
 
-    @OneToMany(mappedBy = "faculty")
-    private List<Query> queries;
-
-
-    @OneToOne
-    private ProfilePic profilePic;
-
-
-    public Faculty(String name, String facultyId, String email, String password) {
+    public FacultyPojo(String name, String facultyId, String email, String password) {
         this.name = name;
         this.facultyId = facultyId;
         this.email = email;
         this.password = password;
     }
 
-    public Faculty() {
-    }
 
     public int getId() {
         return id;
     }
-
 
 
     public String getName() {
@@ -135,37 +114,5 @@ public class Faculty {
 
     public void setDepartment(String department) {
         this.department = department;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
-    public List<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(List<Subject> subjects) {
-        this.subjects = subjects;
-    }
-
-    public List<Query> getQueries() {
-        return queries;
-    }
-
-    public void setQueries(List<Query> queries) {
-        this.queries = queries;
-    }
-
-    public ProfilePic getProfilePic() {
-        return profilePic;
-    }
-
-    public void setProfilePic(ProfilePic profilePic) {
-        this.profilePic = profilePic;
     }
 }
