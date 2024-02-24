@@ -4,6 +4,7 @@ package com.ICE.Entities;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,6 +25,12 @@ public class Faculty {
     private String password;
 
 
+    private String designation;
+
+    private String classTeacher;
+
+    private int age;
+
     private Date birthdate;
 
     private String address;
@@ -37,7 +44,7 @@ public class Faculty {
     @OneToMany(mappedBy = "faculty")
     private List<Student> students;
 
-    @OneToMany(mappedBy = "faculty")
+    @OneToMany(mappedBy = "faculty",fetch = FetchType.EAGER)
     private List<Subject> subjects;
 
 
@@ -45,7 +52,7 @@ public class Faculty {
     private List<Query> queries;
 
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
     private ProfilePic profilePic;
 
 
@@ -93,8 +100,32 @@ public class Faculty {
         return password;
     }
 
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getClassTeacher() {
+        return classTeacher;
+    }
+
+    public void setClassTeacher(String classTeacher) {
+        this.classTeacher = classTeacher;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Date getBirthdate() {
@@ -167,5 +198,15 @@ public class Faculty {
 
     public void setProfilePic(ProfilePic profilePic) {
         this.profilePic = profilePic;
+    }
+
+
+    public void addSubjects(Subject subject)
+    {
+        if(subjects == null)
+        {
+            subjects =new ArrayList<>();
+        }
+        subjects.add(subject);
     }
 }

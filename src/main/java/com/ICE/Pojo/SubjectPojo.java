@@ -7,6 +7,7 @@ public class SubjectPojo {
 
     private String name;
 
+    private String subId;
 
     private String department;
 
@@ -14,12 +15,33 @@ public class SubjectPojo {
 
     private String semester;
 
+    private int credits;
 
-    public SubjectPojo(String name, String department, String course, String semester) {
+
+    public SubjectPojo(String name, String subId, String department, String course, String semester, int credits) {
         this.name = name;
+        this.subId = subId;
         this.department = department;
         this.course = course;
         this.semester = semester;
+        this.credits = credits;
+    }
+
+
+    public String getSubId() {
+        return subId;
+    }
+
+    public void setSubId(String subId) {
+        this.subId = subId;
+    }
+
+    public int getCredits() {
+        return credits;
+    }
+
+    public void setCredits(int credits) {
+        this.credits = credits;
     }
 
     public SubjectPojo() {

@@ -13,15 +13,17 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
     private String name;
 
+    private String subId;
 
     private String department;
 
     private String course;
 
     private String semester;
+
+    private int credits;
 
     @ManyToMany(mappedBy = "subjects")
     private List<Student> students;
@@ -40,11 +42,13 @@ public class Subject {
     private List<Score> scores;
 
 
-    public Subject(String name, String department, String course, String semester) {
+    public Subject(String name, String subId, String department, String course, String semester, int credits) {
         this.name = name;
+        this.subId = subId;
         this.department = department;
         this.course = course;
         this.semester = semester;
+        this.credits = credits;
     }
 
     public Subject() {
@@ -54,6 +58,21 @@ public class Subject {
         return id;
     }
 
+    public String getSubId() {
+        return subId;
+    }
+
+    public void setSubId(String subId) {
+        this.subId = subId;
+    }
+
+    public int getCredits() {
+        return credits;
+    }
+
+    public void setCredits(int credits) {
+        this.credits = credits;
+    }
 
     public String getName() {
         return name;

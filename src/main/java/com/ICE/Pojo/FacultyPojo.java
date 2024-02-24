@@ -15,7 +15,10 @@ public class FacultyPojo {
 
     private String password;
 
+    private String classTeacher;
+    private String designation;
 
+    private int age;
     private Date birthdate;
 
     private String address;
@@ -38,6 +41,24 @@ public class FacultyPojo {
         this.password = password;
     }
 
+    public FacultyPojo(String name, String facultyId, String email, String password, int age, Date birthdate, String address, String city, String state) {
+        this.name = name;
+        this.facultyId = facultyId;
+        this.email = email;
+        this.password = password;
+        this.age = age;
+        this.birthdate = birthdate;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+    }
+
+
+    public FacultyPojo(String classTeacher, String designation, String department) {
+        this.classTeacher = classTeacher;
+        this.designation = designation;
+        this.department = department;
+    }
 
     public int getId() {
         return id;
@@ -72,8 +93,32 @@ public class FacultyPojo {
         return password;
     }
 
+    public String getClassTeacher() {
+        return classTeacher;
+    }
+
+    public void setClassTeacher(String classTeacher) {
+        this.classTeacher = classTeacher;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Date getBirthdate() {

@@ -67,7 +67,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')"><a th:href="@{/student/profile}" class="nav-link">Profile</a></li>
-                  <li sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')"><a th:href="@{/home/dept/ce}" class="nav-link">Log out</a></li>
+                  <li sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')"><a th:href="@{/logout}" class="nav-link">Log out</a></li>
                   <li sec:authorize="!isAuthenticated()"><a th:href="@{/home/login}" class="nav-link">Login</a></li>
                   <li sec:authorize="!isAuthenticated()"><a th:href="@{/home/student/registration}" class="nav-link">Register</a></li>
                 </ul>
@@ -77,7 +77,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')"><a th:href="@{/faculty/profile}" class="nav-link">Profile</a></li>
-                  <li sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')"><a th:href="@{/home/dept/ce}" class="nav-link">Log out</a></li>
+                  <li sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')"><a th:href="@{/logout}" class="nav-link">Log out</a></li>
                   <li sec:authorize="!isAuthenticated()"><a th:href="@{/home/login}" class="nav-link">Login</a></li>
                   <li sec:authorize="!isAuthenticated()"><a th:href="@{/home/faculty/registration}" class="nav-link">Register</a></li>
                 </ul>
@@ -237,6 +237,17 @@
 
     <div th:if="${PageName == 'FacultyRequests'}">
       <div th:replace="~{Fragments/FacultyFragments :: FacultyRequests}"></div>
+    </div>
+
+
+
+    <div th:if="${PageName == 'FacultyManageSubjects'}">
+      <div th:replace="~{Fragments/FacultyFragments :: FacultyManageSubjects}"></div>
+    </div>
+
+
+    <div th:if="${PageName == 'FacultyAddSubject'}">
+      <div th:replace="~{Fragments/FacultyFragments :: FacultyAddSubject}"></div>
     </div>
 
 

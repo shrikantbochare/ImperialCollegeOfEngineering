@@ -11,9 +11,9 @@
 <div class="divContainer m-4 p-3" th:fragment="StudentProfile">
     <div class="row ">
         <div class="col-md-4">
-            <form action="">
+            <form th:action="@{/student/profile/updateProfilePic}" method="post" enctype="multipart/form-data">
                 <div class="profilePic d-flex justify-content-center align-items-center">
-                    <img th:src="@{/Images/logocsn.png}" alt=""  class="img-thumbnail profile_img">
+                    <img th:src="@{'/Images/ProfilePic/' + ${currentUser.profilePic.pic}}" alt=""  class="img-thumbnail profile_img">
                 </div>
                 <div class="d-flex justify-content-center align-items-center">
                     <input style="display:none" type="file" id="my-file" name="profile_img">
@@ -21,7 +21,7 @@
                 </div>
                 <div class="profilePicB row mt-1 mb-2">
                     <div class="col-6 text-center">
-                        <a href="" class="btn btn-danger">Remove</a>
+                        <a th:href="@{/student/profile/removeProfilePic(pId= ${currentUser.ProfilePic.id})}" class="btn btn-danger">Remove</a>
                     </div>
                     <div class="col-6 text-center">
                         <button type="submit" class="btn btn-primary">Update</button>
@@ -30,51 +30,68 @@
             </form>
         </div>
         <div class="col-md-8 ">
-            <form action="">
+            <form th:action="@{/student/profile/update}" method="post" th:object="${student}">
                 <div class="info">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="name" placeholder="Full Name">
+                        <input type="text" class="form-control" id="name" placeholder="Full Name" th:field="*{name}">
                         <label for="name">Full Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="regNumber" placeholder="Registration Number">
+                        <input type="text" class="form-control" id="regNumber" placeholder="Registration Number" th:field="*{universityNo}" readonly>
                         <label for="regNumber">University registration Number</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com" th:field="*{email}" readonly>
                         <label for="email">Email your email</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="age" placeholder="000">
+                        <input type="text" class="form-control" id="age" placeholder="000" th:field="*{age}">
                         <label for="age">Email your age</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="bdate" placeholder="00/0/0000">
+                        <input type="date" class="form-control" id="bdate" placeholder="00/0/0000" th:field="*{birthdate}">
                         <label for="bdate">Email your birth date</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="city" placeholder="mumbai">
+                        <input type="text" class="form-control" id="city" placeholder="mumbai" th:field="*{city}">
                         <label for="city">Email your city</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="state" placeholder="maharashtra">
+                        <input type="text" class="form-control" id="state" placeholder="maharashtra" th:field="*{state}">
                         <label for="state">Email your state</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="address" placeholder="something">
+                        <input type="text" class="form-control" id="address" placeholder="something" th:field="*{address}">
                         <label for="address">Email your address</label>
                     </div>
-                    <select class="form-select mb-3" aria-label="Default select example" name="course">
-                        <option selected>Select Course</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="form-select mb-2" aria-label="Default select example" name="department" th:field="*{department}">
+                        <option th:value="Select_Year" selected>Select Department</option>
+                        <option th:value="Information_Technology">Information Technology</option>
+                        <option th:value="Computer_Science_Engineering">Computer Science and Engineering</option>
+                        <option th:value="Civil_Engineering">Civil Engineering</option>
+                        <option th:value="Mechanical_Engineering">Mechanical Engineering</option>
+                        <option th:value="Electrical_Engineering">Electrical Engineering</option>
+                        <option th:value="Electronics_Engineering">Electronics Engineering</option>
+
                     </select>
-                    <select class="form-select mb-3" aria-label="Default select example" name="semester">
-                        <option selected>Select Semester</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+
+                    <select class="form-select mb-2" aria-label="Default select example" name="studyYear" th:field="*{course}">
+                        <option th:value="Select_Year" selected>Select course</option>
+                        <option th:value="First_Year">First Year</option>
+                        <option th:value="Second_Year">Second Year</option>
+                        <option th:value="Third_Year">Third Year</option>
+                        <option th:value="Fourth_Year">Fourth Year</option>
+                    </select>
+                    <select class="form-select mb-2" aria-label="Default select example" name="studyYear" th:field="*{semester}">
+                        <option th:value="Select_Semester" selected>Select Semester</option>
+                        <option th:value="First">First</option>
+                        <option th:value="Second">Second</option>
+                        <option th:value="Third">Third</option>
+                        <option th:value="Fourth">Fourth</option>
+                        <option th:value="Fifth">Fifth</option>
+                        <option th:value="Sixth">Sixth</option>
+                        <option th:value="Seventh">Seventh</option>
+                        <option th:value="Eighth">Eighth</option>
                     </select>
                 </div>
                 <div class="d-flex justify-content-center align-items-center">

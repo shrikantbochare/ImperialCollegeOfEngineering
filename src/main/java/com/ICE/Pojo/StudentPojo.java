@@ -22,6 +22,8 @@ public class StudentPojo {
 
     private Date birthdate;
 
+    private int age;
+
     private String address;
 
     private String city;
@@ -47,6 +49,22 @@ public class StudentPojo {
         this.course = course;
     }
 
+
+    public StudentPojo(String name, String email, String universityNo, String password, Date birthdate, String address,
+                       String city, String state, String department, String course, String semester,int age) {
+        this.name = name;
+        this.email = email;
+        this.universityNo = universityNo;
+        this.password = password;
+        this.birthdate = birthdate;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.department = department;
+        this.course = course;
+        this.semester = semester;
+        this.age=age;
+    }
 
     public int getId() {
         return id;
@@ -90,6 +108,14 @@ public class StudentPojo {
 
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getAddress() {

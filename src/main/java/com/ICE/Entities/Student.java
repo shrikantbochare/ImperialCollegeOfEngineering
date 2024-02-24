@@ -30,6 +30,7 @@ public class Student {
     private String password;
 
 
+    private int age;
 
     private Date birthdate;
 
@@ -54,18 +55,33 @@ public class Student {
     private Faculty faculty;
 
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
     private ProfilePic profilePic;
 
-    public Student(String name, String email, String universityNo, String password,String department) {
+    public Student(String name, String email, String universityNo, String password,String department,String course) {
         this.name = name;
         this.email = email;
         this.universityNo = universityNo;
         this.password = password;
         this.department=department;
+        this.course=course;
     }
 
 
+    public Student(String name, String email, String universityNo, String password, int age, Date birthdate, String address, String city, String state, String department, String course, String semester) {
+        this.name = name;
+        this.email = email;
+        this.universityNo = universityNo;
+        this.password = password;
+        this.age = age;
+        this.birthdate = birthdate;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.department = department;
+        this.course = course;
+        this.semester = semester;
+    }
 
     @OneToMany(mappedBy = "student")
     private List<Attendance> attendances;
@@ -222,5 +238,13 @@ public class Student {
 
     public void setQueries(List<Query> queries) {
         this.queries = queries;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
