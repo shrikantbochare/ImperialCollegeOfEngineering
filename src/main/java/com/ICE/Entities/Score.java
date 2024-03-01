@@ -2,6 +2,8 @@ package com.ICE.Entities;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+
 
 @Entity
 public class Score {
@@ -23,6 +25,7 @@ public class Score {
 
     private String grade;
 
+    private Date examDate;
 
     @ManyToOne
     private Subject subject;
@@ -51,6 +54,14 @@ public class Score {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Date getExamDate() {
+        return examDate;
+    }
+
+    public void setExamDate(Date examDate) {
+        this.examDate = examDate;
     }
 
     public int getCt1() {

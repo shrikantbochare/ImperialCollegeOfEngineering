@@ -2,6 +2,8 @@ package com.ICE.Entities;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+
 @Entity
 public class Attendance {
 
@@ -18,6 +20,8 @@ public class Attendance {
 
     private int presentPercentage;
 
+    private Date updatedDate;
+
     @ManyToOne
     private Subject subject;
 
@@ -29,10 +33,11 @@ public class Attendance {
     public Attendance() {
     }
 
-    public Attendance(int totalClasses, int presentClasses, int presentPercentage) {
+    public Attendance(int totalClasses, int presentClasses, int presentPercentage,Date updatedDate) {
         this.totalClasses = totalClasses;
         this.presentClasses = presentClasses;
         this.presentPercentage = presentPercentage;
+        this.updatedDate=updatedDate;
     }
 
 
@@ -41,6 +46,13 @@ public class Attendance {
     }
 
 
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
 
     public int getTotalClasses() {
         return totalClasses;

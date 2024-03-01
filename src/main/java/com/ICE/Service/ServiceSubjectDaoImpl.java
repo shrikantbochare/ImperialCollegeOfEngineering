@@ -2,6 +2,7 @@ package com.ICE.Service;
 
 
 import com.ICE.DAO.SubjectRepository;
+import com.ICE.Entities.Faculty;
 import com.ICE.Entities.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,17 @@ public class ServiceSubjectDaoImpl implements ServiceSubjectDao{
         Optional<Subject> value = subjectRepository.findById(id);
         Subject subject = value.orElseGet(Subject::new);
         return subject;
+    }
+
+
+    @Override
+    public List<Subject> getSubjectsForThisSemester(String department, String course, String semester) {
+        return subjectRepository.findByDepartmentAndCourseAndSemester(department, course, semester);
+    }
+
+
+    @Override
+    public List<Subject> getSubjectsOfFaculty(Faculty faculty) {
+        return subjectRepository.findByFaculty(faculty);
     }
 }

@@ -203,6 +203,12 @@ public class HomeController {
         ProfilePic profilePic = new ProfilePic("default_pic.jpg");
         profilePic.setStudent(student);
         student.setProfilePic(profilePic);
+
+        Faculty faculty = serviceFacultyDao.getClassTeacher(student.getDepartment(),student.getCourse());
+        faculty.addStudent(student);
+        serviceFacultyDao.saveFaculty(faculty);
+
+        student.setFaculty(faculty);
         serviceStudentDao.saveStudent(student);
         return "redirect:/home/login";
     }

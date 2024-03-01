@@ -32,4 +32,10 @@ public class ServiceFacultyDaoImpl implements ServiceFacultyDao{
     public void saveFaculty(Faculty faculty) {
         facultyRepository.save(faculty);
     }
+
+
+    @Override
+    public Faculty getClassTeacher(String department, String classTeacher) {
+        return facultyRepository.findByDepartmentAndClassTeacher(department,classTeacher);
+    }
 }

@@ -3,6 +3,7 @@ package com.ICE.Entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,7 +30,7 @@ public class Subject {
     private List<Student> students;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Faculty faculty;
 
 
@@ -41,6 +42,13 @@ public class Subject {
     @OneToMany(mappedBy = "subject")
     private List<Score> scores;
 
+
+    @Transient
+    private int studentCount;
+
+
+    @OneToMany(mappedBy = "subject")
+    private List<SubjectRegistrationRequest> subjectRegistrationRequests;
 
     public Subject(String name, String subId, String department, String course, String semester, int credits) {
         this.name = name;
@@ -136,5 +144,61 @@ public class Subject {
 
     public void setScores(List<Score> scores) {
         this.scores = scores;
+    }
+
+
+    public List<SubjectRegistrationRequest> getSubjectRegistrationRequests() {
+        return subjectRegistrationRequests;
+    }
+
+    public void setSubjectRegistrationRequests(List<SubjectRegistrationRequest> subjectRegistrationRequests) {
+        this.subjectRegistrationRequests = subjectRegistrationRequests;
+    }
+
+    public void addStudent(Student student)
+    {
+        if(students == null)
+        {
+            students = new ArrayList<>();
+        }
+        students.add(student);
+    }
+
+
+    public int getStudentCount() {
+        return students.size();
+    }
+
+    public void addAttendance(Attendance attendance)
+    {
+        if(attendances == null)
+        {
+            attendances = new ArrayList<>();
+        }
+
+        attendances.add(attendance);
+    }
+
+
+    public void addScore(Score score)
+    {
+        if(scores == null)
+        {
+            scores = new ArrayList<>();
+        }
+
+        scores.add(score);
+    }
+
+
+
+    public void addRequest(SubjectRegistrationRequest subjectRegistrationRequest)
+    {
+        if(subjectRegistrationRequests == null)
+        {
+            subjectRegistrationRequests = new ArrayList<>();
+        }
+
+        subjectRegistrationRequests.add(subjectRegistrationRequest);
     }
 }

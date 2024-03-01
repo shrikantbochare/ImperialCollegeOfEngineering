@@ -44,7 +44,7 @@ public class Faculty {
     @OneToMany(mappedBy = "faculty")
     private List<Student> students;
 
-    @OneToMany(mappedBy = "faculty",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "faculty",fetch = FetchType.LAZY)
     private List<Subject> subjects;
 
 
@@ -208,5 +208,16 @@ public class Faculty {
             subjects =new ArrayList<>();
         }
         subjects.add(subject);
+    }
+
+
+    public void addStudent(Student student)
+    {
+        if(students == null)
+        {
+            students = new ArrayList<>();
+        }
+
+        students.add(student);
     }
 }

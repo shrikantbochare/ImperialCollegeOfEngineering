@@ -1,5 +1,6 @@
 package com.ICE.Service;
 
+import com.ICE.Entities.Faculty;
 import com.ICE.Entities.Subject;
 
 import java.util.List;
@@ -20,4 +21,10 @@ public interface ServiceSubjectDao {
 
 
     Subject getSubjectById(int id);
+
+
+    List<Subject> getSubjectsForThisSemester(String department,String course,String semester);
+
+
+    List<Subject> getSubjectsOfFaculty(Faculty faculty);
 }

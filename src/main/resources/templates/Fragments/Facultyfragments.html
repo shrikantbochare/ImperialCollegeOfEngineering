@@ -103,8 +103,7 @@
             <p class="m-1">Department Name : <span class="text-danger" th:text="${currentUser.department}"></span></p>
             <p class="m-1">Head Of The Department : <span class="text-danger"></span></p>
             <p class="m-1">Your Designation : <span class="text-danger" th:text="${currentUser.designation}"></span></p>
-            <p class="m-1">Allocated Class : <span class="text-danger"></span></p>
-            <p class="m-1">Allocated Subjects : <span class="text-danger"></span></p>
+            <p class="m-1">Allocated Class : <span class="text-danger" th:text="${currentUser.classTeacher}"></span></p>
         </div>
         <div class="text-center">
             <a th:href="@{/faculty/updateDeptdetails}" class="btn btn-primary">Update Details</a>
@@ -240,7 +239,8 @@
 <!--Faculty allocated subject fragment Start-->
 <div class="divContainer m-4 p-3" th:fragment="FacultySubjects">
     <div th:replace="~{Fragments/FacultyFragments :: FacultyMenu}"></div>
-    <div class="table-responsive">
+    <hr>
+    <div class="table-responsive mt-1">
         <h3 class="text-center text-primary mb-3">AllOCATED SUBJECT DATA</h3>
         <table class="m-2 table table-bordered">
             <thead>
@@ -254,20 +254,20 @@
             </tr>
             </thead>
             <tbody class="text-center">
-            <tr>
-                <td>1</td>
-                <td>IT0002</td>
-                <td>13</td>
-                <td>12</td>
-                <td th:if="${attendanceView == 'view'}"><a th:href="@{/faculty/subjects/attendance/view(sId=1)}" class="btn btn-success">Go</a>
-                <td th:if="${attendanceUpdate == 'update'}"><a th:href="@{/faculty/subjects/attendance/update(sId=1)}" class="btn btn-success">Go</a>
+            <tr th:each="subject,item : ${subjects}">
+                <td th:text="${item.count}">1</td>
+                <td th:text="${subject.name}">IT0002</td>
+                <td th:text="${subject.subId}">13</td>
+                <td th:text="${subject.studentCount}">12</td>
+                <td th:if="${attendanceView == 'view'}"><a th:href="@{/faculty/subjects/attendance/view(subject=${subject.id})}" class="btn btn-success">Go</a>
+                <td th:if="${attendanceUpdate == 'update'}"><a th:href="@{/faculty/subjects/attendance/update(subject=${subject.id})}" class="btn btn-warning">Update</a>
                 <td th:if="${studentMarks == 'studentMarks'}">
                 <div class="row">
                     <div class="col-sm-6 text-center">
-                        <a th:href="@{/faculty/exams/view(sId=1)}" class="btn btn-success">View</a>
+                        <a th:href="@{/faculty/exams/view(subject=${subject.id})}" class="btn btn-success">View</a>
                     </div>
                     <div class="col-sm-6 text-center">
-                        <a th:href="@{/faculty/exams/update(sId=1)}" class="btn btn-warning">Update</a>
+                        <a th:href="@{/faculty/exams/update(subject=${subject.id})}" class="btn btn-warning">Update</a>
                     </div>
                 </div>
                 </td>
@@ -286,8 +286,9 @@
 <!--Faculty Subject Attendance fragment Start-->
 <div class="divContainer m-4 p-3" th:fragment="FacultyAttendance">
     <div th:replace="~{Fragments/FacultyFragments :: FacultyMenu}"></div>
-    <div class="table-responsive">
-        <h3 class="text-center text-primary mb-3">STUDENT WISE ATTENDANCE FOR SUBJECT</h3>
+    <hr>
+    <div class="table-responsive mt-1">
+        <h3 class="text-center text-primary mb-3">STUDENT WISE ATTENDANCE FOR <span th:text="${subjectName.name}"></span></h3>
         <table class="m-2 table table-bordered">
             <thead>
             <tr class="text-center">
@@ -299,12 +300,12 @@
             </tr>
             </thead>
             <tbody class="text-center">
-            <tr>
-                    <td>1</td>
-                    <td><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
-                    <td>13</td>
-                    <td>12</td>
-                    <td>50</td>
+            <tr th:each="attendance,item : ${attendances}">
+                    <td th:text="${item.count}">1</td>
+                    <td th:text="${attendance.student.name}"><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
+                    <td th:text="${attendance.totalClasses}">13</td>
+                    <td th:text="${attendance.presentClasses}">12</td>
+                    <td th:text="${attendance.presentPercentage}">50</td>
             </tr>
             </tbody>
         </table>
@@ -320,7 +321,7 @@
 <div class="divContainer m-4 p-3" th:fragment="FacultyAttendanceUpdate">
     <div th:replace="~{Fragments/FacultyFragments :: FacultyMenu}"></div>
     <div class="table-responsive">
-        <h3 class="text-center text-primary mb-3">STUDENT WISE ATTENDANCE FOR SUBJECT</h3>
+        <h3 class="text-center text-primary mb-3">STUDENT WISE ATTENDANCE FOR <span th:text="${subjectName.name}"></span></h3>
         <table class="m-2 table table-bordered">
             <thead>
             <tr class="text-center">
@@ -333,13 +334,13 @@
             </tr>
             </thead>
             <tbody class="text-center">
-            <tr>
-                <form>
-                    <td>1</td>
-                    <td><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
-                    <td>13</td>
-                    <td><input type="number" name="attendedLectures" id="attendedLectures"></td>
-                    <td>50</td>
+            <tr th:each="attendance,item : ${attendances}">
+                <form th:action="@{/faculty/subjects/attendance/update/process}" method="post"  th:object="${attendance}">
+                    <td th:text="${item.count}">1</td>
+                    <td th:text="${attendance.student.name}"><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
+                    <td><input type="number" name="totalClasses" id="totalClasses" th:field="${attendance.totalClasses}"/></td>
+                    <td><input type="number" name="presentClasses" id="presentClasses" th:field="*{presentClasses}"/></td>
+                    <td><input type="number" name="presentPercentage" id="presentPercentage" th:field="*{presentPercentage}"/></td>
                     <td><button type="submit" class="btn btn-warning">Update</button></td>
                 </form>
             </tr>
@@ -357,8 +358,9 @@
 <!--Faculty Student Marks for Subject fragment Start-->
 <div class="divContainer m-4 p-3" th:fragment="StudentMarksView">
     <div th:replace="~{Fragments/FacultyFragments :: FacultyMenu}"></div>
-    <div class="table-responsive">
-        <h3 class="text-center text-primary mb-3">STUDENT WISE MARKS OF SUBJECT</h3>
+    <hr>
+    <div class="table-responsive mt-1">
+        <h3 class="text-center text-primary mb-3">STUDENT WISE MARKS OF <span th:text="${subjectName.name}"></span></h3>
         <table class="m-2 table table-bordered">
             <thead>
             <tr class="text-center">
@@ -372,14 +374,14 @@
             </tr>
             </thead>
             <tbody class="text-center">
-            <tr>
-                <td>1</td>
-                <td><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
-                <td>13</td>
-                <td>12</td>
-                <td>50</td>
-                <td>50</td>
-                <td>A</td>
+            <tr th:each="score,item : ${scores}">
+                <td th:text="${item.count}">1</td>
+                <td th:text="${score.student.name}"><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
+                <td th:text="${score.ct1}">13</td>
+                <td th:text="${score.ct2}">12</td>
+                <td th:text="${score.internal}">50</td>
+                <td th:text="${score.endSem}">50</td>
+                <td th:text="${score.grade}">A</td>
             </tr>
             </tbody>
         </table>
@@ -395,31 +397,34 @@
 <!--Faculty Student Marks update for Subject  fragment Start-->
 <div class="divContainer m-4 p-3" th:fragment="StudentMarksUpdate">
     <div th:replace="~{Fragments/FacultyFragments :: FacultyMenu}"></div>
-    <div class="table-responsive">
-        <h3 class="text-center text-primary mb-3">STUDENT WISE ATTENDANCE FOR SUBJECT</h3>
+    <hr>
+    <div class="table-responsive mt-1">
+        <h3 class="text-center text-primary mb-3">STUDENT WISE MARKS FOR <span th:text="${subjectName.name}"></span></h3>
         <table class="m-2 table table-bordered">
             <thead>
             <tr class="text-center">
-                <th scope="col">Sr. No.</th>
+<!--                <th scope="col">Sr. No.</th>-->
                 <th scope="col">Student Name</th>
                 <th scope="col">CT-1</th>
                 <th scope="col">CT-2</th>
                 <th scope="col">INTERNAL</th>
                 <th scope="col">END SEMESTER</th>
                 <th scope="col">GRADE</th>
+                <th scope="col">EXAM DATE</th>
                 <th scope="col">UPDATE</th>
             </tr>
             </thead>
             <tbody class="text-center">
-            <tr>
-                <form>
-                    <td>1</td>
-                    <td><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
-                    <td><input type="number" name="ct1" id="ct1"></td>
-                    <td><input type="number" name="ct2" id="ct2"></td>
-                    <td><input type="number" name="internal" id="internal"></td>
-                    <td><input type="number" name="endSem" id="endSem"></td>
-                    <td><input type="text" name="grade" id="grade"></td>
+            <tr th:each="score : ${scores}">
+                <form th:action="@{/faculty/exams/update/process}" th:object="${score}" method="post">
+<!--                    <td th:text="${item.count}">1</td>-->
+                    <td th:text="${score.student.name}"><a th:href="@{/Student/profile/view(stId=${score.student.id})}" class="text-decoration-none">name</a></td>
+                    <td><input type="number" name="ct1" id="ct1" th:field="*{ct1}"/></td>
+                    <td><input type="number" name="ct2" id="ct2" th:field="*{ct2}"/></td>
+                    <td><input type="number" name="internal" id="internal" th:field="*{internal}"/></td>
+                    <td><input type="number" name="endSem" id="endSem" th:field="*{endSem}"/></td>
+                    <td><input type="text" name="grade" id="grade" th:field="*{grade}"/></td>
+                    <td><input type="date" name="examDate" id="examDate" th:field="*{examDate}"/></td>
                     <td><button type="submit" class="btn btn-warning">Update</button></td>
                 </form>
             </tr>
@@ -519,18 +524,18 @@
             </tr>
             </thead>
             <tbody class="text-center">
-            <tr>
-                <td>1</td>
-                <td>IT0002</td>
-                <td>13</td>
-                <td>12</td>
+            <tr th:each=" request,item : ${Requests}">
+                <td th:text="${item.count}">1</td>
+                <td th:text="${request.student.name}">IT0002</td>
+                <td th:text="${request.subject.subId}">13</td>
+                <td th:text="${request.subject.name}">12</td>
                 <td>
                     <div class="row">
                         <div class="col-sm-6 text-center">
-                            <a th:href="@{/faculty/requests/approve(sId=1)}" class="btn btn-success">Approve</a>
+                            <a th:href="@{/faculty/requests/approve(stId=${request.student.id},subId=${request.subject.id})}" class="btn btn-success">Approve</a>
                         </div>
                         <div class="col-sm-6 text-center">
-                            <a th:href="@{/faculty/request/reject(sId=1)}" class="btn btn-danger">Reject</a>
+                            <a th:href="@{/faculty/requests/reject(stId=${request.student.id},subId=${request.subject.id})}" class="btn btn-danger">Reject</a>
                         </div>
                     </div>
                 </td>

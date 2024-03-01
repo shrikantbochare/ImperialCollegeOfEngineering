@@ -7,4 +7,6 @@ public interface ServiceFacultyDao {
     Faculty getFacultyById(int id);
 
     void saveFaculty(Faculty faculty);
+
+    Faculty getClassTeacher(String department,String classTeacher);
 }

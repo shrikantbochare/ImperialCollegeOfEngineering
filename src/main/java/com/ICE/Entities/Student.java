@@ -4,6 +4,7 @@ package com.ICE.Entities;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -95,6 +96,13 @@ public class Student {
 
     @OneToMany(mappedBy = "student")
     private List<Query> queries;
+
+
+
+    @OneToMany(mappedBy = "student")
+    private List<SubjectRegistrationRequest> subjectRegistrationRequests;
+
+
 
     public Student() {
     }
@@ -246,5 +254,56 @@ public class Student {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+
+    public List<SubjectRegistrationRequest> getSubjectRegistrationRequests() {
+        return subjectRegistrationRequests;
+    }
+
+    public void setSubjectRegistrationRequests(List<SubjectRegistrationRequest> subjectRegistrationRequests) {
+        this.subjectRegistrationRequests = subjectRegistrationRequests;
+    }
+
+    public void addSubjects(Subject subject)
+    {
+        if(subjects == null)
+        {
+            subjects = new ArrayList<>();
+        }
+
+        subjects.add(subject);
+    }
+
+    public void addAttendance(Attendance attendance)
+    {
+        if(attendances == null)
+        {
+            attendances = new ArrayList<>();
+        }
+
+        attendances.add(attendance);
+    }
+
+
+    public void addScore(Score score)
+    {
+        if(scores == null)
+        {
+            scores = new ArrayList<>();
+        }
+
+        scores.add(score);
+    }
+
+
+    public void addRequest(SubjectRegistrationRequest subjectRegistrationRequest)
+    {
+        if(subjectRegistrationRequests == null)
+        {
+            subjectRegistrationRequests = new ArrayList<>();
+        }
+
+        subjectRegistrationRequests.add(subjectRegistrationRequest);
     }
 }

@@ -2,19 +2,22 @@ package com.ICE.controllers;
 
 
 import com.ICE.DAO.StudentRepository;
-import com.ICE.Entities.ProfilePic;
-import com.ICE.Entities.Student;
+import com.ICE.Entities.*;
 import com.ICE.Pojo.StudentPojo;
-import com.ICE.Service.Service1;
-import com.ICE.Service.ServiceProfilePicDao;
-import com.ICE.Service.ServiceStudentDao;
+import com.ICE.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.util.DateUtils;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -25,14 +28,24 @@ public class StudentController {
 
     private ServiceStudentDao serviceStudentDao;
     private ServiceProfilePicDao serviceProfilePicDao;
+    private ServiceSubjectDao serviceSubjectDao;
+    private ServiceAttendanceDao serviceAttendanceDao;
+    private ServiceScoreDao serviceScoreDao;
+    private ServiceSubjectRegistrationDao serviceSubjectRegistrationDao;
     private Service1 service1;
 
 
     @Autowired
-    public StudentController(ServiceStudentDao serviceStudentDao,Service1 service1,ServiceProfilePicDao serviceProfilePicDao) {
+    public StudentController(ServiceStudentDao serviceStudentDao,Service1 service1,ServiceProfilePicDao serviceProfilePicDao
+    ,ServiceSubjectDao serviceSubjectDao,ServiceAttendanceDao serviceAttendanceDao,ServiceScoreDao serviceScoreDao,
+                             ServiceSubjectRegistrationDao serviceSubjectRegistrationDao) {
         this.serviceStudentDao = serviceStudentDao;
         this.service1=service1;
         this.serviceProfilePicDao=serviceProfilePicDao;
+        this.serviceSubjectDao=serviceSubjectDao;
+        this.serviceAttendanceDao=serviceAttendanceDao;
+        this.serviceScoreDao=serviceScoreDao;
+        this.serviceSubjectRegistrationDao=serviceSubjectRegistrationDao;
     }
 
 
@@ -67,7 +80,6 @@ public class StudentController {
         student1.setAddress(studentPojo.getAddress());
         student1.setCity(studentPojo.getCity());
         student1.setState(studentPojo.getState());
-        student1.setDepartment(studentPojo.getDepartment());
         student1.setCourse(studentPojo.getCourse());
         student1.setSemester(studentPojo.getSemester());
 
@@ -121,15 +133,65 @@ public class StudentController {
     @GetMapping("/subjects")
     public String subjects(Model model)
     {
+        Student student1 = serviceStudentDao.getStudentById(4);
+
+        //get subject without registered ===== implement
+        List<Subject> subjects = serviceSubjectDao.getSubjectsForThisSemester(student1.getDepartment(),student1.getCourse(),student1.getSemester());
+
+        List<Subject> registeredSubjects = student1.getSubjects();
+        subjects.removeAll(registeredSubjects);
+
+        List<SubjectRegistrationRequest> requests = serviceSubjectRegistrationDao.getRequestsOfStudentWithNotRejected(student1);
+        requests.stream().forEach( (request) -> {
+            Subject subject = request.getSubject();
+            subjects.remove(subject);
+        } );
+
+
+        List<SubjectRegistrationRequest> requestsWithStatus = serviceSubjectRegistrationDao.getRequestOfStudent(student1);
+
         model.addAttribute("PageName","StudentSubjects");
+        model.addAttribute("subjects",subjects);
+        model.addAttribute("registeredSubjects",registeredSubjects);
+        model.addAttribute("RegistrationStatus",requestsWithStatus);
+
         return "Template";
     }
+
+
+
+    @GetMapping("/subjects/register")
+    public String registerSubject(@ModelAttribute("sId") int id,Model model) {
+        Student student1 = serviceStudentDao.getStudentById(4);
+        Subject subject =serviceSubjectDao.getSubjectById(id);
+
+
+        SubjectRegistrationRequest subjectRegistrationRequest = new SubjectRegistrationRequest(student1,subject,"Pending");
+        serviceSubjectRegistrationDao.saveSubjectRegistrationRequest(subjectRegistrationRequest);
+
+        student1.addRequest(subjectRegistrationRequest);
+        serviceStudentDao.saveStudent(student1);
+
+        subject.addRequest(subjectRegistrationRequest);
+        serviceSubjectDao.save(subject);
+
+
+        model.addAttribute("Request","Yes");
+
+        return "redirect:/student/subjects";
+    }
+
+
+
 
 
 
     @GetMapping("/exams")
     public String exams(Model model)
     {
+        Student student1 = serviceStudentDao.getStudentById(4);
+        List<Score> scores = serviceScoreDao.getScoresOfStudent(student1);
+        model.addAttribute("scores",scores);
         model.addAttribute("PageName","StudentExams");
         return "Template";
     }
@@ -140,6 +202,10 @@ public class StudentController {
     @GetMapping("/attendance")
     public String attendance(Model model)
     {
+        Student student1 = serviceStudentDao.getStudentById(4);
+        List<Attendance> attendances = serviceAttendanceDao.getAttendanceOfStudent(student1);
+
+        model.addAttribute("attendances",attendances);
         model.addAttribute("PageName","StudentAttendance");
         return "Template";
     }

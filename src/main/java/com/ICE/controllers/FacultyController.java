@@ -1,15 +1,10 @@
 package com.ICE.controllers;
 
 import com.ICE.DAO.FacultyRepository;
-import com.ICE.Entities.Faculty;
-import com.ICE.Entities.ProfilePic;
-import com.ICE.Entities.Subject;
+import com.ICE.Entities.*;
 import com.ICE.Pojo.FacultyPojo;
 import com.ICE.Pojo.SubjectPojo;
-import com.ICE.Service.Service1;
-import com.ICE.Service.ServiceFacultyDao;
-import com.ICE.Service.ServiceProfilePicDao;
-import com.ICE.Service.ServiceSubjectDao;
+import com.ICE.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +24,11 @@ public class FacultyController {
 
     private ServiceFacultyDao serviceFacultyDao;
     private ServiceProfilePicDao serviceProfilePicDao;
+    private ServiceAttendanceDao serviceAttendanceDao;
+    private ServiceScoreDao serviceScoreDao;
     private Service1 service1;
+    private ServiceSubjectRegistrationDao serviceSubjectRegistrationDao;
+    private ServiceStudentDao serviceStudentDao;
 
     private ServiceSubjectDao serviceSubjectDao;
 
@@ -37,11 +36,16 @@ public class FacultyController {
 
     @Autowired
     public FacultyController(ServiceFacultyDao serviceFacultyDao,Service1 service1,ServiceProfilePicDao serviceProfilePicDao
-    ,ServiceSubjectDao serviceSubjectDao) {
+    ,ServiceSubjectDao serviceSubjectDao,ServiceAttendanceDao serviceAttendanceDao,ServiceScoreDao serviceScoreDao,
+                             ServiceSubjectRegistrationDao serviceSubjectRegistrationDao,ServiceStudentDao serviceStudentDao) {
         this.serviceFacultyDao = serviceFacultyDao;
         this.service1=service1;
         this.serviceProfilePicDao=serviceProfilePicDao;
         this.serviceSubjectDao=serviceSubjectDao;
+        this.serviceAttendanceDao=serviceAttendanceDao;
+        this.serviceScoreDao=serviceScoreDao;
+        this.serviceSubjectRegistrationDao=serviceSubjectRegistrationDao;
+        this.serviceStudentDao=serviceStudentDao;
     }
 
 
@@ -129,7 +133,6 @@ public class FacultyController {
 
 
 
-//==================================
 
     @GetMapping("/updateDeptdetails")
     public String updateDeptdetails(Model model)
@@ -194,9 +197,16 @@ public class FacultyController {
     }
 
 
+
+
+
     @GetMapping("/subjects")
     public  String facultySubjects(Model model)
     {
+        Faculty faculty = serviceFacultyDao.getFacultyById(4);
+        List<Subject> subjects = serviceSubjectDao.getSubjectsOfFaculty(faculty);
+
+        model.addAttribute("subjects",subjects);
         model.addAttribute("PageName","FacultySubjects");
         model.addAttribute("attendanceView","view");
         return "Template";
@@ -209,6 +219,10 @@ public class FacultyController {
     @GetMapping("/attendance")
     public  String facultyAttendance(Model model)
     {
+        Faculty faculty = serviceFacultyDao.getFacultyById(4);
+        List<Subject> subjects = serviceSubjectDao.getSubjectsOfFaculty(faculty);
+
+        model.addAttribute("subjects",subjects);
         model.addAttribute("PageName","FacultySubjects");
         model.addAttribute("attendanceUpdate","update");
         return "Template";
@@ -218,8 +232,13 @@ public class FacultyController {
 
 
     @GetMapping("/subjects/attendance/view")
-    public String viewSubjectAttendance(Model model)
+    public String viewSubjectAttendance(@RequestParam("subject") Integer id, Model model)
     {
+        Subject subject = serviceSubjectDao.getSubjectById(id);
+        List<Attendance> attendances = serviceAttendanceDao.getAttendanceOfSubject(subject);
+
+        model.addAttribute("attendances",attendances);
+        model.addAttribute("subjectName",subject);
         model.addAttribute("PageName","FacultyAttendance");
         return "Template";
     }
@@ -227,8 +246,13 @@ public class FacultyController {
 
 
     @GetMapping("/subjects/attendance/update")
-    public String updateSubjectAttendance(Model model)
+    public String updateSubjectAttendance(@RequestParam("subject") Integer id,Model model)
     {
+        Subject subject = serviceSubjectDao.getSubjectById(id);
+        List<Attendance> attendances = serviceAttendanceDao.getAttendanceOfSubject(subject);
+
+        model.addAttribute("attendances",attendances);
+        model.addAttribute("subjectName",subject);
         model.addAttribute("PageName","FacultyAttendanceUpdate");
         return "Template";
     }
@@ -237,9 +261,22 @@ public class FacultyController {
 
 
 
+//    @PostMapping("/subjects/attendance/update/process")
+//    public String updateSubjectAttendance2()
+//    {
+//
+//    }
+
+
+
+
     @GetMapping("/exams")
     public  String facultyExams(Model model)
     {
+        Faculty faculty = serviceFacultyDao.getFacultyById(4);
+        List<Subject> subjects = serviceSubjectDao.getSubjectsOfFaculty(faculty);
+
+        model.addAttribute("subjects",subjects);
         model.addAttribute("PageName","FacultySubjects");
         model.addAttribute("studentMarks","studentMarks");
         return "Template";
@@ -248,8 +285,13 @@ public class FacultyController {
 
 
     @GetMapping("/exams/view")
-    public String viewStudentMarks(Model model)
+    public String viewStudentMarks(@RequestParam("subject") Integer id , Model model)
     {
+        Subject subject = serviceSubjectDao.getSubjectById(id);
+        List<Score> scores = serviceScoreDao.getScoreForSubject(subject);
+
+        model.addAttribute("scores",scores);
+        model.addAttribute("subjectName",subject);
         model.addAttribute("PageName","StudentMarksView");
         return "Template";
     }
@@ -258,13 +300,30 @@ public class FacultyController {
 
 
 
-
+// ================ERROR
     @GetMapping("/exams/update")
-    public String viewStudentUpdate(Model model)
+    public String viewStudentUpdate(@RequestParam("subject") Integer id ,Model model)
     {
+        Subject subject = serviceSubjectDao.getSubjectById(id);
+        List<Score> scores = serviceScoreDao.getScoreForSubject(subject);
+
+        model.addAttribute("scores",scores);
+        model.addAttribute("subjectName",subject);
         model.addAttribute("PageName","StudentMarksUpdate");
         return "Template";
     }
+// =====================ERROR
+
+
+
+
+    @PostMapping("/exams/update/process")
+    public String studentScoreUpdate(@ModelAttribute("score") Score score)
+    {
+        serviceScoreDao.saveScore(score);
+        return "redirect:/faculty/exams/update";
+    }
+
 
 
 
@@ -290,9 +349,73 @@ public class FacultyController {
     @GetMapping("/requests")
     public  String facultyRequests(Model model)
     {
+        Faculty faculty = serviceFacultyDao.getFacultyById(4);
+        List<SubjectRegistrationRequest>  requests = serviceSubjectRegistrationDao.getRequestsForFaculty(faculty);
+        System.out.println(requests);
+
+        model.addAttribute("Requests",requests);
         model.addAttribute("PageName","FacultyRequests");
         return "Template";
     }
+
+
+
+
+
+    @GetMapping("/requests/approve")
+    public String approveSubRegistrationRequest(@RequestParam("stId") int studentId, @RequestParam("subId") int subjectId)
+    {
+        Student student1 = serviceStudentDao.getStudentById(studentId);
+        Subject subject =serviceSubjectDao.getSubjectById(subjectId);
+
+        student1.addSubjects(subject);
+        subject.addStudent(student1);
+
+
+        Attendance attendance = new Attendance(0,0,0,null);
+        attendance.setStudent(student1);
+        attendance.setSubject(subject);
+
+        student1.addAttendance(attendance);
+        subject.addAttendance(attendance);
+
+
+        Score score = new Score(0,0,0,0,null);
+        score.setStudent(student1);
+        score.setSubject(subject);
+
+
+        student1.addScore(score);
+        subject.addScore(score);
+
+        serviceStudentDao.saveStudent(student1);
+        serviceSubjectDao.save(subject);
+        serviceAttendanceDao.saveAttendance(attendance);
+        serviceScoreDao.saveScore(score);
+        serviceSubjectRegistrationDao.deleteSubjectRegistrationRequest(student1,subject);
+
+
+        return "redirect:/faculty/requests";
+    }
+
+
+
+
+
+    @GetMapping("/requests/reject")
+    public String rejectSubRegistrationRequest(@RequestParam("stId") int studentId, @RequestParam("subId") int subjectId)
+    {
+        Student student1 = serviceStudentDao.getStudentById(studentId);
+        Subject subject =serviceSubjectDao.getSubjectById(subjectId);
+
+
+        SubjectRegistrationRequest request = serviceSubjectRegistrationDao.getRequestOfStudentForSubject(student1,subject);
+        request.setStatus("Rejected");
+        serviceSubjectRegistrationDao.saveSubjectRegistrationRequest(request);
+
+        return "redirect:/faculty/requests";
+    }
+
 
 
 
@@ -326,8 +449,12 @@ public class FacultyController {
     {
         Faculty faculty = serviceFacultyDao.getFacultyById(4);
         Subject subject = new Subject(subjectPojo.getName(),subjectPojo.getSubId(),faculty.getDepartment(),subjectPojo.getCourse(),subjectPojo.getSemester(), subjectPojo.getCredits());
+        subject.setFaculty(faculty);
+
+        faculty.addSubjects(subject);
 
         serviceSubjectDao.save(subject);
+        serviceFacultyDao.saveFaculty(faculty);
         return "redirect:/faculty/manageSubjects";
     }
 }

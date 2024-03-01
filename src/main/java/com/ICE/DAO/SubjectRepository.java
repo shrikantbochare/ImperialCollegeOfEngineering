@@ -1,5 +1,6 @@
 package com.ICE.DAO;
 
+import com.ICE.Entities.Faculty;
 import com.ICE.Entities.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +16,9 @@ public interface SubjectRepository extends JpaRepository<Subject,Integer> {
     List<Subject> findByDepartmentAndFacultyIsNull( String department);
 
     List<Subject> findByIdIn(Set<Integer> Ids);
+
+    List<Subject> findByDepartmentAndCourseAndSemester(String department,String course,String semester);
+
+
+    List<Subject> findByFaculty(Faculty faculty);
 }
