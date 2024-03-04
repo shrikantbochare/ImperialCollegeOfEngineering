@@ -23,20 +23,38 @@ public class ServiceAttendanceDaoImpl implements ServiceAttendanceDao{
     }
 
 
+
+
+
+//===============> Save or update attendance start ===============>
     @Override
     public void saveAttendance(Attendance attendance) {
         attendanceRepository.save(attendance);
     }
+//<============== Save or update attendance end <===============
 
+
+
+
+
+//===============> Get attendance for all subjects of a student start ===============>
 
     @Override
     public List<Attendance> getAttendanceOfStudent(Student student) {
         return attendanceRepository.findByStudent(student);
     }
+//<============== Get attendance for all subjects of a student end <===============
 
 
+
+
+
+//===============> Get attendance for all students of a subject start ===============>
     @Override
     public List<Attendance> getAttendanceOfSubject(Subject subject) {
         return attendanceRepository.findBySubject(subject);
     }
+//<============== Get attendance for all students of a subject end <===============
+
+
 }

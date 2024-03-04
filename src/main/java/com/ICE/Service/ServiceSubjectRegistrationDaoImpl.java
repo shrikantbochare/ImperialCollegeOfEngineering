@@ -22,39 +22,69 @@ public class ServiceSubjectRegistrationDaoImpl implements ServiceSubjectRegistra
     }
 
 
+
+
+
+//===============> Create subject registration request start ===============>
     @Override
     public void saveSubjectRegistrationRequest(SubjectRegistrationRequest subjectRegistrationRequest) {
         subjectRegistrationRepository.save(subjectRegistrationRequest);
     }
+//<============== Create subject registration request end <===============
 
 
+
+
+
+//===============> Delete subject registration request start ===============>
     @Transactional
     @Override
     public void deleteSubjectRegistrationRequest(Student student, Subject subject) {
         subjectRegistrationRepository.deleteByStudentAndSubject(student,subject);
     }
+//<============== Delete subject registration request end <===============
 
 
+
+
+
+//===============> Get requests for a faculty start ===============>
     @Override
     public List<SubjectRegistrationRequest> getRequestsForFaculty(Faculty faculty) {
         return subjectRegistrationRepository.findByFaculty(faculty);
     }
+//<============== Get requests for a faculty end <===============
 
 
+
+
+
+//===============> Get request of a student for a subject start ===============>
     @Override
     public SubjectRegistrationRequest getRequestOfStudentForSubject(Student student, Subject subject) {
         return subjectRegistrationRepository.findByStudentAndSubject(student,subject);
     }
+//<============== Get request of a student for a subject end <===============
 
 
+
+
+
+//===============> Get all requests of a student start ===============>
     @Override
     public List<SubjectRegistrationRequest> getRequestOfStudent(Student student) {
         return subjectRegistrationRepository.findByStudent(student);
     }
+//<==============  Get all requests of a student end <===============
 
 
+
+
+
+//===============> Get all requests of a students with status is not rejected start ===============>
     @Override
     public List<SubjectRegistrationRequest> getRequestsOfStudentWithNotRejected(Student student) {
         return subjectRegistrationRepository.findByStudentWithNotRejected(student);
     }
+//<============== Get all requests of a students with status is not rejected end <===============
 }

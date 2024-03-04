@@ -1,6 +1,5 @@
 package com.ICE.controllers;
 
-import com.ICE.DAO.StudentRepository;
 import com.ICE.Entities.Faculty;
 import com.ICE.Entities.ProfilePic;
 import com.ICE.Entities.Student;
@@ -50,7 +49,6 @@ public class HomeController {
 
 
 
-
 // =============> Contact handler Start ==============>
     @GetMapping("/contact")
     public String contact(Model model)
@@ -59,8 +57,6 @@ public class HomeController {
         return "Template";
     }
 // <============= Contact handler End <==============
-
-
 
 
 
@@ -103,7 +99,6 @@ public class HomeController {
 
 
 
-
     @GetMapping("/dept/cse")
     public String computer(Model model)
     {
@@ -141,8 +136,6 @@ public class HomeController {
 
 
 
-
-
 // =============> Login handler Start ==============>
     @GetMapping("/login")
     public String studentLogin(Model model)
@@ -156,8 +149,6 @@ public class HomeController {
 
 
 
-
-
 // ================> Student Registration Start =================>
     @GetMapping("/student/registration")
     public String studentRegistration(Model model)
@@ -165,7 +156,6 @@ public class HomeController {
         model.addAttribute("PageName","Student_registration");
         return "Template";
     }
-
 
 
 
@@ -195,7 +185,6 @@ public class HomeController {
 
 
 
-
     @PostMapping("/student/registrationDetails")
     public String studentRegDetails(@ModelAttribute("student") StudentPojo studentPojo)
     {
@@ -219,9 +208,6 @@ public class HomeController {
 
 
 
-
-
-
 // ================> Faculty Registration Start =================>
     @GetMapping("/faculty/registration")
     public String facultyRegistration(Model model)
@@ -229,7 +215,6 @@ public class HomeController {
         model.addAttribute("PageName","faculty_registration");
         return "Template";
     }
-
 
 
 
@@ -254,7 +239,6 @@ public class HomeController {
         model.addAttribute("faculty",facultyPojo);
         return "Template";
     }
-
 
 
 

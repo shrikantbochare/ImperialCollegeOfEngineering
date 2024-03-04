@@ -24,6 +24,11 @@ public class Service1Impl implements Service1{
         this.serviceProfilePicDao = serviceProfilePicDao;
     }
 
+
+
+
+
+//===============> Update Profile Picture Start ===============>
     @Override
     public void profilePicUpdate(ProfilePic profilePic, MultipartFile multipartFile) throws IOException {
         File file = new ClassPathResource("static/Images/ProfilePic").getFile();
@@ -34,8 +39,14 @@ public class Service1Impl implements Service1{
         multipartFile.transferTo(path);
 
     }
+//<============== Update Profile Picture End  <===============
 
 
+
+
+
+
+//===============> Delete profile picture from file path start ===============>
     @Override
     public void deleteProfilePicFromPath(String picName) throws IOException{
         File thePath = new ClassPathResource("static/Images/ProfilePic").getFile();
@@ -48,4 +59,5 @@ public class Service1Impl implements Service1{
             boolean result = file.delete();
         }
     }
+//<============== Delete profile picture from file path end <===============
 }

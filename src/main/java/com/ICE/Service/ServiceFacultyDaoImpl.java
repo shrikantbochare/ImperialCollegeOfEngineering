@@ -19,6 +19,10 @@ public class ServiceFacultyDaoImpl implements ServiceFacultyDao{
     }
 
 
+
+
+
+//===============> Get faculty by Id start ===============>
     @Override
     public Faculty getFacultyById(int id) {
         Optional<Faculty> value = facultyRepository.findById(id);
@@ -26,16 +30,29 @@ public class ServiceFacultyDaoImpl implements ServiceFacultyDao{
         faculty = value.orElseGet(Faculty::new);
         return faculty;
     }
+//<==============  Get faculty by Id end <===============
 
 
+
+
+
+
+//===============> Save or update faculty start ===============>
     @Override
     public void saveFaculty(Faculty faculty) {
         facultyRepository.save(faculty);
     }
+//<============== Save or update faculty end <===============
 
 
+
+
+
+
+//===============> Get faculty - class teacher start ===============>
     @Override
     public Faculty getClassTeacher(String department, String classTeacher) {
         return facultyRepository.findByDepartmentAndClassTeacher(department,classTeacher);
     }
+//<============== Get faculty - class teacher end <===============
 }

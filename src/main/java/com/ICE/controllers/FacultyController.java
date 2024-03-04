@@ -29,15 +29,17 @@ public class FacultyController {
     private Service1 service1;
     private ServiceSubjectRegistrationDao serviceSubjectRegistrationDao;
     private ServiceStudentDao serviceStudentDao;
-
     private ServiceSubjectDao serviceSubjectDao;
+
+    private ServiceFaculty serviceFaculty;
 
 
 
     @Autowired
     public FacultyController(ServiceFacultyDao serviceFacultyDao,Service1 service1,ServiceProfilePicDao serviceProfilePicDao
     ,ServiceSubjectDao serviceSubjectDao,ServiceAttendanceDao serviceAttendanceDao,ServiceScoreDao serviceScoreDao,
-                             ServiceSubjectRegistrationDao serviceSubjectRegistrationDao,ServiceStudentDao serviceStudentDao) {
+                             ServiceSubjectRegistrationDao serviceSubjectRegistrationDao,ServiceStudentDao serviceStudentDao,
+                             ServiceFaculty serviceFaculty) {
         this.serviceFacultyDao = serviceFacultyDao;
         this.service1=service1;
         this.serviceProfilePicDao=serviceProfilePicDao;
@@ -46,31 +48,34 @@ public class FacultyController {
         this.serviceScoreDao=serviceScoreDao;
         this.serviceSubjectRegistrationDao=serviceSubjectRegistrationDao;
         this.serviceStudentDao=serviceStudentDao;
+        this.serviceFaculty=serviceFaculty;
     }
 
 
 
 
 
-
+//===============> Faculty profile page start ===============>
     @GetMapping("/profile")
     public String facultyProfile(Model model)
     {
         Faculty faculty = serviceFacultyDao.getFacultyById(4);
         FacultyPojo facultyPojo = new FacultyPojo(faculty.getName(),faculty.getFacultyId(),faculty.getEmail(),faculty.getPassword(),
                 faculty.getAge(),faculty.getBirthdate(),faculty.getAddress(),faculty.getCity(),faculty.getState());
+
         model.addAttribute("PageName","FacultyProfile");
         model.addAttribute("faculty",facultyPojo);
         model.addAttribute("currentUser",faculty);
 
         return "Template";
     }
+//<============== Faculty profile page end <===============
 
 
 
 
 
-
+//===============> Faculty profile update start ===============>
     @PostMapping("/profile/update")
     public String facultyProfileUpdate(@ModelAttribute("faculty")FacultyPojo facultyPojo)
     {
@@ -88,13 +93,13 @@ public class FacultyController {
 
         return "redirect:/faculty/profile";
     }
+//<============== Faculty profile update end <===============
 
 
 
 
 
-
-
+//===============> Faculty profile pic update start ===============>
     @PostMapping("/profile/updateProfilePic")
     public String updateProfilePic(@RequestParam("profile_img") MultipartFile multipartFile) throws IOException
     {
@@ -109,12 +114,13 @@ public class FacultyController {
         }
         return "redirect:/faculty/profile";
     }
+//<============== Faculty profile pic update end <===============
 
 
 
 
 
-
+//===============> Faculty profile pic remove start ===============>
     @GetMapping("/profile/removeProfilePic")
     public String removeProfilePic(@RequestParam("pId") int id) throws IOException
     {
@@ -129,11 +135,13 @@ public class FacultyController {
         return "redirect:/faculty/profile";
 
     }
+//<============== Faculty profile pic remove end <===============
 
 
 
 
 
+//===============> Faculty update department details page start ===============>
     @GetMapping("/updateDeptdetails")
     public String updateDeptdetails(Model model)
     {
@@ -147,13 +155,13 @@ public class FacultyController {
         model.addAttribute("currentUser",faculty);
         return "Template";
     }
+//<============== Faculty update department details page end <===============
 
 
 
 
 
-
-
+//===============> Faculty update department details start ===============>
     @PostMapping("/updateDeptdetails/process")
     public String processUpdateDeptDetails(@ModelAttribute("faculty") FacultyPojo facultyPojo,@RequestParam(value = "subjects", required = false) Set<Integer> subjects)
     {
@@ -176,12 +184,13 @@ public class FacultyController {
         return "redirect:/faculty/profile";
 
     }
+//<============== Faculty update department details end <===============
 
 
 
 
 
-
+//===============> Faculty unallocated the subject start ===============>
     @GetMapping("/updateDeptdetails/removeSubject")
     public String removeAllocatedSubject(@RequestParam("sId") int id)
     {
@@ -195,11 +204,13 @@ public class FacultyController {
 
         return "redirect:/faculty/profile";
     }
+//<==============  Faculty unallocated the subject end <===============
 
 
 
 
 
+//===============> Faculty subjects page start ===============>
     @GetMapping("/subjects")
     public  String facultySubjects(Model model)
     {
@@ -211,11 +222,13 @@ public class FacultyController {
         model.addAttribute("attendanceView","view");
         return "Template";
     }
+//<============== Faculty subjects page end <===============
 
 
 
 
 
+//===============> Faculty attendance page start ===============>
     @GetMapping("/attendance")
     public  String facultyAttendance(Model model)
     {
@@ -227,10 +240,13 @@ public class FacultyController {
         model.addAttribute("attendanceUpdate","update");
         return "Template";
     }
+//<============== Faculty attendance page end <===============
 
 
 
 
+
+//===============> Faculty attendance view page start ===============>
     @GetMapping("/subjects/attendance/view")
     public String viewSubjectAttendance(@RequestParam("subject") Integer id, Model model)
     {
@@ -242,9 +258,13 @@ public class FacultyController {
         model.addAttribute("PageName","FacultyAttendance");
         return "Template";
     }
+//<============== Faculty attendance view page end <===============
 
 
 
+
+
+//===============> Faculty attendance update page start ===============>
     @GetMapping("/subjects/attendance/update")
     public String updateSubjectAttendance(@RequestParam("subject") Integer id,Model model)
     {
@@ -256,7 +276,7 @@ public class FacultyController {
         model.addAttribute("PageName","FacultyAttendanceUpdate");
         return "Template";
     }
-
+//<============== Faculty attendance update page end <===============
 
 
 
@@ -269,7 +289,7 @@ public class FacultyController {
 
 
 
-
+//===============> Faculty exams  page start ===============>
     @GetMapping("/exams")
     public  String facultyExams(Model model)
     {
@@ -281,9 +301,13 @@ public class FacultyController {
         model.addAttribute("studentMarks","studentMarks");
         return "Template";
     }
+//<============== Faculty exams  page end <===============
 
 
 
+
+
+//===============> Faculty exams view page start ===============>
     @GetMapping("/exams/view")
     public String viewStudentMarks(@RequestParam("subject") Integer id , Model model)
     {
@@ -295,11 +319,13 @@ public class FacultyController {
         model.addAttribute("PageName","StudentMarksView");
         return "Template";
     }
+//<============== Faculty exams view page end <===============
 
 
 
 
 
+//===============> Faculty exams update page start ===============>
 // ================ERROR
     @GetMapping("/exams/update")
     public String viewStudentUpdate(@RequestParam("subject") Integer id ,Model model)
@@ -313,113 +339,95 @@ public class FacultyController {
         return "Template";
     }
 // =====================ERROR
+//<============== Faculty exams update page end<===============
 
 
 
 
+
+//===============> Faculty exams update start ===============>
     @PostMapping("/exams/update/process")
     public String studentScoreUpdate(@ModelAttribute("score") Score score)
     {
         serviceScoreDao.saveScore(score);
         return "redirect:/faculty/exams/update";
     }
+//<============== Faculty exams update end <===============
 
 
 
 
+
+//===============> Faculty query view page start ===============>
     @GetMapping("/query")
     public  String facultyQueries(Model model)
     {
         model.addAttribute("PageName","StudentQueriesView");
         return "Template";
     }
+//<============== Faculty query view page end <===============
 
 
 
+
+
+//===============> Faculty query resolve page start ===============>
     @GetMapping("/query/resolve")
     public String facultyQueryResolve(Model model)
     {
         model.addAttribute("PageName","FacultyQueryResolve");
         return "Template";
     }
+//<============== Faculty query resolve page end <===============
 
 
 
 
+
+//===============> Faculty requests view page start ===============>
     @GetMapping("/requests")
     public  String facultyRequests(Model model)
     {
         Faculty faculty = serviceFacultyDao.getFacultyById(4);
         List<SubjectRegistrationRequest>  requests = serviceSubjectRegistrationDao.getRequestsForFaculty(faculty);
-        System.out.println(requests);
 
         model.addAttribute("Requests",requests);
         model.addAttribute("PageName","FacultyRequests");
         return "Template";
     }
+//<============== Faculty requests view page end <===============
 
 
 
 
 
+//===============> Faculty requests approve start ===============>
     @GetMapping("/requests/approve")
     public String approveSubRegistrationRequest(@RequestParam("stId") int studentId, @RequestParam("subId") int subjectId)
     {
-        Student student1 = serviceStudentDao.getStudentById(studentId);
-        Subject subject =serviceSubjectDao.getSubjectById(subjectId);
-
-        student1.addSubjects(subject);
-        subject.addStudent(student1);
-
-
-        Attendance attendance = new Attendance(0,0,0,null);
-        attendance.setStudent(student1);
-        attendance.setSubject(subject);
-
-        student1.addAttendance(attendance);
-        subject.addAttendance(attendance);
-
-
-        Score score = new Score(0,0,0,0,null);
-        score.setStudent(student1);
-        score.setSubject(subject);
-
-
-        student1.addScore(score);
-        subject.addScore(score);
-
-        serviceStudentDao.saveStudent(student1);
-        serviceSubjectDao.save(subject);
-        serviceAttendanceDao.saveAttendance(attendance);
-        serviceScoreDao.saveScore(score);
-        serviceSubjectRegistrationDao.deleteSubjectRegistrationRequest(student1,subject);
-
-
+        serviceFaculty.successSubjectRegistration(studentId,subjectId);
         return "redirect:/faculty/requests";
     }
+//<============== Faculty requests approve start <===============
 
 
 
 
 
+//===============> Faculty requests reject start ===============>
     @GetMapping("/requests/reject")
     public String rejectSubRegistrationRequest(@RequestParam("stId") int studentId, @RequestParam("subId") int subjectId)
     {
-        Student student1 = serviceStudentDao.getStudentById(studentId);
-        Subject subject =serviceSubjectDao.getSubjectById(subjectId);
-
-
-        SubjectRegistrationRequest request = serviceSubjectRegistrationDao.getRequestOfStudentForSubject(student1,subject);
-        request.setStatus("Rejected");
-        serviceSubjectRegistrationDao.saveSubjectRegistrationRequest(request);
-
+        serviceFaculty.rejectSubjectRegistration(studentId,subjectId);
         return "redirect:/faculty/requests";
     }
+//<============== Faculty requests reject end <===============
 
 
 
 
 
+//===============> HOD-Faculty manage subjects page start ===============>
     @GetMapping("/manageSubjects")
     public String manageSubjects(Model model)
     {
@@ -429,8 +437,13 @@ public class FacultyController {
         model.addAttribute("PageName","FacultyManageSubjects");
         return "Template";
     }
+//<============== HOD-Faculty manage subjects page end <===============
 
 
+
+
+
+//===============> HOD-Faculty manage subjects add new page start ===============>
     @GetMapping("/manageSubjects/add")
     public String addSubject(Model model)
     {
@@ -439,22 +452,28 @@ public class FacultyController {
         model.addAttribute("PageName","FacultyAddSubject");
         return "Template";
     }
+//<============== HOD-Faculty manage subjects page add new end <===============
 
 
 
 
 
+//===============> HOD-Faculty manage subjects add new start  ===============>
     @PostMapping("/manageSubjects/add/newSubject")
     public String addSubject2(@ModelAttribute("subject") SubjectPojo subjectPojo)
     {
         Faculty faculty = serviceFacultyDao.getFacultyById(4);
-        Subject subject = new Subject(subjectPojo.getName(),subjectPojo.getSubId(),faculty.getDepartment(),subjectPojo.getCourse(),subjectPojo.getSemester(), subjectPojo.getCredits());
+        Subject subject = new Subject(subjectPojo.getName(),subjectPojo.getSubId(),faculty.getDepartment(),
+                subjectPojo.getCourse(),subjectPojo.getSemester(), subjectPojo.getCredits());
+
         subject.setFaculty(faculty);
 
         faculty.addSubjects(subject);
 
         serviceSubjectDao.save(subject);
         serviceFacultyDao.saveFaculty(faculty);
+
         return "redirect:/faculty/manageSubjects";
     }
+//<============== HOD-Faculty manage subjects add new end <===============
 }

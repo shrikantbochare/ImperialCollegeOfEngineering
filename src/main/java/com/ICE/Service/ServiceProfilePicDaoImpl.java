@@ -14,10 +14,13 @@ public class ServiceProfilePicDaoImpl implements ServiceProfilePicDao{
 
     private ProfilePicRepository profilePicRepository;
 
+
+
     @Autowired
     public ServiceProfilePicDaoImpl(ProfilePicRepository profilePicRepository) {
         this.profilePicRepository = profilePicRepository;
     }
+
 
     @Override
     public void saveProfilePic(ProfilePic profilePic) {
@@ -26,6 +29,10 @@ public class ServiceProfilePicDaoImpl implements ServiceProfilePicDao{
 
 
 
+
+
+
+//===============> Get the profile pic by Id start ===============>
     public ProfilePic getProfilePicById(int id)
     {
         Optional<ProfilePic> value = profilePicRepository.findById(id);
@@ -33,4 +40,5 @@ public class ServiceProfilePicDaoImpl implements ServiceProfilePicDao{
         profilePic = value.orElseGet(ProfilePic::new);
         return profilePic;
     }
+//<============== Get the profile pic by Id end <===============
 }

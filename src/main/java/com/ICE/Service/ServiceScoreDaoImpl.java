@@ -23,20 +23,33 @@ public class ServiceScoreDaoImpl implements ServiceScoreDao{
     }
 
 
+
+//===============> Save or update score start ===============>
     @Override
     public void saveScore(Score score) {
         scoreRepository.save(score);
     }
+//<============== Save or update score end  <===============
 
 
+
+
+
+//===============> Get scores of a student for all subjects start ===============>
     @Override
     public List<Score> getScoresOfStudent(Student student) {
         return scoreRepository.findByStudent(student);
     }
+//<============== Get scores of a student for all subjects end <===============
 
 
+
+
+
+//===============> Get scores of a subject for all students start ===============>
     @Override
     public List<Score> getScoreForSubject(Subject subject) {
         return scoreRepository.findBySubject(subject);
     }
+//<============== Get scores of a subject for all students end <===============
 }

@@ -21,16 +21,27 @@ public class ServiceStudentDaoImpl implements ServiceStudentDao{
     }
 
 
+
+
+
+//===============> Save or update student start ===============>
     @Override
     public void saveStudent(Student student) {
         studentRepository.save(student);
     }
+//<============== Save or update student end <===============
 
 
+
+
+
+
+//===============> Get the student by Id start ===============>
     @Override
     public Student getStudentById(int id) {
         Optional<Student> value = studentRepository.findById(id);
         Student student = value.orElseGet(Student :: new);
         return student;
     }
+//<============== Get the student by Id end <===============
 }

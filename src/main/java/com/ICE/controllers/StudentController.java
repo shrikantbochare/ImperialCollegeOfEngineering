@@ -1,7 +1,6 @@
 package com.ICE.controllers;
 
 
-import com.ICE.DAO.StudentRepository;
 import com.ICE.Entities.*;
 import com.ICE.Pojo.StudentPojo;
 import com.ICE.Service.*;
@@ -10,15 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.util.DateUtils;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/student")
@@ -33,12 +26,13 @@ public class StudentController {
     private ServiceScoreDao serviceScoreDao;
     private ServiceSubjectRegistrationDao serviceSubjectRegistrationDao;
     private Service1 service1;
+    private ServiceStudent serviceStudent;
 
 
     @Autowired
     public StudentController(ServiceStudentDao serviceStudentDao,Service1 service1,ServiceProfilePicDao serviceProfilePicDao
     ,ServiceSubjectDao serviceSubjectDao,ServiceAttendanceDao serviceAttendanceDao,ServiceScoreDao serviceScoreDao,
-                             ServiceSubjectRegistrationDao serviceSubjectRegistrationDao) {
+                             ServiceSubjectRegistrationDao serviceSubjectRegistrationDao,ServiceStudent serviceStudent) {
         this.serviceStudentDao = serviceStudentDao;
         this.service1=service1;
         this.serviceProfilePicDao=serviceProfilePicDao;
@@ -46,11 +40,12 @@ public class StudentController {
         this.serviceAttendanceDao=serviceAttendanceDao;
         this.serviceScoreDao=serviceScoreDao;
         this.serviceSubjectRegistrationDao=serviceSubjectRegistrationDao;
+        this.serviceStudent=serviceStudent;
     }
 
 
 
-
+//===============> Student profile page start ===============>
     @GetMapping("/profile")
     public String profile(Model model)
     {
@@ -59,16 +54,20 @@ public class StudentController {
         StudentPojo studentPojo = new StudentPojo(student1.getName(),student1.getEmail(),student1.getUniversityNo(),student1.getPassword()
                                         ,student1.getBirthdate(),student1.getAddress(),student1.getCity()
                                         ,student1.getState(),student1.getDepartment(),student1.getCourse(),student1.getSemester(),student1.getAge());
+
         model.addAttribute("PageName","StudentProfile");
         model.addAttribute("student",studentPojo);
         model.addAttribute("currentUser",student1);
 
         return "Template";
     }
+//<============== Student profile page end <===============
 
 
 
 
+
+//===============> Student profile update start  ===============>
     @PostMapping("/profile/update")
     public String updateStudentProfile(@ModelAttribute("Student") StudentPojo studentPojo)
     {
@@ -88,11 +87,13 @@ public class StudentController {
 
         return "redirect:/student/profile";
     }
+//<============== Student profile update end <===============
 
 
 
 
 
+//===============> Student profile pic update start ===============>
     @PostMapping("/profile/updateProfilePic")
     public String updateProfilePic(@RequestParam("profile_img")MultipartFile multipartFile) throws IOException
     {
@@ -107,13 +108,13 @@ public class StudentController {
         }
         return "redirect:/student/profile";
     }
+//<============== Student profile pic update end <===============
 
 
 
 
 
-
-
+//===============> Student profile pic remove start ===============>
     @GetMapping("/profile/removeProfilePic")
     public String removeProfilePic(@RequestParam("pId") int id) throws IOException
     {
@@ -128,38 +129,36 @@ public class StudentController {
         return "redirect:/faculty/profile";
 
     }
+//<============== Student profile pic remove end <===============
 
 
+
+
+
+//===============> Student subjects page start ===============>
     @GetMapping("/subjects")
     public String subjects(Model model)
     {
         Student student1 = serviceStudentDao.getStudentById(4);
 
-        //get subject without registered ===== implement
-        List<Subject> subjects = serviceSubjectDao.getSubjectsForThisSemester(student1.getDepartment(),student1.getCourse(),student1.getSemester());
-
-        List<Subject> registeredSubjects = student1.getSubjects();
-        subjects.removeAll(registeredSubjects);
-
-        List<SubjectRegistrationRequest> requests = serviceSubjectRegistrationDao.getRequestsOfStudentWithNotRejected(student1);
-        requests.stream().forEach( (request) -> {
-            Subject subject = request.getSubject();
-            subjects.remove(subject);
-        } );
-
+        List<Subject> subjects = serviceStudent.subjectsAvailableForRegistration(student1);
 
         List<SubjectRegistrationRequest> requestsWithStatus = serviceSubjectRegistrationDao.getRequestOfStudent(student1);
 
         model.addAttribute("PageName","StudentSubjects");
         model.addAttribute("subjects",subjects);
-        model.addAttribute("registeredSubjects",registeredSubjects);
+        model.addAttribute("registeredSubjects",student1.getSubjects());
         model.addAttribute("RegistrationStatus",requestsWithStatus);
 
         return "Template";
     }
+//<==============  Student subjects page end <===============
 
 
 
+
+
+//===============> Student subject register page start ===============>
     @GetMapping("/subjects/register")
     public String registerSubject(@ModelAttribute("sId") int id,Model model) {
         Student student1 = serviceStudentDao.getStudentById(4);
@@ -175,17 +174,15 @@ public class StudentController {
         subject.addRequest(subjectRegistrationRequest);
         serviceSubjectDao.save(subject);
 
-
-        model.addAttribute("Request","Yes");
-
         return "redirect:/student/subjects";
     }
+//<==============  Student subject register page end <===============
 
 
 
 
 
-
+//===============> Student exams view page start ===============>
     @GetMapping("/exams")
     public String exams(Model model)
     {
@@ -195,10 +192,13 @@ public class StudentController {
         model.addAttribute("PageName","StudentExams");
         return "Template";
     }
+//<============== Student exams view page end <===============
 
 
 
 
+
+//===============> Student attendance view page start ===============>
     @GetMapping("/attendance")
     public String attendance(Model model)
     {
@@ -209,22 +209,31 @@ public class StudentController {
         model.addAttribute("PageName","StudentAttendance");
         return "Template";
     }
+//<============== Student attendance view page end <===============
 
 
 
 
+
+//===============> Student query page start ===============>
     @GetMapping("/query")
     public String query(Model model)
     {
         model.addAttribute("PageName","StudentQuery");
         return "Template";
     }
+//<============== Student query page end <===============
 
 
+
+
+
+//===============> Student query view page start ===============>
     @GetMapping("/query/view")
     public String queryView(Model model)
     {
         model.addAttribute("PageName","viewQuery");
         return "Template";
     }
+//<============== Student query view page end <===============
 }
