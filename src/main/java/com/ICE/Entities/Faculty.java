@@ -220,4 +220,14 @@ public class Faculty {
 
         students.add(student);
     }
+
+
+    public void addQuery(Query query)
+    {
+        if(queries == null)
+        {
+            queries = new ArrayList<>();
+        }
+        queries.add(query);
+    }
 }

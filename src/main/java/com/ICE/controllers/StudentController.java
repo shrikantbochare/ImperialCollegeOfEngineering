@@ -2,6 +2,7 @@ package com.ICE.controllers;
 
 
 import com.ICE.Entities.*;
+import com.ICE.Pojo.QueryPojo;
 import com.ICE.Pojo.StudentPojo;
 import com.ICE.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,15 @@ public class StudentController {
     private ServiceSubjectRegistrationDao serviceSubjectRegistrationDao;
     private Service1 service1;
     private ServiceStudent serviceStudent;
+    private ServiceQueryDao serviceQueryDao;
+    private ServiceFacultyDao serviceFacultyDao;
 
 
     @Autowired
     public StudentController(ServiceStudentDao serviceStudentDao,Service1 service1,ServiceProfilePicDao serviceProfilePicDao
     ,ServiceSubjectDao serviceSubjectDao,ServiceAttendanceDao serviceAttendanceDao,ServiceScoreDao serviceScoreDao,
-                             ServiceSubjectRegistrationDao serviceSubjectRegistrationDao,ServiceStudent serviceStudent) {
+                             ServiceSubjectRegistrationDao serviceSubjectRegistrationDao,ServiceStudent serviceStudent,
+                             ServiceQueryDao serviceQueryDao,ServiceFacultyDao serviceFacultyDao) {
         this.serviceStudentDao = serviceStudentDao;
         this.service1=service1;
         this.serviceProfilePicDao=serviceProfilePicDao;
@@ -41,6 +45,8 @@ public class StudentController {
         this.serviceScoreDao=serviceScoreDao;
         this.serviceSubjectRegistrationDao=serviceSubjectRegistrationDao;
         this.serviceStudent=serviceStudent;
+        this.serviceQueryDao=serviceQueryDao;
+        this.serviceFacultyDao=serviceFacultyDao;
     }
 
 
@@ -219,6 +225,13 @@ public class StudentController {
     @GetMapping("/query")
     public String query(Model model)
     {
+        Student student1 = serviceStudentDao.getStudentById(4);
+        QueryPojo queryPojo = new QueryPojo();
+
+        List<Query> queries = serviceQueryDao.getQueriesOfStudent(student1);
+
+        model.addAttribute("queries",queries);
+        model.addAttribute("query",queryPojo);
         model.addAttribute("PageName","StudentQuery");
         return "Template";
     }
@@ -228,10 +241,41 @@ public class StudentController {
 
 
 
+//===============> Student query submit start ===============>
+    @PostMapping("/query/submit")
+    public String createQuery(@ModelAttribute("query") QueryPojo queryPojo)
+    {
+        Student student1 = serviceStudentDao.getStudentById(4);
+        Faculty faculty = student1.getFaculty();
+
+        Query query = new Query(queryPojo.getTitle(),queryPojo.getQuery(),null,"Pending");
+        query.setStudent(student1);
+        query.setFaculty(faculty);
+        serviceQueryDao.saveQuery(query);
+
+
+        student1.addQuery(query);
+        faculty.addQuery(query);
+
+        serviceStudentDao.saveStudent(student1);
+        serviceFacultyDao.saveFaculty(faculty);
+
+        return "redirect:/student/query";
+
+    }
+//<=============== Student query submit end <===============
+
+
+
+
+
 //===============> Student query view page start ===============>
     @GetMapping("/query/view")
-    public String queryView(Model model)
+    public String queryView(@RequestParam("qId") int id,Model model)
     {
+        Query query = serviceQueryDao.getQueryById(id);
+
+        model.addAttribute("query",query);
         model.addAttribute("PageName","viewQuery");
         return "Template";
     }

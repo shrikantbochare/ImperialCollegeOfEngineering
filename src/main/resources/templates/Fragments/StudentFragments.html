@@ -144,8 +144,7 @@
 <div class="divContainer m-4 p-3" th:fragment="StudentSubjects">
     <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
     <hr>
-    <p class="text-warning bg-dark mt-1">&nbsp; Note : You can registere upto 6 subjects for this semester.</p>
-    <p th:if="${Request == 'Yes'}"><span class="text-center text-success">Your Subject registration has been sent to the respective faculty.</span></p>
+    <p class="text-warning bg-dark mt-1">&nbsp; Note : You can register up to 6 subjects for this semester.</p>
         <div class="table-responsive">
         <h3 class="text-center text-primary">AVAILABLE SUBJECTS</h3>
         <table class="m-2 table table-bordered">
@@ -319,14 +318,14 @@
     <div class="container mt-1">
         <h3 class="text-center text-primary">ENTER YOUR QUERY</h3>
         <P class="text-center text-dark">Your query will be sent to your respective class teacher.</P>
-        <form action="">
+        <form th:action="@{/student/query/submit}" th:object="${query}" method="post">
             <div class="mb-3">
                 <label for="querySubject" class="form-label">Enter Subject</label>
-                <input type="text" class="form-control" id="querySubject" placeholder="Enter Query Subject">
+                <input type="text" class="form-control" id="querySubject" placeholder="Enter Query Subject" th:field="*{title}">
             </div>
             <div class="mb-3">
                 <label for="query" class="form-label">Enter Query</label>
-                <textarea class="form-control" id="query" rows="4"></textarea>
+                <textarea class="form-control" id="query" rows="4"th:field="*{query}"></textarea>
             </div>
             <div class="row my-2">
                 <div class="col-6 text-center">
@@ -350,17 +349,15 @@
                 <th scope="col">Raised On</th>
                 <th scope="col">Status</th>
                 <th scope="col">Resolved on</th>
-                <th scope="col">Remark</th>
             </tr>
             </thead>
             <tbody class="text-center">
-            <tr>
-                <td>1</td>
-                <td><a th:href="@{/student/query/view(qId=1)}" class="text-decoration-none">CMS</a></td>
-                <td>IT0002</td>
-                <td>13</td>
-                <td>12</td>
-                <td>80</td>
+            <tr th:each="query,item : ${queries}">
+                <td th:text="${item.count}">1</td>
+                <td ><a th:href="@{/student/query/view(qId=${query.id})}" class="text-decoration-none" th:text="${query.title}">CMS</a></td>
+                <td th:text="${query.postedDate}">IT0002</td>
+                <td th:text="${query.status}">13</td>
+                <td th:text="${query.resolvedDate}">12</td>
             </tr>
             </tbody>
         </table>
@@ -378,13 +375,13 @@
     <hr>
     <div class="container mt-1">
         <h3 class="text-center text-primary"> QUERY DATA</h3>
-        <p class="text-primary fw-bold">Query Subject : <span class="font-monospace text-dark fst-normal">dfdgsdfgsdfg</span></p>
-        <p class="text-primary fw-bold">Query : <span class="font-monospace text-dark fst-normal">dfgdfgdfgdfg</span></p>
-        <p class="text-primary fw-bold">Raised On : <span class="font-monospace text-dark fst-normal">sdfgsdfgsdfgdfg</span></p>
-        <p class="text-primary fw-bold">Status : <span class="font-monospace text-dark fst-normal">dhdghfgj</span></p>
-        <p class="text-primary fw-bold">Resolved on : <span class="font-monospace text-dark fst-normal">ghjdrthg</span></p>
-        <p class="text-primary fw-bold">Remark : <span class="font-monospace text-dark fst-normal">fghfghfghfgf</span></p>
-        <p class="text-primary fw-bold">Resolved By : <span class="font-monospace text-dark fst-normal">gffjghjhgjhjjhhjhj</span></p>
+        <p class="text-primary fw-bold">Query Subject : <span class="font-monospace text-dark fst-normal" th:text="${query.title}">dfdgsdfgsdfg</span></p>
+        <p class="text-primary fw-bold">Query : <span class="font-monospace text-dark fst-normal" th:text="${query.query}">dfgdfgdfgdfg</span></p>
+        <p class="text-primary fw-bold">Raised On : <span class="font-monospace text-dark fst-normal" th:text="${query.postedDate}">sdfgsdfgsdfgdfg</span></p>
+        <p class="text-primary fw-bold">Status : <span class="font-monospace text-dark fst-normal" th:text="${query.status}">dhdghfgj</span></p>
+        <p class="text-primary fw-bold">Resolved on : <span class="font-monospace text-dark fst-normal" th:text="${query.resolvedDate}">ghjdrthg</span></p>
+        <p class="text-primary fw-bold">Remark : <span class="font-monospace text-dark fst-normal" th:text="${query.remark}">fghfghfghfgf</span></p>
+        <p class="text-primary fw-bold">Resolved By : <span class="font-monospace text-dark fst-normal" th:text="${query.faculty.name}">gffjghjhgjhjjhhjhj</span></p>
     </div>
 </div>
 <!--Student view query fragment End-->

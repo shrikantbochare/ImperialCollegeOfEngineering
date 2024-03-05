@@ -441,27 +441,50 @@
 <!--Faculty Student query fragment Start-->
 <div class="divContainer m-4 p-3" th:fragment="StudentQueriesView">
     <div th:replace="~{Fragments/FacultyFragments :: FacultyMenu}"></div>
-    <div class="table-responsive">
-        <h3 class="text-center text-primary mb-3">STUDENT WISE MARKS OF SUBJECT</h3>
+    <hr>
+    <div class="table-responsive mt-1">
+        <h3 class="text-center text-primary mb-3">QUERIES OF STUDENTS</h3>
         <table class="m-2 table table-bordered">
             <thead>
             <tr class="text-center">
                 <th scope="col">Sr. No.</th>
                 <th scope="col">Student Name</th>
                 <th scope="col">Query Subject</th>
-                <th scope="col">Query ID</th>
                 <th scope="col">Raised On</th>
                 <th scope="col">Resolve</th>
             </tr>
             </thead>
             <tbody class="text-center">
-            <tr>
-                <td>1</td>
-                <td><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
-                <td>13</td>
-                <td>12</td>
-                <td>50///</td>
-                <td><a th:href="@{/faculty/query/resolve(aId=1)}" class="btn btn-primary">Resolve</a></td>
+            <tr th:each="query,item : ${queries}">
+                <td th:text="${item.count}">1</td>
+                <td ><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none" th:text="${query.student.name}">name</a></td>
+                <td th:text="${query.title}">13</td>
+                <td th:text="${query.postedDate}">12</td>
+                <td><a th:href="@{/faculty/query/resolve(qId=${query.id})}" class="btn btn-primary">Resolve</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div class="table-responsive mt-2">
+        <h3 class="text-center text-primary mb-3">RESOLVED QUERIES OF STUDENTS</h3>
+        <table class="m-2 table table-bordered">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Sr. No.</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Query Subject</th>
+                <th scope="col">Raised On</th>
+                <th scope="col">Resolve On</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr th:each="query,item : ${resolvedQueries}">
+                <td th:text="${item.count}">1</td>
+                <td ><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none" th:text="${query.student.name}">name</a></td>
+                <td th:text="${query.title}">13</td>
+                <td th:text="${query.postedDate}">12</td>
+                <td th:text="${query.resolvedDate}"></td>
             </tr>
             </tbody>
         </table>
@@ -479,16 +502,17 @@
     <div class="container">
         <h3 class="text-center text-primary">Query</h3>
         <div class="p-2 fw-bold">
-            <p class="m-1">Raised by : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
-            <p class="m-1">Query Subject : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
-            <p class="m-1">Query Data : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
-            <p class="m-1">Raised On : <a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            <p class="m-1">Raised by : <a class="text-decoration-none text-danger" href="" th:text="${query.student.name}">Password Update</a></p>
+            <p class="m-1">Query Subject : <span class="text-success" th:text="${query.title}"></span></p>
+            <p class="m-1">Query Data : <span class="text-success" th:text="${query.query}"></span></p>
+            <p class="m-1">Raised On :<span class="text-success" th:text="${query.postedDate}"></span></p>
         </div>
         <div class="m-1 p-1">
-            <form action="">
+            <form th:action="@{/faculty/query/resolve/submit}" th:object="${queryPojo}" method="post">
+                <input type="hidden" th:field="*{id}">
                 <div class="mb-3">
                     <label for="query" class="form-label">Enter Remark</label>
-                    <textarea class="form-control" id="query" rows="4"></textarea>
+                    <textarea class="form-control" id="query" rows="4" th:field="*{remark}"></textarea>
                 </div>
                 <div class="row my-2">
                     <div class="col-sm-6 text-center">

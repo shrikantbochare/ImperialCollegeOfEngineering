@@ -20,16 +20,16 @@ public class Query {
     @Column(length = 500)
     private String query;
 
-
     private Date postedDate;
-
 
     @Column(length = 500)
     private String remark;
 
+    private String status;
+
+    private Date resolvedDate;
     @ManyToOne
     private Student student;
-
 
     @ManyToOne
     private Faculty faculty;
@@ -39,10 +39,11 @@ public class Query {
     }
 
 
-    public Query(String title, String query, Date postedDate) {
+    public Query(String title, String query, Date postedDate,String status) {
         this.title = title;
         this.query = query;
         this.postedDate = postedDate;
+        this.status=status;
     }
 
 
@@ -97,5 +98,22 @@ public class Query {
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getResolvedDate() {
+        return resolvedDate;
+    }
+
+    public void setResolvedDate(Date resolvedDate) {
+        this.resolvedDate = resolvedDate;
     }
 }

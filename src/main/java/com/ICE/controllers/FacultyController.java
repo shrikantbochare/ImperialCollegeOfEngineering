@@ -3,6 +3,7 @@ package com.ICE.controllers;
 import com.ICE.DAO.FacultyRepository;
 import com.ICE.Entities.*;
 import com.ICE.Pojo.FacultyPojo;
+import com.ICE.Pojo.QueryPojo;
 import com.ICE.Pojo.SubjectPojo;
 import com.ICE.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class FacultyController {
     private ServiceSubjectRegistrationDao serviceSubjectRegistrationDao;
     private ServiceStudentDao serviceStudentDao;
     private ServiceSubjectDao serviceSubjectDao;
-
     private ServiceFaculty serviceFaculty;
+    private ServiceQueryDao serviceQueryDao;
 
 
 
@@ -39,7 +40,7 @@ public class FacultyController {
     public FacultyController(ServiceFacultyDao serviceFacultyDao,Service1 service1,ServiceProfilePicDao serviceProfilePicDao
     ,ServiceSubjectDao serviceSubjectDao,ServiceAttendanceDao serviceAttendanceDao,ServiceScoreDao serviceScoreDao,
                              ServiceSubjectRegistrationDao serviceSubjectRegistrationDao,ServiceStudentDao serviceStudentDao,
-                             ServiceFaculty serviceFaculty) {
+                             ServiceFaculty serviceFaculty,ServiceQueryDao serviceQueryDao) {
         this.serviceFacultyDao = serviceFacultyDao;
         this.service1=service1;
         this.serviceProfilePicDao=serviceProfilePicDao;
@@ -49,6 +50,7 @@ public class FacultyController {
         this.serviceSubjectRegistrationDao=serviceSubjectRegistrationDao;
         this.serviceStudentDao=serviceStudentDao;
         this.serviceFaculty=serviceFaculty;
+        this.serviceQueryDao=serviceQueryDao;
     }
 
 
@@ -362,6 +364,12 @@ public class FacultyController {
     @GetMapping("/query")
     public  String facultyQueries(Model model)
     {
+        Faculty faculty = serviceFacultyDao.getFacultyById(4);
+        List<Query> pendingQueries = serviceQueryDao.getQueriesOfFacultyWithPending(faculty,"Pending");
+        List<Query> resolvedQueries = serviceQueryDao.getQueriesOfFacultyWithResolved(faculty,"Resolved");
+
+        model.addAttribute("queries",pendingQueries);
+        model.addAttribute("resolvedQueries",resolvedQueries);
         model.addAttribute("PageName","StudentQueriesView");
         return "Template";
     }
@@ -373,12 +381,37 @@ public class FacultyController {
 
 //===============> Faculty query resolve page start ===============>
     @GetMapping("/query/resolve")
-    public String facultyQueryResolve(Model model)
+    public String facultyQueryResolve(Model model,@RequestParam("qId") int id)
     {
+        Query query = serviceQueryDao.getQueryById(id);
+        QueryPojo queryPojo = new QueryPojo();
+        queryPojo.setId(query.getId());
+
+        model.addAttribute("query",query);
+        model.addAttribute("queryPojo",queryPojo);
         model.addAttribute("PageName","FacultyQueryResolve");
         return "Template";
     }
 //<============== Faculty query resolve page end <===============
+
+
+
+
+
+//===============> Faculty query resolve start ===============>
+    @PostMapping("/query/resolve/submit")
+    public String facultyQuerySubmit(@ModelAttribute("queryPojo") QueryPojo queryPojo)
+    {
+        Query query = serviceQueryDao.getQueryById(queryPojo.getId());
+        query.setRemark(queryPojo.getRemark());
+        query.setResolvedDate(null);
+        query.setStatus("Resolved");
+
+        serviceQueryDao.saveQuery(query);
+
+        return "redirect:/faculty/query";
+    }
+//<============== Faculty query resolve  end <===============
 
 
 

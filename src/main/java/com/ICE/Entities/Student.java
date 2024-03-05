@@ -306,4 +306,13 @@ public class Student {
 
         subjectRegistrationRequests.add(subjectRegistrationRequest);
     }
+
+    public void addQuery(Query query)
+    {
+        if(queries == null)
+        {
+            queries = new ArrayList<>();
+        }
+        queries.add(query);
+    }
 }
