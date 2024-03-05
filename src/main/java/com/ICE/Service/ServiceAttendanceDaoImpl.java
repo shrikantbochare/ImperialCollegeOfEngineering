@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceAttendanceDaoImpl implements ServiceAttendanceDao{
@@ -56,5 +57,17 @@ public class ServiceAttendanceDaoImpl implements ServiceAttendanceDao{
     }
 //<============== Get attendance for all students of a subject end <===============
 
+
+
+
+
+//===============> Get attendance by id start ===============>
+    @Override
+    public Attendance getAttendanceById(int id) {
+        Optional<Attendance> value = attendanceRepository.findById(id);
+        Attendance attendance = value.orElseGet(Attendance::new);
+        return attendance;
+    }
+//<============== Get attendance by id end <===============
 
 }

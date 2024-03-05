@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceScoreDaoImpl implements ServiceScoreDao{
@@ -52,4 +53,16 @@ public class ServiceScoreDaoImpl implements ServiceScoreDao{
         return scoreRepository.findBySubject(subject);
     }
 //<============== Get scores of a subject for all students end <===============
+
+
+
+
+//===============> Get scores by Id start ===============>
+
+    @Override
+    public Score getScoreById(int id) {
+        Optional<Score> value = scoreRepository.findById(id);
+        Score score = value.orElseGet(Score::new);
+        return score;
+    }
 }

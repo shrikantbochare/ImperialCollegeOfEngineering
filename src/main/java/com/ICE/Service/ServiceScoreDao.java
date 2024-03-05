@@ -15,4 +15,6 @@ public interface ServiceScoreDao {
     List<Score> getScoresOfStudent(Student student);
 
     List<Score> getScoreForSubject(Subject subject);
+
+    Score getScoreById(int id);
 }

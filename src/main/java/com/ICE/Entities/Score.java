@@ -25,7 +25,6 @@ public class Score {
 
     private String grade;
 
-    private Date examDate;
 
     @ManyToOne
     private Subject subject;
@@ -56,13 +55,13 @@ public class Score {
         this.id = id;
     }
 
-    public Date getExamDate() {
-        return examDate;
-    }
-
-    public void setExamDate(Date examDate) {
-        this.examDate = examDate;
-    }
+//    public Date getExamDate() {
+//        return examDate;
+//    }
+//
+//    public void setExamDate(Date examDate) {
+//        this.examDate = examDate;
+//    }
 
     public int getCt1() {
         return ct1;
@@ -118,5 +117,19 @@ public class Score {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "id=" + id +
+                ", ct1=" + ct1 +
+                ", ct2=" + ct2 +
+                ", internal=" + internal +
+                ", endSem=" + endSem +
+                ", grade='" + grade + '\'' +
+                ", subject=" + subject.getId() +
+                ", student=" + student.getId() +
+                '}';
     }
 }

@@ -283,11 +283,22 @@ public class FacultyController {
 
 
 
-//    @PostMapping("/subjects/attendance/update/process")
-//    public String updateSubjectAttendance2()
-//    {
-//
-//    }
+
+//==============> Faculty attendance update  start ===============>
+    @PostMapping("/subjects/attendance/update/process")
+    public String updateSubjectAttendance2(@ModelAttribute("attendance") Attendance attendance)
+    {
+        Attendance oldAttendance = serviceAttendanceDao.getAttendanceById(attendance.getId());
+        oldAttendance.setPresentClasses(attendance.getPresentClasses());
+        oldAttendance.setTotalClasses(attendance.getTotalClasses());
+        oldAttendance.setUpdatedDate(null);
+
+        serviceAttendanceDao.saveAttendance(oldAttendance);
+        return "redirect:/faculty/subjects/attendance/update?subject="+ oldAttendance.getSubject().getId();
+    }
+//<============== Faculty attendance update  end <===============
+
+
 
 
 
@@ -328,7 +339,6 @@ public class FacultyController {
 
 
 //===============> Faculty exams update page start ===============>
-// ================ERROR
     @GetMapping("/exams/update")
     public String viewStudentUpdate(@RequestParam("subject") Integer id ,Model model)
     {
@@ -340,7 +350,6 @@ public class FacultyController {
         model.addAttribute("PageName","StudentMarksUpdate");
         return "Template";
     }
-// =====================ERROR
 //<============== Faculty exams update page end<===============
 
 
@@ -351,8 +360,14 @@ public class FacultyController {
     @PostMapping("/exams/update/process")
     public String studentScoreUpdate(@ModelAttribute("score") Score score)
     {
-        serviceScoreDao.saveScore(score);
-        return "redirect:/faculty/exams/update";
+        Score oldScore = serviceScoreDao.getScoreById(score.getId());
+        oldScore.setCt1(score.getCt1());
+        oldScore.setCt2(score.getCt2());
+        oldScore.setInternal(score.getInternal());
+        oldScore.setEndSem(score.getEndSem());
+
+        serviceScoreDao.saveScore(oldScore);
+        return "redirect:/faculty/exams/update?subject="+ oldScore.getSubject().getId();
     }
 //<============== Faculty exams update end <===============
 
@@ -499,12 +514,8 @@ public class FacultyController {
         Subject subject = new Subject(subjectPojo.getName(),subjectPojo.getSubId(),faculty.getDepartment(),
                 subjectPojo.getCourse(),subjectPojo.getSemester(), subjectPojo.getCredits());
 
-        subject.setFaculty(faculty);
-
-        faculty.addSubjects(subject);
 
         serviceSubjectDao.save(subject);
-        serviceFacultyDao.saveFaculty(faculty);
 
         return "redirect:/faculty/manageSubjects";
     }

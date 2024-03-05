@@ -45,6 +45,9 @@ public class Attendance {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Date getUpdatedDate() {
         return updatedDate;

@@ -326,10 +326,10 @@
             <thead>
             <tr class="text-center">
                 <th scope="col">Sr. No.</th>
+                <th class="d-none" scope="col">Attendance Id.</th>
                 <th scope="col">Student Name</th>
                 <th scope="col">Total Lectures</th>
                 <th scope="col">Attended Lectures</th>
-                <th scope="col">Percentage</th>
                 <th scope="col">Update Attendance</th>
             </tr>
             </thead>
@@ -337,10 +337,10 @@
             <tr th:each="attendance,item : ${attendances}">
                 <form th:action="@{/faculty/subjects/attendance/update/process}" method="post"  th:object="${attendance}">
                     <td th:text="${item.count}">1</td>
-                    <td th:text="${attendance.student.name}"><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
-                    <td><input type="number" name="totalClasses" id="totalClasses" th:field="${attendance.totalClasses}"/></td>
-                    <td><input type="number" name="presentClasses" id="presentClasses" th:field="*{presentClasses}"/></td>
-                    <td><input type="number" name="presentPercentage" id="presentPercentage" th:field="*{presentPercentage}"/></td>
+                    <td class="d-none"><input type="number" name="id" th:value="${attendance.id}" readonly/></td>
+                    <td th:text="${attendance.student.name}"><a th:href="@{/Student/profile/view(stId={attendance.student.id})}" class="text-decoration-none">name</a></td>
+                    <td><input type="number" name="totalClasses" id="totalClasses" th:value="${attendance.totalClasses}"/></td>
+                    <td><input type="number" name="presentClasses" id="presentClasses" th:value="${attendance.presentClasses}"/></td>
                     <td><button type="submit" class="btn btn-warning">Update</button></td>
                 </form>
             </tr>
@@ -403,28 +403,28 @@
         <table class="m-2 table table-bordered">
             <thead>
             <tr class="text-center">
-<!--                <th scope="col">Sr. No.</th>-->
+                <th scope="col">Sr. No.</th>
+                <th class="d-none">Score Id</th>
                 <th scope="col">Student Name</th>
                 <th scope="col">CT-1</th>
                 <th scope="col">CT-2</th>
                 <th scope="col">INTERNAL</th>
                 <th scope="col">END SEMESTER</th>
-                <th scope="col">GRADE</th>
-                <th scope="col">EXAM DATE</th>
+<!--                <th scope="col">EXAM DATE</th>-->
                 <th scope="col">UPDATE</th>
             </tr>
             </thead>
             <tbody class="text-center">
-            <tr th:each="score : ${scores}">
+            <tr th:each="score,item : ${scores}">
                 <form th:action="@{/faculty/exams/update/process}" th:object="${score}" method="post">
-<!--                    <td th:text="${item.count}">1</td>-->
+                    <td th:text="${item.count}">1</td>
+                    <td class="d-none"><input type="number" th:value="${score.id}" name="id" readonly/></td>
                     <td th:text="${score.student.name}"><a th:href="@{/Student/profile/view(stId=${score.student.id})}" class="text-decoration-none">name</a></td>
-                    <td><input type="number" name="ct1" id="ct1" th:field="*{ct1}"/></td>
-                    <td><input type="number" name="ct2" id="ct2" th:field="*{ct2}"/></td>
-                    <td><input type="number" name="internal" id="internal" th:field="*{internal}"/></td>
-                    <td><input type="number" name="endSem" id="endSem" th:field="*{endSem}"/></td>
-                    <td><input type="text" name="grade" id="grade" th:field="*{grade}"/></td>
-                    <td><input type="date" name="examDate" id="examDate" th:field="*{examDate}"/></td>
+                    <td><input type="number" name="ct1" id="ct1" th:value="${score.ct1}"/></td>
+                    <td><input type="number" name="ct2" id="ct2" th:value="${score.ct2}"/></td>
+                    <td><input type="number" name="internal" id="internal" th:value="${score.internal}"/></td>
+                    <td><input type="number" name="endSem" id="endSem" th:value="${score.endSem}"/></td>
+<!--                    <td><input type="date" name="examDate" id="examDate" th:value="${score.examDate}"/></td>-->
                     <td><button type="submit" class="btn btn-warning">Update</button></td>
                 </form>
             </tr>
