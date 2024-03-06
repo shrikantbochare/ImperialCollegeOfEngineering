@@ -57,12 +57,22 @@ public class ServiceScoreDaoImpl implements ServiceScoreDao{
 
 
 
-//===============> Get scores by Id start ===============>
-
+//===============> Get score by Id start ===============>
     @Override
     public Score getScoreById(int id) {
         Optional<Score> value = scoreRepository.findById(id);
         Score score = value.orElseGet(Score::new);
         return score;
     }
+//<============== Get score by id end <===============
+
+
+
+
+//===============> Remove Scores of a subject start ===============>
+    @Override
+    public void removeScoresOfSubject(Subject subject) {
+        scoreRepository.deleteBySubject(subject);
+    }
+//<============== Remove Scores of a subject end <===============
 }

@@ -70,4 +70,14 @@ public class ServiceAttendanceDaoImpl implements ServiceAttendanceDao{
     }
 //<============== Get attendance by id end <===============
 
+
+
+
+//===============> Remove Attendances of a subject start ===============>
+    @Override
+    public void deleteAttendanceOfSubject(Subject subject) {
+        attendanceRepository.deleteBySubject(subject);
+    }
+//<============== Remove Attendances of a subject end <===============
+
 }

@@ -520,4 +520,43 @@ public class FacultyController {
         return "redirect:/faculty/manageSubjects";
     }
 //<============== HOD-Faculty manage subjects add new end <===============
+
+
+
+
+//===============> HOD-Faculty manage subjects edit page start  ===============>
+    @GetMapping("/manageSubjects/edit")
+    public String editSubject(@RequestParam("sId") int id,Model model)
+    {
+        Subject subject = serviceSubjectDao.getSubjectById(id);
+        SubjectPojo subjectPojo = new SubjectPojo(subject.getName(),subject.getSubId(),subject.getDepartment(),subject.getCourse()
+                                        ,subject.getSemester(),subject.getCredits());
+
+        subjectPojo.setId(subject.getId());
+
+        model.addAttribute("subject",subjectPojo);
+        model.addAttribute("PageName","FacultyEditSubject");
+        return "Template";
+    }
+//<============== HOD-Faculty manage subjects edit page end <===============
+
+
+
+
+//===============> HOD-Faculty manage subjects edit page start  ===============>
+    @PostMapping("/manageSubjects/edit/process")
+    public String editSubject2(@ModelAttribute("subject") SubjectPojo subjectPojo)
+    {
+        Subject oldSubject = serviceSubjectDao.getSubjectById(subjectPojo.getId());
+
+        oldSubject.setName(subjectPojo.getName());
+        oldSubject.setSubId(subjectPojo.getSubId());
+        oldSubject.setCourse(subjectPojo.getCourse());
+        oldSubject.setSemester(subjectPojo.getSemester());
+        oldSubject.setCredits(subjectPojo.getCredits());
+
+        serviceSubjectDao.save(oldSubject);
+
+        return "redirect:/faculty/manageSubjects";
+    }
 }

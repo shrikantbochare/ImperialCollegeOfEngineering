@@ -17,4 +17,6 @@ public interface ServiceScoreDao {
     List<Score> getScoreForSubject(Subject subject);
 
     Score getScoreById(int id);
+
+    void removeScoresOfSubject(Subject subject);
 }

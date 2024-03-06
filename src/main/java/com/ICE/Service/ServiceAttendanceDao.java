@@ -16,4 +16,6 @@ public interface ServiceAttendanceDao {
     List<Attendance> getAttendanceOfSubject(Subject subject);
 
     Attendance getAttendanceById(int id);
+
+    void deleteAttendanceOfSubject(Subject subject);
 }

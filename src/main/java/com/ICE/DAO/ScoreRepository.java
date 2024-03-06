@@ -13,4 +13,6 @@ public interface ScoreRepository extends JpaRepository<Score,Integer> {
     List<Score> findByStudent(Student student);
 
     List<Score> findBySubject(Subject subject);
+
+    void deleteBySubject(Subject subject);
 }

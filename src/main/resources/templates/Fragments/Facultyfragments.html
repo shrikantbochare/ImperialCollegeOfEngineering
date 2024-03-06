@@ -596,7 +596,6 @@
                 <th scope="col">Credits</th>
                 <th scope="col">Course</th>
                 <th scope="col">Semester</th>
-                <th scope="col">Remove</th>
                 <th scope="col">Edit</th>
             </tr>
             </thead>
@@ -608,7 +607,6 @@
                 <td th:text="${subject.credits}">5</td>
                 <td th:text="${subject.course}">First Year</td>
                 <td th:text="${subject.semester}">2</td>
-                <td class="text-center"><a th:href="@{/faculty/manageSubjects/remove(sId=${subject.id})}" class="btn btn-danger">Remove</a></td>
                 <td class="text-center"><a th:href="@{/faculty/manageSubjects/edit(sId=${subject.id})}" class="btn btn-warning">Edit</a></td>
             </tr>
             </tbody>
@@ -666,6 +664,61 @@
        </form>
    </div>
 </div>
+<!--Faculty Add department Subjects fragment end-->
+
+
+
+
+
+
+
+<!--Faculty edit department Subjects fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="FacultyEditSubject">
+    <div th:replace="~{Fragments/FacultyFragments :: FacultyMenu}"></div>
+    <div class="m-2 p-5">
+        <form th:action="@{/faculty/manageSubjects/edit/process}" th:object="${subject}" method="post">
+            <div class="form-floating mb-3 d-none">
+                <input type="hidden" class="form-control" id="id" placeholder="id" th:field="*{id}">
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="name" placeholder="Full Name" th:field="*{name}">
+                <label for="name">Subject Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="subId" placeholder="Subject Id" th:field="*{subId}">
+                <label for="subId">Subject Id</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="credits" placeholder="Credits" th:field="*{credits}">
+                <label for="credits">Credits</label>
+            </div>
+            <select class="form-select mb-3" aria-label="Default select example" name="course" th:field="*{course}">
+                <option th:value="Select_Year" selected>Select Class</option>
+                <option th:value="First_Year">First Year</option>
+                <option th:value="Second_Year">Second Year</option>
+                <option th:value="Third_Year">Third Year</option>
+                <option th:value="Fourth_Year">Fourth Year</option>
+
+            </select>
+            <select class="form-select mb-3" aria-label="Default select example" name="semester" th:field="*{semester}">
+                <option th:value="Select_Year" selected>Select Semester</option>
+                <option th:value="First">First</option>
+                <option th:value="Second">Second</option>
+                <option th:value="Third">Third</option>
+                <option th:value="Fourth">Fourth</option>
+                <option th:value="Fifth">Fifth</option>
+                <option th:value="Sixth">Sixth</option>
+                <option th:value="Seventh">Seventh</option>
+                <option th:value="Eighth">Eighth</option>
+
+            </select>
+            <div class="d-flex justify-content-center align-items-center m-1">
+                <button type="submit" class="btn btn-primary w-50">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Faculty edit department Subjects fragment Start-->
 
 
 </body>

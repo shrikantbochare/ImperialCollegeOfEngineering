@@ -11,6 +11,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Integer> 
 
     List<Attendance> findByStudent(Student student);
 
-
     List<Attendance> findBySubject(Subject subject);
+
+    void deleteBySubject(Subject subject);
 }
