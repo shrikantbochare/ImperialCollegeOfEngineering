@@ -4,6 +4,7 @@ import com.ICE.DAO.FacultyRepository;
 import com.ICE.Entities.Faculty;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -55,4 +56,18 @@ public class ServiceFacultyDaoImpl implements ServiceFacultyDao{
         return facultyRepository.findByDepartmentAndClassTeacher(department,classTeacher);
     }
 //<============== Get faculty - class teacher end <===============
+
+
+
+
+
+//===============> Get faculty by Id start ===============>
+    @Override
+    public Object getFacultyByFacultyId(String facultyId) {
+        Optional<Faculty> value = facultyRepository.findByFacultyId(facultyId);
+        Object object = value.orElse(null);
+        return object;
+    }
+//<==============  Get faculty by Id end <===============
+
 }

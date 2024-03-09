@@ -276,7 +276,13 @@
 <div th:fragment="login" class="row m-2">
     <div class="col-md-6 offset-md-3 rounded loginContainer p-5">
         <h3 class="text-center text-Success">LOGIN</h3>
-        <form>
+        <div th:if="${param.error}">
+            <p class="text-center text-warning">Username or Password incorrect</p>
+        </div>
+        <div th:if="${param.logout}">
+            <p class="text-center text-success">Logged out successfully</p>
+        </div>
+        <form th:action="@{/home/login/authenticate}" method="post">
             <div class="form-floating mb-2">
                 <input type="text" name="username" id="regNumber" class="form-control" placeholder="BT24F06F006">
                 <label for="regNumber">Enter University Registration Number</label>

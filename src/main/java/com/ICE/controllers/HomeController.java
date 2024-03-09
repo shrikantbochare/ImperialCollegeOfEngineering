@@ -8,6 +8,7 @@ import com.ICE.Pojo.StudentPojo;
 import com.ICE.Service.ServiceFacultyDao;
 import com.ICE.Service.ServiceStudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +25,13 @@ public class HomeController {
 
     private ServiceStudentDao serviceStudentDao;
     private ServiceFacultyDao serviceFacultyDao;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public HomeController(ServiceStudentDao serviceStudentDao, ServiceFacultyDao serviceFacultyDao) {
+    public HomeController(ServiceStudentDao serviceStudentDao, ServiceFacultyDao serviceFacultyDao,PasswordEncoder passwordEncoder) {
         this.serviceStudentDao = serviceStudentDao;
         this.serviceFacultyDao = serviceFacultyDao;
+        this.passwordEncoder=passwordEncoder;
     }
 
 
@@ -188,7 +191,8 @@ public class HomeController {
     @PostMapping("/student/registrationDetails")
     public String studentRegDetails(@ModelAttribute("student") StudentPojo studentPojo)
     {
-        Student student = new Student(studentPojo.getName(),studentPojo.getEmail(),studentPojo.getUniversityNo(),studentPojo.getPassword(),studentPojo.getDepartment(),studentPojo.getCourse());
+        Student student = new Student(studentPojo.getName(),studentPojo.getEmail(),studentPojo.getUniversityNo(),passwordEncoder.encode(studentPojo.getPassword()),studentPojo.getDepartment(),studentPojo.getCourse());
+        student.setRole("ROLE_STUDENT");
         ProfilePic profilePic = new ProfilePic("default_pic.jpg");
         profilePic.setStudent(student);
         student.setProfilePic(profilePic);
@@ -247,7 +251,8 @@ public class HomeController {
     @PostMapping("/faculty/registrationDetails")
     public String FacultyRegDetails(@ModelAttribute("faculty") FacultyPojo facultyPojo)
     {
-        Faculty faculty = new Faculty(facultyPojo.getName(),facultyPojo.getFacultyId(),facultyPojo.getEmail(),facultyPojo.getPassword());
+        Faculty faculty = new Faculty(facultyPojo.getName(),facultyPojo.getFacultyId(),facultyPojo.getEmail(),passwordEncoder.encode(facultyPojo.getPassword()));
+        faculty.addRole("ROLE_FACULTY");
         ProfilePic profilePic = new ProfilePic("default_pic.jpg");
         profilePic.setFaculty(faculty);
         faculty.setProfilePic(profilePic);

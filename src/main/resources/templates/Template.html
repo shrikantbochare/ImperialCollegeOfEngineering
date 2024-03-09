@@ -17,7 +17,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-2 col-3" style="text-align: right;">
-          <img th:src="@{/images/logocsn.png}" class="logo" />
+          <img th:src="@{/Images/logocsn.png}" class="logo" />
         </div>
         <div class="col-md-6 col-9 arsenal align-content-lg-start">
           <h1>Government College of Engineering, Chhatrapati Sambhajinagar<br />
@@ -25,13 +25,13 @@
           <h4>(An Autonomous Institute of Government of Maharashtra)</h4>
         </div>
         <div class="col-md-1 d-none d-md-block">
-          <img th:src="@{/images/dte-logo.gif}" style="height: 90px;" />
+          <img th:src="@{/Images/dte-logo.gif}" style="height: 90px;" />
         </div>
         <div class="col-md-1 d-none d-md-block">
-          <img th:src="@{/images/mahalogo.png}" style="height: 90px;" />
+          <img th:src="@{/Images/mahalogo.png}" style="height: 90px;" />
         </div>
         <div class="col-md-1 d-none d-md-block">
-          <img th:src="@{/images/emblem.jpg}" style="height: 90px;" />
+          <img th:src="@{/Images/emblem.jpg}" style="height: 90px;" />
         </div>
       </div>
     </div>
@@ -66,8 +66,8 @@
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">STUDENT
                 </a>
                 <ul class="dropdown-menu">
-                  <li sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')"><a th:href="@{/student/profile}" class="nav-link">Profile</a></li>
-                  <li sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')"><a th:href="@{/logout}" class="nav-link">Log out</a></li>
+                  <li sec:authorize="isAuthenticated()"><span sec:authorize="hasRole('STUDENT')"><a th:href="@{/student/profile}" class="nav-link">Profile</a></span></li>
+                  <li sec:authorize="isAuthenticated()"><span sec:authorize="hasRole('STUDENT')"><a href="#" class="nav-link" onclick="document.getElementById('logoutBtn').click()">Log out</a></span></li>
                   <li sec:authorize="!isAuthenticated()"><a th:href="@{/home/login}" class="nav-link">Login</a></li>
                   <li sec:authorize="!isAuthenticated()"><a th:href="@{/home/student/registration}" class="nav-link">Register</a></li>
                 </ul>
@@ -76,12 +76,15 @@
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">FACULTY
                 </a>
                 <ul class="dropdown-menu">
-                  <li sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')"><a th:href="@{/faculty/profile}" class="nav-link">Profile</a></li>
-                  <li sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')"><a th:href="@{/logout}" class="nav-link">Log out</a></li>
+                  <li sec:authorize="isAuthenticated()"><span sec:authorize="hasRole('FACULTY')"><a th:href="@{/faculty/profile}" class="nav-link">Profile</a></span></li>
+                  <li sec:authorize="isAuthenticated()"><span sec:authorize="hasRole('FACULTY')"><a href="#" class="nav-link" onclick="document.getElementById('logoutBtn').click()">Log out</a></span></li>
                   <li sec:authorize="!isAuthenticated()"><a th:href="@{/home/login}" class="nav-link">Login</a></li>
                   <li sec:authorize="!isAuthenticated()"><a th:href="@{/home/faculty/registration}" class="nav-link">Register</a></li>
                 </ul>
               </li>
+              <form action="#" th:action="@{/home/logout}" method="POST" class="d-none">
+                <input type="submit" value="Logout" class="d-none" id="logoutBtn">
+              </form>
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" th:href="@{/home/contact}">CONTACT</a>
               </li>

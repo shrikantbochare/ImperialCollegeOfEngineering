@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
 
 @Service
 public class Service1Impl implements Service1{
@@ -60,4 +61,19 @@ public class Service1Impl implements Service1{
         }
     }
 //<============== Delete profile picture from file path end <===============
+
+
+
+
+// =========> Get Today's Date Start ===========>
+    @Override
+    public Date getTodayDate()
+    {
+        Long millis=System.currentTimeMillis();
+
+        // creating a new object of the class Date
+        Date date = new Date(millis);
+        return date;
+    }
+// <=========> Get Today's Date End <===========
 }

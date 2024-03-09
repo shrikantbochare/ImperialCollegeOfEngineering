@@ -24,39 +24,73 @@ public class ServiceQueryDaoImpl implements ServiceQueryDao{
     }
 
 
+
+
+//===============> Save or update query start ===============>
     @Override
     public void saveQuery(Query query) {
         queryRepository.save(query);
     }
+//<============== Save or update query end <===============
 
 
+
+
+
+//===============> Get queries of student start ===============>
     @Override
     public List<Query> getQueriesOfStudent(Student student) {
         return queryRepository.findByStudent(student);
     }
+//<============== Get queries of student  end <===============
 
 
+
+
+
+//===============> Get query by id start ===============>
     @Override
     public Query getQueryById(int id) {
         Optional<Query> value =  queryRepository.findById(id);
         Query query = value.orElseGet(Query::new);
         return query;
     }
+//<============== Get query by id end <===============
 
+
+
+
+
+//===============> Get queries of faculty start ===============>
 
     @Override
     public List<Query> getQueriesOfFaculty(Faculty faculty) {
         return queryRepository.findByFaculty(faculty);
     }
+//<============== Get queries of faculty  end <===============
 
+
+
+
+
+//===============> Get resolved queries of faculty  start ===============>
 
     @Override
     public List<Query> getQueriesOfFacultyWithResolved(Faculty faculty, String status) {
         return queryRepository.findByFacultyAndStatus(faculty,"Resolved");
     }
+//<============== Get resolved queries of faculty  end <===============
+
+
+
+
+
+//===============> Get pending queries of faculty  start ===============>
 
     @Override
     public List<Query> getQueriesOfFacultyWithPending(Faculty faculty, String status) {
         return queryRepository.findByFacultyAndStatus(faculty,"Pending");
     }
+//<============== Get pending queries of faculty end <===============
+
 }

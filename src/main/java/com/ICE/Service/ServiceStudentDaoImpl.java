@@ -44,4 +44,15 @@ public class ServiceStudentDaoImpl implements ServiceStudentDao{
         return student;
     }
 //<============== Get the student by Id end <===============
+
+
+
+
+
+//===============> Get the student by universityNo start ===============>
+    @Override
+    public Student getStudentByUniversityNo(String universityNo) {
+        return studentRepository.findByUniversityNo(universityNo);
+    }
+//<============== Get the student by universityNo end <===============
 }

@@ -22,17 +22,19 @@ public class ServiceProfilePicDaoImpl implements ServiceProfilePicDao{
     }
 
 
+//===============> Save or update profile pic start ===============>
     @Override
     public void saveProfilePic(ProfilePic profilePic) {
         profilePicRepository.save(profilePic);
     }
-
+//<============== Save or update profile pic end <===============
 
 
 
 
 
 //===============> Get the profile pic by Id start ===============>
+    @Override
     public ProfilePic getProfilePicById(int id)
     {
         Optional<ProfilePic> value = profilePicRepository.findById(id);

@@ -30,7 +30,6 @@ public class Student {
     @Column(nullable = false)
     private String password;
 
-
     private int age;
 
     private Date birthdate;
@@ -41,13 +40,13 @@ public class Student {
 
     private String state;
 
-
     private String department;
 
     private String course;
 
     private String semester;
 
+    private String role;
 
     @ManyToMany
     private List<Subject> subjects;
@@ -256,6 +255,13 @@ public class Student {
         this.age = age;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public List<SubjectRegistrationRequest> getSubjectRegistrationRequests() {
         return subjectRegistrationRequests;

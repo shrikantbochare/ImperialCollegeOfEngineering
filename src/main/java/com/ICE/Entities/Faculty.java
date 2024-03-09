@@ -41,6 +41,8 @@ public class Faculty {
 
     private String department;
 
+    private List<String> roles;
+
     @OneToMany(mappedBy = "faculty")
     private List<Student> students;
 
@@ -229,5 +231,18 @@ public class Faculty {
             queries = new ArrayList<>();
         }
         queries.add(query);
+    }
+
+    public void addRole(String role)
+    {
+        if(roles == null)
+        {
+            roles = new ArrayList<>();
+        }
+        roles.add(role);
+    }
+
+    public List<String> getRoles() {
+        return roles;
     }
 }

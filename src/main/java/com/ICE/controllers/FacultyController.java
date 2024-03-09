@@ -7,6 +7,7 @@ import com.ICE.Pojo.QueryPojo;
 import com.ICE.Pojo.SubjectPojo;
 import com.ICE.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,8 @@ public class FacultyController {
 
 
 
+
+
     @Autowired
     public FacultyController(ServiceFacultyDao serviceFacultyDao,Service1 service1,ServiceProfilePicDao serviceProfilePicDao
     ,ServiceSubjectDao serviceSubjectDao,ServiceAttendanceDao serviceAttendanceDao,ServiceScoreDao serviceScoreDao,
@@ -51,6 +54,7 @@ public class FacultyController {
         this.serviceStudentDao=serviceStudentDao;
         this.serviceFaculty=serviceFaculty;
         this.serviceQueryDao=serviceQueryDao;
+
     }
 
 
@@ -543,7 +547,7 @@ public class FacultyController {
 
 
 
-//===============> HOD-Faculty manage subjects edit page start  ===============>
+//===============> HOD-Faculty manage subjects edit  start  ===============>
     @PostMapping("/manageSubjects/edit/process")
     public String editSubject2(@ModelAttribute("subject") SubjectPojo subjectPojo)
     {
@@ -557,6 +561,8 @@ public class FacultyController {
 
         serviceSubjectDao.save(oldSubject);
 
+
         return "redirect:/faculty/manageSubjects";
     }
+//<============== HOD-Faculty manage subjects edit  end <===============
 }
