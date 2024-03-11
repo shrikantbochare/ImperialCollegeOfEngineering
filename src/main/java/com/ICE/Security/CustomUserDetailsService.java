@@ -34,7 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Student student = serviceStudentDao.getStudentByUniversityNo(username);
+        Student student = (Student) serviceStudentDao.getStudentByUniversityNo(username);
         Faculty faculty = (Faculty) serviceFacultyDao.getFacultyByFacultyId(username);
 
 
@@ -63,6 +63,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private Collection<GrantedAuthority> grantedAuthorities(List<String> authorities)
     {
-        return authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return authorities.stream().map(e -> new SimpleGrantedAuthority(e)).collect(Collectors.toList());
     }
 }

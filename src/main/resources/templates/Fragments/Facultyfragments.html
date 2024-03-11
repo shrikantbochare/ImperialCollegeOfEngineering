@@ -19,7 +19,7 @@
         <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/attendance}" class="btn btn-success">Attendance</a></div>
         <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/query}" class="btn btn-success">Query</a></div>
         <div class="text-center mx-1 mb-1"><a th:href="@{/faculty/requests}" class="btn btn-success">Registration Request</a></div>
-        <div class="text-center mx-1 mb-1"  sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/faculty/manageSubjects}" class="btn btn-success">Manage Subjects</a></div>
+        <div class="text-center mx-1 mb-1"  sec:authorize="hasRole('HOD')"><a th:href="@{/faculty/manageSubjects}" class="btn btn-success">Manage Subjects</a></div>
 
     </div>
 </div>
@@ -66,27 +66,27 @@
                     </div>
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="email" placeholder="name@example.com" th:field="*{email}" readonly>
-                        <label for="email">Email your email</label>
+                        <label for="email">your email</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="age" placeholder="000" th:field="*{age}">
-                        <label for="age">Email your age</label>
+                        <label for="age">your age</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="date" class="form-control" id="bdate" placeholder="00/0/0000" th:field="*{birthdate}">
-                        <label for="bdate">Email your birth date</label>
+                        <label for="bdate">your birth date</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="city" placeholder="mumbai" th:field="*{city}">
-                        <label for="city">Email your city</label>
+                        <label for="city">your city</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="state" placeholder="maharashtra" th:field="*{state}">
-                        <label for="state">Email your state</label>
+                        <label for="state">your state</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="address" placeholder="something" th:field="*{address}">
-                        <label for="address">Email your address</label>
+                        <label for="address">your address</label>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center align-items-center">
@@ -119,26 +119,6 @@
 
 <!--Faculty Dept details update fragment Start-->
 <div class="divContainer m-4 p-3" th:fragment="FacultyDeptUpdate">
-<!--    <div class=" row rounded border border-1 border-dark p-2 ">-->
-<!--        <h3 class="text-center text-dark m-1">PROFILE DETAILS</h3>-->
-<!--        <div class="col-md-4">-->
-<!--            <div class="profilePic d-flex justify-content-center align-items-center">-->
-<!--                <img th:src="@{'/Images/ProfilePic/' + ${currentUser.profilePic.pic}}" alt=""  class="img-thumbnail profile_img">-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="col-md-8 ">-->
-<!--            <div class="p-3">-->
-<!--                <p class="m-1">Full Name : <a class="text-decoration-none text-danger" href="">Password Update</a></p>-->
-<!--                <p class="m-1">Email : <a class="text-decoration-none text-danger" href="">Password Update</a></p>-->
-<!--                <p class="m-1">University Registration Number : <a class="text-decoration-none text-danger" href="">Password Update</a></p>-->
-<!--                <p class="m-1">Age : <a class="text-decoration-none text-danger" href="">Password Update</a></p>-->
-<!--                <p class="m-1">Birthdate : <a class="text-decoration-none text-danger" href="">Password Update</a></p>-->
-<!--                <p class="m-1">City : <a class="text-decoration-none text-danger" href="">Password Update</a></p>-->
-<!--                <p class="m-1">State : <a class="text-decoration-none text-danger" href="">Password Update</a></p>-->
-<!--                <p class="m-1">Address : <a class="text-decoration-none text-danger" href="">Password Update</a></p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
     <div th:replace="~{Fragments/FacultyFragments :: FacultyMenu}"></div>
     <div class="container rounded border border-1 border-dark p-5 mt-3" th:fragment="DeptView">
         <h3 class="text-center text-dark">DEPARTMENT DETAILS</h3>
@@ -154,11 +134,10 @@
 
             </select>
             <select class="form-select mb-3" aria-label="Default select example" th:field="*{designation}">
-                <option th:value="Select_Year" selected>Select Class</option>
-                <option th:value="First_Year">First Year</option>
-                <option th:value="Second_Year">Second Year</option>
-                <option th:value="Third_Year">Third Year</option>
-                <option th:value="Fourth_Year">Fourth Year</option>
+                <option th:value="Select_Year" selected>Select Designation</option>
+                <option th:value="Professor">Professor</option>
+                <option th:value="Assistant_Professor">Assistant Professor</option>
+                <option th:value="HOD">HOD</option>
             </select>
             <select class="form-select mb-2" aria-label="Default select example" th:field="*{classTeacher}">
                 <option th:value="Select_Year" selected>Select Class</option>

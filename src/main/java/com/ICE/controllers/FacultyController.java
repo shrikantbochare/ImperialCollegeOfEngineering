@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/faculty")
@@ -63,15 +60,14 @@ public class FacultyController {
 
 //===============> Faculty profile page start ===============>
     @GetMapping("/profile")
-    public String facultyProfile(Model model)
+    public String facultyProfile(Model model,@ModelAttribute("currentUser") Faculty faculty)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
+        System.out.println(faculty.getRoles());
         FacultyPojo facultyPojo = new FacultyPojo(faculty.getName(),faculty.getFacultyId(),faculty.getEmail(),faculty.getPassword(),
                 faculty.getAge(),faculty.getBirthdate(),faculty.getAddress(),faculty.getCity(),faculty.getState());
 
         model.addAttribute("PageName","FacultyProfile");
         model.addAttribute("faculty",facultyPojo);
-        model.addAttribute("currentUser",faculty);
 
         return "Template";
     }
@@ -83,10 +79,8 @@ public class FacultyController {
 
 //===============> Faculty profile update start ===============>
     @PostMapping("/profile/update")
-    public String facultyProfileUpdate(@ModelAttribute("faculty")FacultyPojo facultyPojo)
+    public String facultyProfileUpdate(@ModelAttribute("faculty")FacultyPojo facultyPojo,@ModelAttribute("currentUser") Faculty faculty)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
-
         faculty.setName(facultyPojo.getName());
         faculty.setAge(facultyPojo.getAge());
         faculty.setBirthdate(facultyPojo.getBirthdate());
@@ -107,9 +101,9 @@ public class FacultyController {
 
 //===============> Faculty profile pic update start ===============>
     @PostMapping("/profile/updateProfilePic")
-    public String updateProfilePic(@RequestParam("profile_img") MultipartFile multipartFile) throws IOException
+    public String updateProfilePic(@RequestParam("profile_img") MultipartFile multipartFile,@ModelAttribute("currentUser") Faculty faculty) throws IOException
     {
-        ProfilePic profilePic = serviceFacultyDao.getFacultyById(4).getProfilePic();
+        ProfilePic profilePic = faculty.getProfilePic();
         if(!multipartFile.isEmpty())
         {
             if(!profilePic.getPic().equals("default_pic.jpg"))
@@ -149,16 +143,14 @@ public class FacultyController {
 
 //===============> Faculty update department details page start ===============>
     @GetMapping("/updateDeptdetails")
-    public String updateDeptdetails(Model model)
+    public String updateDeptdetails(Model model,@ModelAttribute("currentUser") Faculty faculty)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
         FacultyPojo facultyPojo = new FacultyPojo(faculty.getClassTeacher(),faculty.getDesignation(),faculty.getDepartment());
         List<Subject> subjects = serviceSubjectDao.getAllSubjectsOfDepartmentNoFaculty(faculty.getDepartment());
 
         model.addAttribute("allSubjects",subjects);
         model.addAttribute("PageName","FacultyDeptUpdate");
         model.addAttribute("faculty",facultyPojo);
-        model.addAttribute("currentUser",faculty);
         return "Template";
     }
 //<============== Faculty update department details page end <===============
@@ -169,12 +161,25 @@ public class FacultyController {
 
 //===============> Faculty update department details start ===============>
     @PostMapping("/updateDeptdetails/process")
-    public String processUpdateDeptDetails(@ModelAttribute("faculty") FacultyPojo facultyPojo,@RequestParam(value = "subjects", required = false) Set<Integer> subjects)
+    public String processUpdateDeptDetails(@ModelAttribute("faculty") FacultyPojo facultyPojo,@ModelAttribute("currentUser") Faculty faculty
+            ,@RequestParam(value = "subjects", required = false) Set<Integer> subjects)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
         faculty.setClassTeacher(facultyPojo.getClassTeacher());
         faculty.setDesignation(facultyPojo.getDesignation());
         faculty.setDepartment(facultyPojo.getDepartment());
+
+
+        if(faculty.getDesignation().equals("HOD"))
+        {
+            faculty.addRole("ROLE_HOD");
+        }
+        else
+        {
+            if(faculty.getRoles().contains("ROLE_HOD"))
+            {
+                faculty.getRoles().remove("ROLE_HOD");
+            }
+        }
 
 
         List<Subject> allocatedSubjects = serviceSubjectDao.getAllSubjectsWithIds(subjects);
@@ -198,9 +203,8 @@ public class FacultyController {
 
 //===============> Faculty unallocated the subject start ===============>
     @GetMapping("/updateDeptdetails/removeSubject")
-    public String removeAllocatedSubject(@RequestParam("sId") int id)
+    public String removeAllocatedSubject(@RequestParam("sId") int id,@ModelAttribute("currentUser") Faculty faculty)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
         Subject subject = serviceSubjectDao.getSubjectById(id);
         faculty.getSubjects().remove(subject);
         subject.setFaculty(null);
@@ -218,9 +222,8 @@ public class FacultyController {
 
 //===============> Faculty subjects page start ===============>
     @GetMapping("/subjects")
-    public  String facultySubjects(Model model)
+    public  String facultySubjects(Model model,@ModelAttribute("currentUser") Faculty faculty)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
         List<Subject> subjects = serviceSubjectDao.getSubjectsOfFaculty(faculty);
 
         model.addAttribute("subjects",subjects);
@@ -236,9 +239,8 @@ public class FacultyController {
 
 //===============> Faculty attendance page start ===============>
     @GetMapping("/attendance")
-    public  String facultyAttendance(Model model)
+    public  String facultyAttendance(Model model,@ModelAttribute("currentUser") Faculty faculty)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
         List<Subject> subjects = serviceSubjectDao.getSubjectsOfFaculty(faculty);
 
         model.addAttribute("subjects",subjects);
@@ -308,9 +310,8 @@ public class FacultyController {
 
 //===============> Faculty exams  page start ===============>
     @GetMapping("/exams")
-    public  String facultyExams(Model model)
+    public  String facultyExams(Model model,@ModelAttribute("currentUser") Faculty faculty)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
         List<Subject> subjects = serviceSubjectDao.getSubjectsOfFaculty(faculty);
 
         model.addAttribute("subjects",subjects);
@@ -381,9 +382,8 @@ public class FacultyController {
 
 //===============> Faculty query view page start ===============>
     @GetMapping("/query")
-    public  String facultyQueries(Model model)
+    public  String facultyQueries(Model model,@ModelAttribute("currentUser") Faculty faculty)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
         List<Query> pendingQueries = serviceQueryDao.getQueriesOfFacultyWithPending(faculty,"Pending");
         List<Query> resolvedQueries = serviceQueryDao.getQueriesOfFacultyWithResolved(faculty,"Resolved");
 
@@ -438,9 +438,8 @@ public class FacultyController {
 
 //===============> Faculty requests view page start ===============>
     @GetMapping("/requests")
-    public  String facultyRequests(Model model)
+    public  String facultyRequests(Model model,@ModelAttribute("currentUser") Faculty faculty)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
         List<SubjectRegistrationRequest>  requests = serviceSubjectRegistrationDao.getRequestsForFaculty(faculty);
 
         model.addAttribute("Requests",requests);
@@ -481,9 +480,8 @@ public class FacultyController {
 
 //===============> HOD-Faculty manage subjects page start ===============>
     @GetMapping("/manageSubjects")
-    public String manageSubjects(Model model)
+    public String manageSubjects(Model model,@ModelAttribute("currentUser") Faculty faculty)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
         List<Subject> subjects = serviceSubjectDao.getAllSubjectsOfDepartment(faculty.getDepartment());
         model.addAttribute("subjects",subjects);
         model.addAttribute("PageName","FacultyManageSubjects");
@@ -512,9 +510,8 @@ public class FacultyController {
 
 //===============> HOD-Faculty manage subjects add new start  ===============>
     @PostMapping("/manageSubjects/add/newSubject")
-    public String addSubject2(@ModelAttribute("subject") SubjectPojo subjectPojo)
+    public String addSubject2(@ModelAttribute("subject") SubjectPojo subjectPojo,@ModelAttribute("currentUser") Faculty faculty)
     {
-        Faculty faculty = serviceFacultyDao.getFacultyById(4);
         Subject subject = new Subject(subjectPojo.getName(),subjectPojo.getSubId(),faculty.getDepartment(),
                 subjectPojo.getCourse(),subjectPojo.getSemester(), subjectPojo.getCredits());
 

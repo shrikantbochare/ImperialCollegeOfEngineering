@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/home")
 public class HomeController {
@@ -141,7 +143,7 @@ public class HomeController {
 
 // =============> Login handler Start ==============>
     @GetMapping("/login")
-    public String studentLogin(Model model)
+    public String login(Model model,Principal p)
     {
         model.addAttribute("PageName","login");
         return "Template";
@@ -154,7 +156,7 @@ public class HomeController {
 
 // ================> Student Registration Start =================>
     @GetMapping("/student/registration")
-    public String studentRegistration(Model model)
+    public String studentRegistration(Model model, Principal p)
     {
         model.addAttribute("PageName","Student_registration");
         return "Template";

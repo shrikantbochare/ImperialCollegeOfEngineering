@@ -9,5 +9,5 @@ public interface ServiceStudentDao {
 
     Student getStudentById(int id);
 
-    Student getStudentByUniversityNo(String universityNo);
+    Object getStudentByUniversityNo(String universityNo);
 }
