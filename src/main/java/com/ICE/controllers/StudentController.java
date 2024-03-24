@@ -6,6 +6,7 @@ import com.ICE.Pojo.QueryPojo;
 import com.ICE.Pojo.StudentPojo;
 import com.ICE.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,17 +54,16 @@ public class StudentController {
 
 //===============> Student profile page start ===============>
     @GetMapping("/profile")
-    public String profile(Model model)
+    public String profile(Model model,@ModelAttribute("currentUser") Student student)
     {
-        Student student1 = serviceStudentDao.getStudentById(4);
 
-        StudentPojo studentPojo = new StudentPojo(student1.getName(),student1.getEmail(),student1.getUniversityNo(),student1.getPassword()
-                                        ,student1.getBirthdate(),student1.getAddress(),student1.getCity()
-                                        ,student1.getState(),student1.getDepartment(),student1.getCourse(),student1.getSemester(),student1.getAge());
+        StudentPojo studentPojo = new StudentPojo(student.getName(),student.getEmail(),student.getUniversityNo(),student.getPassword()
+                                        ,student.getBirthdate(),student.getAddress(),student.getCity()
+                                        ,student.getState(),student.getDepartment(),student.getCourse(),student.getSemester(),student.getAge());
+
 
         model.addAttribute("PageName","StudentProfile");
         model.addAttribute("student",studentPojo);
-        model.addAttribute("currentUser",student1);
 
         return "Template";
     }
@@ -75,20 +75,18 @@ public class StudentController {
 
 //===============> Student profile update start  ===============>
     @PostMapping("/profile/update")
-    public String updateStudentProfile(@ModelAttribute("Student") StudentPojo studentPojo)
+    public String updateStudentProfile(@ModelAttribute("Student") StudentPojo studentPojo,@ModelAttribute("currentUser") Student student)
     {
-        Student student1 = serviceStudentDao.getStudentById(4);
+        student.setAge(studentPojo.getAge());
+        student.setName(studentPojo.getName());
+        student.setBirthdate(studentPojo.getBirthdate());
+        student.setAddress(studentPojo.getAddress());
+        student.setCity(studentPojo.getCity());
+        student.setState(studentPojo.getState());
+        student.setCourse(studentPojo.getCourse());
+        student.setSemester(studentPojo.getSemester());
 
-        student1.setAge(studentPojo.getAge());
-        student1.setName(studentPojo.getName());
-        student1.setBirthdate(studentPojo.getBirthdate());
-        student1.setAddress(studentPojo.getAddress());
-        student1.setCity(studentPojo.getCity());
-        student1.setState(studentPojo.getState());
-        student1.setCourse(studentPojo.getCourse());
-        student1.setSemester(studentPojo.getSemester());
-
-        serviceStudentDao.saveStudent(student1);
+        serviceStudentDao.saveStudent(student);
 
 
         return "redirect:/student/profile";
@@ -101,9 +99,9 @@ public class StudentController {
 
 //===============> Student profile pic update start ===============>
     @PostMapping("/profile/updateProfilePic")
-    public String updateProfilePic(@RequestParam("profile_img")MultipartFile multipartFile) throws IOException
+    public String updateProfilePic(@RequestParam("profile_img")MultipartFile multipartFile,@ModelAttribute("currentUser") Student student) throws IOException
     {
-        ProfilePic profilePic = serviceStudentDao.getStudentById(4).getProfilePic();
+        ProfilePic profilePic = student.getProfilePic();
         if(!multipartFile.isEmpty())
         {
             if(!profilePic.getPic().equals("default_pic.jpg"))
@@ -132,7 +130,7 @@ public class StudentController {
             serviceProfilePicDao.saveProfilePic(profilePic);
         }
 
-        return "redirect:/faculty/profile";
+        return "redirect:/student/profile";
 
     }
 //<============== Student profile pic remove end <===============
@@ -141,19 +139,65 @@ public class StudentController {
 
 
 
+//===============> Student password update page start ===============>
+    @GetMapping("/passwordUpdate")
+    public String passwordUpdate(Model model)
+    {
+        model.addAttribute("PageName","StudentPassUpdate");
+        return "Template";
+
+    }
+//<============== Student password update page end <===============
+
+
+
+
+
+//===============> Student password update  start ===============>
+    @PostMapping("/passwordUpdate/process")
+    public String processNewPassword(@RequestParam("Password_old") String password_old,@RequestParam("Password_new") String password_new
+            ,@ModelAttribute("currentUser") Student student,Model model)
+    {
+        boolean match = BCrypt.checkpw(password_old,student.getPassword());
+        if(match)
+        {
+            if(service1.checkPassValidity(password_new))
+            {
+                student.setPassword(service1.encodePassword(password_new));
+                serviceStudentDao.saveStudent(student);
+                model.addAttribute("Match","match");
+            }
+            else
+            {
+                model.addAttribute("password_error","Password must contain" +
+                        " at least one small letter, capital letter, number, and special character like @ or _  " +
+                        "with minimum size of 8 letters");
+            }
+        }
+        else
+        {
+            model.addAttribute("NotMatch","NotMatch");
+        }
+        model.addAttribute("PageName","StudentPassUpdate");
+        return "Template";
+    }
+//<============== Student password update  end <===============
+
+
+
+
+
 //===============> Student subjects page start ===============>
     @GetMapping("/subjects")
-    public String subjects(Model model)
+    public String subjects(Model model,@ModelAttribute("currentUser") Student student)
     {
-        Student student1 = serviceStudentDao.getStudentById(4);
+        List<Subject> subjects = serviceStudent.subjectsAvailableForRegistration(student);
 
-        List<Subject> subjects = serviceStudent.subjectsAvailableForRegistration(student1);
-
-        List<SubjectRegistrationRequest> requestsWithStatus = serviceSubjectRegistrationDao.getRequestOfStudent(student1);
+        List<SubjectRegistrationRequest> requestsWithStatus = serviceSubjectRegistrationDao.getRequestOfStudent(student);
 
         model.addAttribute("PageName","StudentSubjects");
         model.addAttribute("subjects",subjects);
-        model.addAttribute("registeredSubjects",student1.getSubjects());
+        model.addAttribute("registeredSubjects",student.getSubjects());
         model.addAttribute("RegistrationStatus",requestsWithStatus);
 
         return "Template";
@@ -166,16 +210,15 @@ public class StudentController {
 
 //===============> Student subject register page start ===============>
     @GetMapping("/subjects/register")
-    public String registerSubject(@ModelAttribute("sId") int id,Model model) {
-        Student student1 = serviceStudentDao.getStudentById(4);
+    public String registerSubject(@ModelAttribute("sId") int id,Model model,@ModelAttribute("currentUser") Student student) {
         Subject subject =serviceSubjectDao.getSubjectById(id);
 
 
-        SubjectRegistrationRequest subjectRegistrationRequest = new SubjectRegistrationRequest(student1,subject,"Pending");
+        SubjectRegistrationRequest subjectRegistrationRequest = new SubjectRegistrationRequest(student,subject,"Pending");
         serviceSubjectRegistrationDao.saveSubjectRegistrationRequest(subjectRegistrationRequest);
 
-        student1.addRequest(subjectRegistrationRequest);
-        serviceStudentDao.saveStudent(student1);
+        student.addRequest(subjectRegistrationRequest);
+        serviceStudentDao.saveStudent(student);
 
         subject.addRequest(subjectRegistrationRequest);
         serviceSubjectDao.save(subject);
@@ -190,10 +233,9 @@ public class StudentController {
 
 //===============> Student exams view page start ===============>
     @GetMapping("/exams")
-    public String exams(Model model)
+    public String exams(Model model,@ModelAttribute("currentUser") Student student)
     {
-        Student student1 = serviceStudentDao.getStudentById(4);
-        List<Score> scores = serviceScoreDao.getScoresOfStudent(student1);
+        List<Score> scores = serviceScoreDao.getScoresOfStudent(student);
         model.addAttribute("scores",scores);
         model.addAttribute("PageName","StudentExams");
         return "Template";
@@ -206,10 +248,9 @@ public class StudentController {
 
 //===============> Student attendance view page start ===============>
     @GetMapping("/attendance")
-    public String attendance(Model model)
+    public String attendance(Model model,@ModelAttribute("currentUser") Student student)
     {
-        Student student1 = serviceStudentDao.getStudentById(4);
-        List<Attendance> attendances = serviceAttendanceDao.getAttendanceOfStudent(student1);
+        List<Attendance> attendances = serviceAttendanceDao.getAttendanceOfStudent(student);
 
         model.addAttribute("attendances",attendances);
         model.addAttribute("PageName","StudentAttendance");
@@ -223,12 +264,11 @@ public class StudentController {
 
 //===============> Student query page start ===============>
     @GetMapping("/query")
-    public String query(Model model)
+    public String query(Model model,@ModelAttribute("currentUser") Student student)
     {
-        Student student1 = serviceStudentDao.getStudentById(4);
         QueryPojo queryPojo = new QueryPojo();
 
-        List<Query> queries = serviceQueryDao.getQueriesOfStudent(student1);
+        List<Query> queries = serviceQueryDao.getQueriesOfStudent(student);
 
         model.addAttribute("queries",queries);
         model.addAttribute("query",queryPojo);
@@ -243,22 +283,21 @@ public class StudentController {
 
 //===============> Student query submit start ===============>
     @PostMapping("/query/submit")
-    public String createQuery(@ModelAttribute("query") QueryPojo queryPojo)
+    public String createQuery(@ModelAttribute("query") QueryPojo queryPojo,@ModelAttribute("currentUser") Student student)
     {
-        Student student1 = serviceStudentDao.getStudentById(4);
-        Faculty faculty = student1.getFaculty();
+        Faculty faculty = student.getFaculty();
 
         Query query = new Query(queryPojo.getTitle(),queryPojo.getQuery(),null,"Pending");
-        query.setStudent(student1);
+        query.setStudent(student);
         query.setFaculty(faculty);
         serviceQueryDao.saveQuery(query);
 
 
-        student1.addQuery(query);
+        student.addQuery(query);
         faculty.addQuery(query);
 
-        serviceStudentDao.saveStudent(student1);
-        serviceFacultyDao.saveFaculty(faculty);
+        serviceStudentDao.saveStudent(student);
+        serviceFacultyDao.saveFaculty(faculty );
 
         return "redirect:/student/query";
 

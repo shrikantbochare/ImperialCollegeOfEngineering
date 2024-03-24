@@ -81,7 +81,7 @@ public class ServiceSubjectDaoImpl implements ServiceSubjectDao{
 //===============> Get subjects available for this semester start ===============>
     @Override
     public List<Subject> getSubjectsForThisSemester(String department, String course, String semester) {
-        return subjectRepository.findByDepartmentAndCourseAndSemester(department, course, semester);
+        return subjectRepository.findByDepartmentAndCourseAndSemesterAndFacultyIsNotNull(department, course, semester);
     }
 //<============== Get subjects available for this semester end <===============
 

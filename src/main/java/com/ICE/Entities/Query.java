@@ -28,10 +28,10 @@ public class Query {
     private String status;
 
     private Date resolvedDate;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Student student;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Faculty faculty;
 
 

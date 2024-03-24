@@ -4,6 +4,7 @@ package com.ICE.Service;
 import com.ICE.Entities.ProfilePic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,17 +13,21 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class Service1Impl implements Service1{
 
 
     private ServiceProfilePicDao serviceProfilePicDao;
+    private PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public Service1Impl(ServiceProfilePicDao serviceProfilePicDao) {
+    public Service1Impl(ServiceProfilePicDao serviceProfilePicDao,PasswordEncoder passwordEncoder) {
         this.serviceProfilePicDao = serviceProfilePicDao;
+        this.passwordEncoder=passwordEncoder;
     }
 
 
@@ -76,4 +81,31 @@ public class Service1Impl implements Service1{
         return date;
     }
 // <=========> Get Today's Date End <===========
+
+
+
+
+
+// =========> Check Password Validity Start ===========>
+    @Override
+    public Boolean checkPassValidity(String pass)
+    {
+        Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@_/*$])[A-Za-z\\d@_/*$]{8,}$");
+        Matcher matcher = pattern.matcher(pass);
+
+        return matcher.matches();
+    }
+// <=========> Check Password Validity End <===========
+
+
+
+
+
+// =========> Check Password Validity Start ===========>
+    @Override
+    public String encodePassword(String password) {
+        String encoded = passwordEncoder.encode(password);
+        return encoded;
+    }
+// <=========> Check Password Validity End <===========
 }

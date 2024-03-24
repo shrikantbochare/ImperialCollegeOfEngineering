@@ -48,15 +48,34 @@ public class Student {
 
     private String role;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Subject> subjects;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Faculty faculty;
 
 
-    @OneToOne(cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.PERSIST},fetch = FetchType.LAZY)
     private ProfilePic profilePic;
+
+
+    @OneToMany(mappedBy = "student",fetch = FetchType.LAZY)
+    private List<Attendance> attendances;
+
+
+
+    @OneToMany(mappedBy = "student",fetch = FetchType.LAZY)
+    private List<Score> scores;
+
+
+
+    @OneToMany(mappedBy = "student",fetch = FetchType.LAZY)
+    private List<Query> queries;
+
+
+
+    @OneToMany(mappedBy = "student",fetch = FetchType.LAZY)
+    private List<SubjectRegistrationRequest> subjectRegistrationRequests;
 
     public Student(String name, String email, String universityNo, String password,String department,String course) {
         this.name = name;
@@ -82,25 +101,6 @@ public class Student {
         this.course = course;
         this.semester = semester;
     }
-
-    @OneToMany(mappedBy = "student")
-    private List<Attendance> attendances;
-
-
-
-    @OneToMany(mappedBy = "student")
-    private List<Score> scores;
-
-
-
-    @OneToMany(mappedBy = "student")
-    private List<Query> queries;
-
-
-
-    @OneToMany(mappedBy = "student")
-    private List<SubjectRegistrationRequest> subjectRegistrationRequests;
-
 
 
     public Student() {

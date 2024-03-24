@@ -145,10 +145,36 @@ public class HomeController {
     @GetMapping("/login")
     public String login(Model model,Principal p)
     {
-        model.addAttribute("PageName","login");
-        return "Template";
+        if(p == null)
+        {
+            model.addAttribute("PageName","login");
+            return "Template";
+        }
+        else
+        {
+            return "redirect:/home/loginSuccess";
+        }
     }
 // <============= Login handler End <==============
+
+
+
+
+
+// =============> loginSuccess handler Start ==============>
+    @GetMapping("/loginSuccess")
+    public String loginSuccess(Principal p,@ModelAttribute("currentUser") Object object)
+    {
+        if(object instanceof Student)
+        {
+            return "redirect:/student/profile";
+        }
+        else
+        {
+            return "redirect:/faculty/profile";
+        }
+    }
+// <============= loginSuccess handler End <==============
 
 
 
@@ -158,8 +184,15 @@ public class HomeController {
     @GetMapping("/student/registration")
     public String studentRegistration(Model model, Principal p)
     {
-        model.addAttribute("PageName","Student_registration");
-        return "Template";
+       if(p == null)
+       {
+           model.addAttribute("PageName","Student_registration");
+           return "Template";
+       }
+       else
+       {
+           return "redirect:/home/loginSuccess";
+       }
     }
 
 
@@ -167,10 +200,16 @@ public class HomeController {
 
 
     @PostMapping("/student/registration/verification")
-    public String emailVerification(Model model)
+    public String emailVerification(Model model,Principal p)
     {
-        model.addAttribute("PageName","Student_registration_verification");
-        return "Template";
+        if(p == null) {
+            model.addAttribute("PageName", "Student_registration_verification");
+            return "Template";
+        }
+        else
+        {
+            return "redirect:/home/loginSuccess";
+        }
     }
 
 
@@ -178,12 +217,18 @@ public class HomeController {
 
 
     @PostMapping("/student/registration/otpVerification")
-    public String otpVerification(Model model)
+    public String otpVerification(Model model,Principal p)
     {
-        model.addAttribute("PageName","Student_registration2");
-        StudentPojo studentPojo = new StudentPojo();
-        model.addAttribute("student",studentPojo);
-        return "Template";
+        if(p == null) {
+            model.addAttribute("PageName", "Student_registration2");
+            StudentPojo studentPojo = new StudentPojo();
+            model.addAttribute("student", studentPojo);
+            return "Template";
+        }
+        else
+        {
+            return "redirect:/home/loginSuccess";
+        }
     }
 
 
@@ -191,8 +236,9 @@ public class HomeController {
 
 
     @PostMapping("/student/registrationDetails")
-    public String studentRegDetails(@ModelAttribute("student") StudentPojo studentPojo)
+    public String studentRegDetails(@ModelAttribute("student") StudentPojo studentPojo,Principal p)
     {
+        if(p == null) {
         Student student = new Student(studentPojo.getName(),studentPojo.getEmail(),studentPojo.getUniversityNo(),passwordEncoder.encode(studentPojo.getPassword()),studentPojo.getDepartment(),studentPojo.getCourse());
         student.setRole("ROLE_STUDENT");
         ProfilePic profilePic = new ProfilePic("default_pic.jpg");
@@ -206,6 +252,12 @@ public class HomeController {
         student.setFaculty(faculty);
         serviceStudentDao.saveStudent(student);
         return "redirect:/home/login";
+        }
+        else
+        {
+            return "redirect:/home/loginSuccess";
+        }
+
     }
 
 // <================ Student Registration End <=================
@@ -216,10 +268,17 @@ public class HomeController {
 
 // ================> Faculty Registration Start =================>
     @GetMapping("/faculty/registration")
-    public String facultyRegistration(Model model)
+    public String facultyRegistration(Model model,Principal p)
     {
-        model.addAttribute("PageName","faculty_registration");
-        return "Template";
+        if(p == null)
+        {
+            model.addAttribute("PageName","faculty_registration");
+            return "Template";
+        }
+        else
+        {
+            return "redirect:/home/loginSuccess";
+        }
     }
 
 
@@ -227,10 +286,16 @@ public class HomeController {
 
 
     @PostMapping("/faculty/registration/verification")
-    public String emailVerification2(Model model)
+    public String emailVerification2(Model model,Principal p)
     {
-        model.addAttribute("PageName","Faculty_registration_verification");
-        return "Template";
+        if(p == null) {
+            model.addAttribute("PageName", "Faculty_registration_verification");
+            return "Template";
+        }
+        else
+        {
+            return "redirect:/home/loginSuccess";
+        }
     }
 
 
@@ -238,12 +303,18 @@ public class HomeController {
 
 
     @PostMapping("/faculty/registration/otpVerification")
-    public String otpVerification2(Model model)
+    public String otpVerification2(Model model,Principal p)
     {
-        model.addAttribute("PageName","Faculty_registration2");
-        FacultyPojo facultyPojo = new FacultyPojo();
-        model.addAttribute("faculty",facultyPojo);
-        return "Template";
+        if(p == null) {
+            model.addAttribute("PageName", "Faculty_registration2");
+            FacultyPojo facultyPojo = new FacultyPojo();
+            model.addAttribute("faculty", facultyPojo);
+            return "Template";
+        }
+        else
+        {
+            return "redirect:/home/loginSuccess";
+        }
     }
 
 
@@ -251,15 +322,21 @@ public class HomeController {
 
 
     @PostMapping("/faculty/registrationDetails")
-    public String FacultyRegDetails(@ModelAttribute("faculty") FacultyPojo facultyPojo)
+    public String FacultyRegDetails(@ModelAttribute("faculty") FacultyPojo facultyPojo,Principal p)
     {
-        Faculty faculty = new Faculty(facultyPojo.getName(),facultyPojo.getFacultyId(),facultyPojo.getEmail(),passwordEncoder.encode(facultyPojo.getPassword()));
-        faculty.addRole("ROLE_FACULTY");
-        ProfilePic profilePic = new ProfilePic("default_pic.jpg");
-        profilePic.setFaculty(faculty);
-        faculty.setProfilePic(profilePic);
-        serviceFacultyDao.saveFaculty(faculty);
-        return "redirect:/home/login";
+        if(p == null) {
+            Faculty faculty = new Faculty(facultyPojo.getName(), facultyPojo.getFacultyId(), facultyPojo.getEmail(), passwordEncoder.encode(facultyPojo.getPassword()));
+            faculty.addRole("ROLE_FACULTY");
+            ProfilePic profilePic = new ProfilePic("default_pic.jpg");
+            profilePic.setFaculty(faculty);
+            faculty.setProfilePic(profilePic);
+            serviceFacultyDao.saveFaculty(faculty);
+            return "redirect:/home/login";
+        }
+        else
+        {
+            return "redirect:/home/loginSuccess";
+        }
     }
 
 // <================ Faculty Registration End <=================

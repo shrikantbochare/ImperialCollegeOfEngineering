@@ -13,4 +13,8 @@ public interface Service1 {
     void deleteProfilePicFromPath(String picName) throws IOException;
 
     Date getTodayDate();
+
+    Boolean checkPassValidity(String pass);
+
+    String encodePassword(String password);
 }

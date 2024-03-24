@@ -7,6 +7,7 @@ import com.ICE.Pojo.QueryPojo;
 import com.ICE.Pojo.SubjectPojo;
 import com.ICE.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,7 +63,6 @@ public class FacultyController {
     @GetMapping("/profile")
     public String facultyProfile(Model model,@ModelAttribute("currentUser") Faculty faculty)
     {
-        System.out.println(faculty.getRoles());
         FacultyPojo facultyPojo = new FacultyPojo(faculty.getName(),faculty.getFacultyId(),faculty.getEmail(),faculty.getPassword(),
                 faculty.getAge(),faculty.getBirthdate(),faculty.getAddress(),faculty.getCity(),faculty.getState());
 
@@ -141,6 +141,56 @@ public class FacultyController {
 
 
 
+
+//===============> Faculty password update page start ===============>
+    @GetMapping("/passwordUpdate")
+    public String passwordUpdate(Model model)
+    {
+        model.addAttribute("PageName","FacultyPassUpdate");
+        return "Template";
+
+    }
+//<============== Faculty password update page end <===============
+
+
+
+
+
+//===============> Faculty password update  start ===============>
+    @PostMapping("/passwordUpdate/process")
+    public String processNewPassword(@RequestParam("Password_old") String password_old,@RequestParam("Password_new") String password_new
+                                        ,@ModelAttribute("currentUser") Faculty faculty,Model model)
+    {
+        boolean match = BCrypt.checkpw(password_old,faculty.getPassword());
+        if(match)
+        {
+            if(service1.checkPassValidity(password_new))
+            {
+                faculty.setPassword(service1.encodePassword(password_new));
+                serviceFacultyDao.saveFaculty(faculty);
+                model.addAttribute("Match","match");
+            }
+            else
+            {
+                model.addAttribute("password_error","Password must contain" +
+                        " at least one small letter, capital letter, number, and special character like @ or _  " +
+                        "with minimum size of 8 letters");
+            }
+        }
+        else
+        {
+            model.addAttribute("NotMatch","NotMatch");
+        }
+        model.addAttribute("PageName","FacultyPassUpdate");
+        return "Template";
+    }
+//<============== Faculty password update  end <===============
+
+
+
+
+
+
 //===============> Faculty update department details page start ===============>
     @GetMapping("/updateDeptdetails")
     public String updateDeptdetails(Model model,@ModelAttribute("currentUser") Faculty faculty)
@@ -171,7 +221,10 @@ public class FacultyController {
 
         if(faculty.getDesignation().equals("HOD"))
         {
-            faculty.addRole("ROLE_HOD");
+            if(!faculty.getRoles().contains("ROLE_HOD"))
+            {
+                faculty.addRole("ROLE_HOD");
+            }
         }
         else
         {

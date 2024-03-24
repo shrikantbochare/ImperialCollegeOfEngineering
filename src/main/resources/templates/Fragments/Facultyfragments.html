@@ -93,7 +93,7 @@
                     <button type="submit" class="btn btn-primary w-50">Update</button>
                 </div>
             </form>
-            <p class="text-center m-1"><a class="text-decoration-none text-danger" href="">Password Update</a></p>
+            <p class="text-center m-1"><a class="text-decoration-none text-danger" th:href="@{/faculty/passwordUpdate}">Password Update</a></p>
         </div>
     </div>
     <div th:replace="~{Fragments/FacultyFragments :: FacultyMenu}"></div>
@@ -112,6 +112,51 @@
 </div>
 <!--Faculty profile fragment End-->
 
+
+
+
+
+<!--Faculty Password fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="FacultyPassUpdate">
+    <div class="m-1">
+        <h5 class="text-primary text-center">Password Update</h5>
+    </div>
+
+
+    <div class="profileForm row">
+        <div class="col-md-8 offset-md-2 mb-2">
+            <form th:action="@{/faculty/passwordUpdate/process}"  method="post" enctype="multipart/form-data">
+                <div class="form-floating mb-3 mt-3 ">
+                    <input type="text" class="form-control" id="password_old" placeholder="Enter current password"
+                           name="Password_old">
+                    <label for="password_old">Current password :</label>
+                </div>
+                <div class="form-floating mb-3 mt-3 ">
+                    <input type="password" class="form-control" id="password_new" placeholder="Enter password"
+                           name="Password_new">
+                    <label for="password_new">New password :</label>
+                    <p th:if="${password_error}" th:text="${password_error}"></p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button type="submit" class="myButton w-50">Submit</button>
+                </div>
+            </form>
+
+
+            <div th:if="${Match}">
+                <h4 class="text-success text-center">Password Updated Successfully</h4>
+                <p class="text-center text-dark">Go back to <a class="text-decoration-none text-primary" th:href="@{/faculty/profile}">Profile</a> page</p>
+            </div>
+            <div th:if="${NotMatch}">
+                <h4 class="text-danger text-center">Current Password did not match, try again..!</h4>
+            </div>
+        </div>
+        <hr>
+        <div th:replace="~{Fragments/FacultyFragments :: FacultyMenu}"></div>
+
+    </div>
+</div>
+<!--Faculty Password fragment End-->
 
 
 
@@ -140,7 +185,7 @@
                 <option th:value="HOD">HOD</option>
             </select>
             <select class="form-select mb-2" aria-label="Default select example" th:field="*{classTeacher}">
-                <option th:value="Select_Year" selected>Select Class</option>
+                <option th:value="None" selected>Select Class</option>
                 <option th:value="First_Year">First Year</option>
                 <option th:value="Second_Year">Second Year</option>
                 <option th:value="Third_Year">Third Year</option>

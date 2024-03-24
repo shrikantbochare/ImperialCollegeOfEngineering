@@ -17,7 +17,7 @@ public interface SubjectRepository extends JpaRepository<Subject,Integer> {
 
     List<Subject> findByIdIn(Set<Integer> Ids);
 
-    List<Subject> findByDepartmentAndCourseAndSemester(String department,String course,String semester);
+    List<Subject> findByDepartmentAndCourseAndSemesterAndFacultyIsNotNull(String department,String course,String semester);
 
 
     List<Subject> findByFaculty(Faculty faculty);

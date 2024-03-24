@@ -2,7 +2,9 @@ package com.ICE.Service;
 
 
 import com.ICE.DAO.ProfilePicRepository;
+import com.ICE.Entities.Faculty;
 import com.ICE.Entities.ProfilePic;
+import com.ICE.Entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,4 +45,26 @@ public class ServiceProfilePicDaoImpl implements ServiceProfilePicDao{
         return profilePic;
     }
 //<============== Get the profile pic by Id end <===============
+
+
+
+
+
+//===============> Get the profile pic of student start ===============>
+    @Override
+    public ProfilePic getProfilePicOfStudent(Student student) {
+        return profilePicRepository.findByStudent(student);
+    }
+//<============== Get the profile pic of student end <===============
+
+
+
+
+
+//===============> Get the profile pic of faculty start ===============>
+    @Override
+    public ProfilePic getProfilePicOfFaculty(Faculty faculty) {
+        return profilePicRepository.findByFaculty(faculty);
+    }
+//<============== Get the profile pic of faculty end <===============
 }

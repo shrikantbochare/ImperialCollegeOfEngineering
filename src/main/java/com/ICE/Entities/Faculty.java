@@ -43,18 +43,18 @@ public class Faculty {
 
     private List<String> roles;
 
-    @OneToMany(mappedBy = "faculty")
+    @OneToMany(mappedBy = "faculty",fetch = FetchType.LAZY)
     private List<Student> students;
 
     @OneToMany(mappedBy = "faculty",fetch = FetchType.LAZY)
     private List<Subject> subjects;
 
 
-    @OneToMany(mappedBy = "faculty")
+    @OneToMany(mappedBy = "faculty",fetch = FetchType.LAZY)
     private List<Query> queries;
 
 
-    @OneToOne(cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.PERSIST},fetch = FetchType.LAZY)
     private ProfilePic profilePic;
 
 

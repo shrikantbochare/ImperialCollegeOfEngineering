@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/home/login")
                         .loginProcessingUrl("/home/login/authenticate")
-                        .defaultSuccessUrl("/home/login")
+                        .defaultSuccessUrl("/home/loginSuccess")
                         .failureUrl("/home/login?error=true"))
                 .logout(logout ->
                         logout.logoutUrl("/home/logout")

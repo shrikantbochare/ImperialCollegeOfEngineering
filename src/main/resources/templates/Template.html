@@ -150,6 +150,12 @@
 
 
 
+    <div th:if="${PageName == 'StudentPassUpdate'}">
+      <div th:replace="~{Fragments/StudentFragments :: StudentPassUpdate}"></div>
+    </div>
+
+
+
     <div th:if="${PageName == 'StudentSubjects'}">
        <div th:replace="~{Fragments/StudentFragments :: StudentSubjects}"></div>
     </div>
@@ -181,6 +187,12 @@
 
     <div th:if="${PageName == 'FacultyProfile'}">
       <div th:replace="~{Fragments/FacultyFragments :: FacultyProfile}"></div>
+    </div>
+
+
+
+    <div th:if="${PageName == 'FacultyPassUpdate'}">
+      <div th:replace="~{Fragments/FacultyFragments :: FacultyPassUpdate}"></div>
     </div>
 
 
@@ -251,6 +263,15 @@
 
     <div th:if="${PageName == 'FacultyEditSubject'}">
       <div th:replace="~{Fragments/FacultyFragments :: FacultyEditSubject}"></div>
+    </div>
+
+
+
+    <div th:if="${PageName == 'Exception'}">
+      <div class="divContainer m-4 p-3">
+        <h3 class="m-2 text-center text-warning">Something Went wrong.. Please try again later!</h3>
+        <p class="m-2 text-center text-dark">Go back to <span><a class="text-decoration-none text-primary" th:href="@{/home/loginSuccess}">Profile </a></span>page.</p>
+      </div>
     </div>
 
 

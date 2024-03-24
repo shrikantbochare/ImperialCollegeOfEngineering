@@ -12,11 +12,11 @@ public class SubjectRegistrationRequest {
     private int id;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Student student;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Subject subject;
 
 

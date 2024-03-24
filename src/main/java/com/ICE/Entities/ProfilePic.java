@@ -15,11 +15,11 @@ public class ProfilePic {
     private String pic;
 
 
-    @OneToOne(mappedBy = "profilePic")
+    @OneToOne(mappedBy = "profilePic",fetch = FetchType.LAZY)
     private Student student;
 
 
-    @OneToOne(mappedBy = "profilePic")
+    @OneToOne(mappedBy = "profilePic",fetch = FetchType.LAZY)
     private Faculty faculty;
 
 

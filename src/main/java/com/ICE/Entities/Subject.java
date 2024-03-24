@@ -26,20 +26,20 @@ public class Subject {
 
     private int credits;
 
-    @ManyToMany(mappedBy = "subjects")
+    @ManyToMany(mappedBy = "subjects",fetch = FetchType.LAZY)
     private List<Student> students;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Faculty faculty;
 
 
-    @OneToMany(mappedBy = "subject")
+    @OneToMany(mappedBy = "subject",fetch = FetchType.LAZY)
     private List<Attendance> attendances;
 
 
 
-    @OneToMany(mappedBy = "subject")
+    @OneToMany(mappedBy = "subject",fetch = FetchType.LAZY)
     private List<Score> scores;
 
 
@@ -47,7 +47,7 @@ public class Subject {
     private int studentCount;
 
 
-    @OneToMany(mappedBy = "subject")
+    @OneToMany(mappedBy = "subject",fetch = FetchType.LAZY)
     private List<SubjectRegistrationRequest> subjectRegistrationRequests;
 
     public Subject(String name, String subId, String department, String course, String semester, int credits) {
