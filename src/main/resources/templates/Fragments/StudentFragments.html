@@ -116,9 +116,9 @@
     <div class="container rounded border border-1 border-dark p-2 mt-2">
         <h3 class="text-center text-dark">DEPARTMENT DETAILS</h3>
         <div >
-            <p class="m-1">Department Name : <a class="text-decoration-none text-dark" href="" th:text="${currentUser.department}">Password Update</a></p>
-            <p class="m-1">Head Of The Department : <a class="text-decoration-none text-dark" href="">Password Update</a></p>
-            <p class="m-1">Class Teacher : <a class="text-decoration-none text-dark" href="" th:text="${currentUser.faculty.name}">Password Update</a></p>
+            <p class="m-1">Department Name : <a class="text-decoration-none " th:href="@{'/home/dept/' + ${currentUser.department}}" th:text="${currentUser.department}">Password Update</a></p>
+            <p class="m-1">Head Of The Department : <a class="text-decoration-none " th:href="@{/profile/faculty(id=${currentUser.faculty.id})}">Password Update</a></p>
+            <p class="m-1">Class Teacher : <a class="text-decoration-none " th:href="@{/profile/faculty(id=${currentUser.faculty.id})}" th:text="${currentUser.faculty.name}">Password Update</a></p>
 
         </div>
     </div>
@@ -199,7 +199,7 @@
                 <td th:text="${subject.name}">CMS</td>
                 <td th:text="${subject.subId}">IT002</td>
                 <td th:text="${subject.credits}">4</td>
-                <td th:text="${subject.faculty.name}">4</td>
+                <td ><a class="text-decoration-none " th:href="@{/profile/faculty(id=${subject.faculty.id})}" th:text="${subject.faculty.name}"></a></td>
                 <td ><a th:href="@{/student/subjects/register(sId=${subject.id})}" class="btn btn-primary">Add</a></td>
             </tr>
             </tbody>
@@ -225,7 +225,7 @@
                 <td th:text="${subject.name}">CMS</td>
                 <td th:text="${subject.subId}">IT002</td>
                 <td th:text="${subject.credits}">4</td>
-                <td th:text="${subject.faculty.name}">4</td>
+                <td><a class="text-decoration-none " th:href="@{/profile/faculty(id=${subject.faculty.id})}" th:text="${subject.faculty.name}"></a></td>
             </tr>
             </tbody>
         </table>
@@ -251,7 +251,7 @@
                 <td th:text="${request.subject.name}">CMS</td>
                 <td th:text="${request.subject.subId}">IT002</td>
                 <td th:text="${request.subject.credits}">4</td>
-                <td th:text="${request.subject.faculty.name}">4</td>
+                <td ><a class="text-decoration-none " th:href="@{/profile/faculty(id=${request.subject.faculty.id})}" th:text="${request.subject.faculty.name}"></a></td>
                 <td th:text="${request.status}">4</td>
             </tr>
             </tbody>
@@ -332,7 +332,7 @@
                 <td th:text="${attendance.presentClasses}">12</td>
                 <td th:text="${attendance.presentPercentage}">80</td>
                 <td th:text="${attendance.updatedDate}">04/02/2024</td>
-                <td th:text="${attendance.subject.faculty.name}">Abc</td>
+                <td ><a class="text-decoration-none " th:href="@{/profile/faculty(id=${attendance.subject.faculty.id})}" th:text="${attendance.subject.faculty.name}"></a></td>
             </tr>
             </tbody>
         </table>
@@ -414,7 +414,7 @@
         <p class="text-primary fw-bold">Status : <span class="font-monospace text-dark fst-normal" th:text="${query.status}">dhdghfgj</span></p>
         <p class="text-primary fw-bold">Resolved on : <span class="font-monospace text-dark fst-normal" th:text="${query.resolvedDate}">ghjdrthg</span></p>
         <p class="text-primary fw-bold">Remark : <span class="font-monospace text-dark fst-normal" th:text="${query.remark}">fghfghfghfgf</span></p>
-        <p class="text-primary fw-bold">Resolved By : <span class="font-monospace text-dark fst-normal" th:text="${query.faculty.name}">gffjghjhgjhjjhhjhj</span></p>
+        <p class="text-primary fw-bold">Resolved By : <span class="font-monospace text-dark fst-normal"><a class="text-decoration-none " th:href="@{/profile/faculty(id=${query.faculty.id})}" th:text="${query.faculty.name}"></a></span></p>
     </div>
 </div>
 <!--Student view query fragment End-->

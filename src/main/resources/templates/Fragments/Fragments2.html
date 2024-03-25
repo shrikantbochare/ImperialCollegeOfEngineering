@@ -238,5 +238,40 @@
 
 
 
+
+
+<div class="divContainer m-4 p-3" th:fragment="Profile">
+    <div class="row ">
+        <div class="col-md-4">
+            <div class="profilePic d-flex justify-content-center align-items-center">
+                    <img th:src="@{'/Images/ProfilePic/' + ${profileOf.profilePic.pic}}" alt=""  class="img-thumbnail profile_img">
+                </div>
+        </div>
+        <div class="col-md-8 ">
+            <div class="p-2">
+                <p class="m-1">Full Name : <span th:text="${profileOf.name}"></span></p>
+                <p class="m-1">Email : <span th:text="${profileOf.email}"></span></p>
+                <p class="m-1">Age : <span th:text="${profileOf.age}"></span></p>
+                <p class="m-1">BirthDate : <span th:text="${profileOf.birthdate}"></span></p>
+                <p class="m-1">Address : <span th:text="${profileOf.address}"></span></p>
+                <p class="m-1">City : <span th:text="${profileOf.city}"></span></p>
+                <p class="m-1">State : <span th:text="${profileOf.state}"></span></p>
+                <p class="m-1">Department : <span th:text="${profileOf.department}"></span></p>
+                <div th:if="${section == 'student'}">
+                    <p class="m-1">Course : <span th:text="${profileOf.course}"></span></p>
+                    <p class="m-1">Semester : <span th:text="${profileOf.semester}"></span></p>
+                    <p class="m-1">Class Teacher : <span th:text="${profileOf.faculty.name}"></span></p>
+                </div>
+                <div th:unless="${section == 'student'}">
+                    <p class="m-1">Designation : <span th:text="${profileOf.designation}"></span></p>
+                    <p class="m-1">Class Teacher Of : <span th:text="${profileOf.classTeacher}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 </body>
 </html>

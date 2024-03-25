@@ -100,8 +100,8 @@
     <div class="container rounded border border-1 border-dark p-2 mt-3">
         <h3 class="text-center text-dark">DEPARTMENT DETAILS</h3>
         <div class="fw-bold pt-2">
-            <p class="m-1">Department Name : <span class="text-danger" th:text="${currentUser.department}"></span></p>
-            <p class="m-1">Head Of The Department : <span class="text-danger"></span></p>
+            <p class="m-1">Department Name : <span class="text-danger"><a class="text-decoration-none" th:href="@{'/home/dept/' + ${currentUser.department}}" th:text="${currentUser.department}"></a></span></p>
+            <p class="m-1">Head Of The Department : <span class="text-danger"><a class="text-decoration-none" th:href="@{/profile/faculty}"></a></span></p>
             <p class="m-1">Your Designation : <span class="text-danger" th:text="${currentUser.designation}"></span></p>
             <p class="m-1">Allocated Class : <span class="text-danger" th:text="${currentUser.classTeacher}"></span></p>
         </div>
@@ -326,7 +326,7 @@
             <tbody class="text-center">
             <tr th:each="attendance,item : ${attendances}">
                     <td th:text="${item.count}">1</td>
-                    <td th:text="${attendance.student.name}"><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
+                    <td><a th:href="@{/profile/student(id=${attendance.student.id})}" class="text-decoration-none" th:text="${attendance.student.name}">name</a></td>
                     <td th:text="${attendance.totalClasses}">13</td>
                     <td th:text="${attendance.presentClasses}">12</td>
                     <td th:text="${attendance.presentPercentage}">50</td>
@@ -362,7 +362,7 @@
                 <form th:action="@{/faculty/subjects/attendance/update/process}" method="post"  th:object="${attendance}">
                     <td th:text="${item.count}">1</td>
                     <td class="d-none"><input type="number" name="id" th:value="${attendance.id}" readonly/></td>
-                    <td th:text="${attendance.student.name}"><a th:href="@{/Student/profile/view(stId={attendance.student.id})}" class="text-decoration-none">name</a></td>
+                    <td ><a th:href="@{/profile/student(id=${attendance.student.id})}" class="text-decoration-none" th:text="${attendance.student.name}">name</a></td>
                     <td><input type="number" name="totalClasses" id="totalClasses" th:value="${attendance.totalClasses}"/></td>
                     <td><input type="number" name="presentClasses" id="presentClasses" th:value="${attendance.presentClasses}"/></td>
                     <td><button type="submit" class="btn btn-warning">Update</button></td>
@@ -400,7 +400,7 @@
             <tbody class="text-center">
             <tr th:each="score,item : ${scores}">
                 <td th:text="${item.count}">1</td>
-                <td th:text="${score.student.name}"><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none">name</a></td>
+                <td ><a th:href="@{/profile/student(id=${score.student.id})}" class="text-decoration-none" th:text="${score.student.name}">name</a></td>
                 <td th:text="${score.ct1}">13</td>
                 <td th:text="${score.ct2}">12</td>
                 <td th:text="${score.internal}">50</td>
@@ -443,7 +443,7 @@
                 <form th:action="@{/faculty/exams/update/process}" th:object="${score}" method="post">
                     <td th:text="${item.count}">1</td>
                     <td class="d-none"><input type="number" th:value="${score.id}" name="id" readonly/></td>
-                    <td th:text="${score.student.name}"><a th:href="@{/Student/profile/view(stId=${score.student.id})}" class="text-decoration-none">name</a></td>
+                    <td><a th:href="@{/profile/student(id=${score.student.id})}" class="text-decoration-none" th:text="${score.student.name}">name</a></td>
                     <td><input type="number" name="ct1" id="ct1" th:value="${score.ct1}"/></td>
                     <td><input type="number" name="ct2" id="ct2" th:value="${score.ct2}"/></td>
                     <td><input type="number" name="internal" id="internal" th:value="${score.internal}"/></td>
@@ -481,7 +481,7 @@
             <tbody class="text-center">
             <tr th:each="query,item : ${queries}">
                 <td th:text="${item.count}">1</td>
-                <td ><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none" th:text="${query.student.name}">name</a></td>
+                <td ><a th:href="@{/profile/student(id=${query.student.id})}" class="text-decoration-none" th:text="${query.student.name}">name</a></td>
                 <td th:text="${query.title}">13</td>
                 <td th:text="${query.postedDate}">12</td>
                 <td><a th:href="@{/faculty/query/resolve(qId=${query.id})}" class="btn btn-primary">Resolve</a></td>
@@ -505,7 +505,7 @@
             <tbody class="text-center">
             <tr th:each="query,item : ${resolvedQueries}">
                 <td th:text="${item.count}">1</td>
-                <td ><a th:href="@{/Student/profile/view(stId=1)}" class="text-decoration-none" th:text="${query.student.name}">name</a></td>
+                <td ><a th:href="@{/profile/student(id=${query.student.id})}" class="text-decoration-none" th:text="${query.student.name}">name</a></td>
                 <td th:text="${query.title}">13</td>
                 <td th:text="${query.postedDate}">12</td>
                 <td th:text="${query.resolvedDate}"></td>
@@ -526,7 +526,7 @@
     <div class="container">
         <h3 class="text-center text-primary">Query</h3>
         <div class="p-2 fw-bold">
-            <p class="m-1">Raised by : <a class="text-decoration-none text-danger" href="" th:text="${query.student.name}">Password Update</a></p>
+            <p class="m-1">Raised by : <a th:href="@{/profile/student(id=${query.student.id})}" class="text-decoration-none" th:text="${query.student.name}">name</a></p>
             <p class="m-1">Query Subject : <span class="text-success" th:text="${query.title}"></span></p>
             <p class="m-1">Query Data : <span class="text-success" th:text="${query.query}"></span></p>
             <p class="m-1">Raised On :<span class="text-success" th:text="${query.postedDate}"></span></p>
@@ -560,7 +560,7 @@
 <div class="divContainer m-4 p-3" th:fragment="FacultyRequests">
     <div th:replace="~{Fragments/FacultyFragments :: FacultyMenu}"></div>
     <div class="table-responsive">
-        <h3 class="text-center text-primary mb-3">AllOCATED SUBJECT DATA</h3>
+        <h3 class="text-center text-primary mb-3">ALLOCATED SUBJECT DATA</h3>
         <table class="m-2 table table-bordered">
             <thead>
             <tr class="text-center">
@@ -574,7 +574,7 @@
             <tbody class="text-center">
             <tr th:each=" request,item : ${Requests}">
                 <td th:text="${item.count}">1</td>
-                <td th:text="${request.student.name}">IT0002</td>
+                <td><a th:href="@{/profile/student(id=${request.student.id})}" class="text-decoration-none" th:text="${request.student.name}">name</a></td>
                 <td th:text="${request.subject.subId}">13</td>
                 <td th:text="${request.subject.name}">12</td>
                 <td>

@@ -68,7 +68,7 @@ public class HomeController {
 
 
 // ===========> Department handlers Start ==============>
-    @GetMapping("/dept/ce")
+    @GetMapping("/dept/Civil_Engineering")
     public String civil(Model model)
     {
         model.addAttribute("DeptName","Civil Engineering");
@@ -80,7 +80,7 @@ public class HomeController {
 
 
 
-    @GetMapping("/dept/me")
+    @GetMapping("/dept/Mechanical_Engineering")
     public String mech(Model model)
     {
         model.addAttribute("DeptName","Mechanical Engineering");
@@ -92,7 +92,7 @@ public class HomeController {
 
 
 
-    @GetMapping("/dept/ee")
+    @GetMapping("/dept/Electrical_Engineering")
     public String electrical(Model model)
     {
         model.addAttribute("DeptName","Electrical Engineering");
@@ -104,7 +104,7 @@ public class HomeController {
 
 
 
-    @GetMapping("/dept/cse")
+    @GetMapping("/dept/Computer_Science_Engineering")
     public String computer(Model model)
     {
         model.addAttribute("DeptName","Computer Science And Engineering");
@@ -116,7 +116,7 @@ public class HomeController {
 
 
 
-    @GetMapping("/dept/it")
+    @GetMapping("/dept/Information_Technology")
     public String info(Model model)
     {
         model.addAttribute("DeptName","Information Technology");
@@ -128,7 +128,7 @@ public class HomeController {
 
 
 
-    @GetMapping("/dept/etc")
+    @GetMapping("/dept/Electronics_Engineering")
     public String electronics(Model model)
     {
         model.addAttribute("DeptName","Electronics and Communication");

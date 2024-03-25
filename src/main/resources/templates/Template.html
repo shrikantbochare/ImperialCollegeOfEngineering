@@ -267,6 +267,12 @@
 
 
 
+    <div th:if="${PageName == 'Profile'}">
+      <div th:replace="~{Fragments/Fragments2 :: Profile}"></div>
+    </div>
+
+
+
     <div th:if="${PageName == 'Exception'}">
       <div class="divContainer m-4 p-3">
         <h3 class="m-2 text-center text-warning">Something Went wrong.. Please try again later!</h3>
