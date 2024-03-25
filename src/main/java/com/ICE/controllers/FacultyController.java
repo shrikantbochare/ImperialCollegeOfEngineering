@@ -350,7 +350,7 @@ public class FacultyController {
         Attendance oldAttendance = serviceAttendanceDao.getAttendanceById(attendance.getId());
         oldAttendance.setPresentClasses(attendance.getPresentClasses());
         oldAttendance.setTotalClasses(attendance.getTotalClasses());
-        oldAttendance.setUpdatedDate(null);
+        oldAttendance.setUpdatedDate(service1.getTodayDate());
 
         serviceAttendanceDao.saveAttendance(oldAttendance);
         return "redirect:/faculty/subjects/attendance/update?subject="+ oldAttendance.getSubject().getId();
@@ -476,7 +476,7 @@ public class FacultyController {
     {
         Query query = serviceQueryDao.getQueryById(queryPojo.getId());
         query.setRemark(queryPojo.getRemark());
-        query.setResolvedDate(null);
+        query.setResolvedDate(service1.getTodayDate());
         query.setStatus("Resolved");
 
         serviceQueryDao.saveQuery(query);

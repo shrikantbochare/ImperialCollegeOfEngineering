@@ -287,7 +287,7 @@ public class StudentController {
     {
         Faculty faculty = student.getFaculty();
 
-        Query query = new Query(queryPojo.getTitle(),queryPojo.getQuery(),null,"Pending");
+        Query query = new Query(queryPojo.getTitle(),queryPojo.getQuery(),service1.getTodayDate(),"Pending");
         query.setStudent(student);
         query.setFaculty(faculty);
         serviceQueryDao.saveQuery(query);
