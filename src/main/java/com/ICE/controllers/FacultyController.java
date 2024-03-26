@@ -7,6 +7,7 @@ import com.ICE.Pojo.QueryPojo;
 import com.ICE.Pojo.SubjectPojo;
 import com.ICE.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -532,6 +533,7 @@ public class FacultyController {
 
 
 //===============> HOD-Faculty manage subjects page start ===============>
+    @PreAuthorize("hasRole('HOD')")
     @GetMapping("/manageSubjects")
     public String manageSubjects(Model model,@ModelAttribute("currentUser") Faculty faculty)
     {
@@ -547,6 +549,7 @@ public class FacultyController {
 
 
 //===============> HOD-Faculty manage subjects add new page start ===============>
+    @PreAuthorize("hasRole('HOD')")
     @GetMapping("/manageSubjects/add")
     public String addSubject(Model model)
     {
@@ -562,6 +565,7 @@ public class FacultyController {
 
 
 //===============> HOD-Faculty manage subjects add new start  ===============>
+    @PreAuthorize("hasRole('HOD')")
     @PostMapping("/manageSubjects/add/newSubject")
     public String addSubject2(@ModelAttribute("subject") SubjectPojo subjectPojo,@ModelAttribute("currentUser") Faculty faculty)
     {
@@ -579,6 +583,7 @@ public class FacultyController {
 
 
 //===============> HOD-Faculty manage subjects edit page start  ===============>
+    @PreAuthorize("hasRole('HOD')")
     @GetMapping("/manageSubjects/edit")
     public String editSubject(@RequestParam("sId") int id,Model model)
     {
@@ -598,6 +603,7 @@ public class FacultyController {
 
 
 //===============> HOD-Faculty manage subjects edit  start  ===============>
+    @PreAuthorize("hasRole('HOD')")
     @PostMapping("/manageSubjects/edit/process")
     public String editSubject2(@ModelAttribute("subject") SubjectPojo subjectPojo)
     {
