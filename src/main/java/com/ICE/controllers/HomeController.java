@@ -7,10 +7,15 @@ import com.ICE.Pojo.FacultyPojo;
 import com.ICE.Pojo.StudentPojo;
 import com.ICE.Service.ServiceFacultyDao;
 import com.ICE.Service.ServiceStudentDao;
+import com.ICE.Validation.OnCreate;
+import jakarta.validation.Valid;
+import org.hibernate.validator.internal.engine.groups.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -234,24 +239,31 @@ public class HomeController {
 
 
 
-
     @PostMapping("/student/registrationDetails")
-    public String studentRegDetails(@ModelAttribute("student") StudentPojo studentPojo,Principal p)
+    public String studentRegDetails(@Validated(OnCreate.class) @ModelAttribute("student") StudentPojo studentPojo, BindingResult bindingResult, Principal p, Model model)
     {
         if(p == null) {
-        Student student = new Student(studentPojo.getName(),studentPojo.getEmail(),studentPojo.getUniversityNo(),passwordEncoder.encode(studentPojo.getPassword()),studentPojo.getDepartment(),studentPojo.getCourse());
-        student.setRole("ROLE_STUDENT");
-        ProfilePic profilePic = new ProfilePic("default_pic.jpg");
-        profilePic.setStudent(student);
-        student.setProfilePic(profilePic);
+                if(bindingResult.hasErrors())
+                {
+                    model.addAttribute("PageName", "Student_registration2");
+                    return "Template";
+                }
+                {
+                    Student student = new Student(studentPojo.getName(),studentPojo.getEmail(),studentPojo.getUniversityNo(),passwordEncoder.encode(studentPojo.getPassword()),studentPojo.getDepartment(),studentPojo.getCourse());
+                    student.setRole("ROLE_STUDENT");
+                    ProfilePic profilePic = new ProfilePic("default_pic.jpg");
+                    profilePic.setStudent(student);
+                    student.setProfilePic(profilePic);
 
-        Faculty faculty = serviceFacultyDao.getClassTeacher(student.getDepartment(),student.getCourse());
-        faculty.addStudent(student);
-        serviceFacultyDao.saveFaculty(faculty);
+                    Faculty faculty = serviceFacultyDao.getClassTeacher(student.getDepartment(),student.getCourse());
+                    faculty.addStudent(student);
+                    serviceFacultyDao.saveFaculty(faculty);
 
-        student.setFaculty(faculty);
-        serviceStudentDao.saveStudent(student);
-        return "redirect:/home/login";
+                    student.setFaculty(faculty);
+                    serviceStudentDao.saveStudent(student);
+                    return "redirect:/home/login";
+                }
+
         }
         else
         {
@@ -303,16 +315,18 @@ public class HomeController {
 
 
     @PostMapping("/faculty/registration/otpVerification")
-    public String otpVerification2(Model model,Principal p)
+    public String otpVerification2(Model model, Principal p)
     {
         if(p == null) {
             model.addAttribute("PageName", "Faculty_registration2");
             FacultyPojo facultyPojo = new FacultyPojo();
-            model.addAttribute("faculty", facultyPojo);
+            model.addAttribute("facultyPojo", facultyPojo);
             return "Template";
         }
         else
         {
+            System.out.println("no");
+
             return "redirect:/home/loginSuccess";
         }
     }
@@ -322,16 +336,23 @@ public class HomeController {
 
 
     @PostMapping("/faculty/registrationDetails")
-    public String FacultyRegDetails(@ModelAttribute("faculty") FacultyPojo facultyPojo,Principal p)
+    public String FacultyRegDetails(@Validated(OnCreate.class) @ModelAttribute("facultyPojo") FacultyPojo facultyPojo, BindingResult bindingResult, Principal p, Model model)
     {
         if(p == null) {
-            Faculty faculty = new Faculty(facultyPojo.getName(), facultyPojo.getFacultyId(), facultyPojo.getEmail(), passwordEncoder.encode(facultyPojo.getPassword()));
-            faculty.addRole("ROLE_FACULTY");
-            ProfilePic profilePic = new ProfilePic("default_pic.jpg");
-            profilePic.setFaculty(faculty);
-            faculty.setProfilePic(profilePic);
-            serviceFacultyDao.saveFaculty(faculty);
-            return "redirect:/home/login";
+            if(bindingResult.hasErrors())
+            {
+                model.addAttribute("PageName", "Faculty_registration2");
+                return "Template";
+            }
+            {
+                Faculty faculty = new Faculty(facultyPojo.getName(), facultyPojo.getFacultyId(), facultyPojo.getEmail(), passwordEncoder.encode(facultyPojo.getPassword()));
+                faculty.addRole("ROLE_FACULTY");
+                ProfilePic profilePic = new ProfilePic("default_pic.jpg");
+                profilePic.setFaculty(faculty);
+                faculty.setProfilePic(profilePic);
+                serviceFacultyDao.saveFaculty(faculty);
+                return "redirect:/home/login";
+            }
         }
         else
         {

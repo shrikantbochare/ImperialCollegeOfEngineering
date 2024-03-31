@@ -1,9 +1,9 @@
 package com.ICE.Pojo;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.ICE.Validation.OnCreate;
+import com.ICE.Validation.OnUpdate;
+import com.ICE.Validation.UniversityId;
+import jakarta.validation.constraints.*;
 
 import java.sql.Date;
 
@@ -12,22 +12,41 @@ public class StudentPojo {
 
     private int id;
 
+    @NotNull(groups = {OnCreate.class, OnUpdate.class})
+    @Pattern(regexp = "^[a-zA-Z ]{5,}$", message = "Name can contain small letters, capital letters " +
+            "and spaces with minimum size of 5 letters" ,groups = {OnCreate.class, OnUpdate.class})
     private String name;
 
+
+    @NotNull(groups = {OnCreate.class})
+    @Email(message = "Enter valid email address",groups = {OnCreate.class})
     private String email;
 
+    @NotNull(groups = {OnCreate.class, OnUpdate.class})
+    @UniversityId(groups = {OnCreate.class})
     private String universityNo;
 
+
+    @NotNull(groups = {OnCreate.class})
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@_])[A-Za-z0-9@_]{5,}$" , message = "Password must contain" +
+            " at least one small letter, capital letter, number, and special character like @ or _  " +
+            "with minimum size of 5 letters" ,groups = {OnCreate.class, OnUpdate.class})
     private String password;
 
+    @Past(groups = {OnUpdate.class},message = "BirthDate should be in past")
     private Date birthdate;
 
+    @Min(value = 18,groups = {OnUpdate.class},message = "Minimum age must be 18")
     private int age;
 
+    @Pattern(regexp = "^[a-zA-Z0-9, ]+$", message = "Address can contain letters, numbers, spaces and ,",groups = {OnUpdate.class} )
     private String address;
 
+
+    @Pattern(regexp = "^[a-zA-Z\\s]+$" , message = "City name should contain letters and white spaces if needed" ,groups = {OnUpdate.class})
     private String city;
 
+    @Pattern(regexp = "^[a-zA-Z\\s]+$" , message = "State name should contain letters and white spaces if needed" ,groups = {OnUpdate.class})
     private String state;
 
     private String department;

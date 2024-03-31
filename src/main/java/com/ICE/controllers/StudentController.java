@@ -5,10 +5,14 @@ import com.ICE.Entities.*;
 import com.ICE.Pojo.QueryPojo;
 import com.ICE.Pojo.StudentPojo;
 import com.ICE.Service.*;
+import com.ICE.Validation.OnUpdate;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,7 +67,7 @@ public class StudentController {
 
 
         model.addAttribute("PageName","StudentProfile");
-        model.addAttribute("student",studentPojo);
+        model.addAttribute("studentPojo",studentPojo);
 
         return "Template";
     }
@@ -75,21 +79,29 @@ public class StudentController {
 
 //===============> Student profile update start  ===============>
     @PostMapping("/profile/update")
-    public String updateStudentProfile(@ModelAttribute("Student") StudentPojo studentPojo,@ModelAttribute("currentUser") Student student)
+    public String updateStudentProfile(@Validated(OnUpdate.class) @ModelAttribute("studentPojo") StudentPojo studentPojo, BindingResult bindingResult,
+                                       @ModelAttribute("currentUser") Student student, Model model)
     {
-        student.setAge(studentPojo.getAge());
-        student.setName(studentPojo.getName());
-        student.setBirthdate(studentPojo.getBirthdate());
-        student.setAddress(studentPojo.getAddress());
-        student.setCity(studentPojo.getCity());
-        student.setState(studentPojo.getState());
-        student.setCourse(studentPojo.getCourse());
-        student.setSemester(studentPojo.getSemester());
+        if(bindingResult.hasErrors())
+        {
+            model.addAttribute("PageName","StudentProfile");
+            return "Template";
+        }else
+        {
+            student.setAge(studentPojo.getAge());
+            student.setName(studentPojo.getName());
+            student.setBirthdate(studentPojo.getBirthdate());
+            student.setAddress(studentPojo.getAddress());
+            student.setCity(studentPojo.getCity());
+            student.setState(studentPojo.getState());
+            student.setCourse(studentPojo.getCourse());
+            student.setSemester(studentPojo.getSemester());
 
-        serviceStudentDao.saveStudent(student);
+            serviceStudentDao.saveStudent(student);
 
 
-        return "redirect:/student/profile";
+            return "redirect:/student/profile";
+        }
     }
 //<============== Student profile update end <===============
 

@@ -6,12 +6,15 @@ import com.ICE.Pojo.FacultyPojo;
 import com.ICE.Pojo.QueryPojo;
 import com.ICE.Pojo.SubjectPojo;
 import com.ICE.Service.*;
+import com.ICE.Validation.OnUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,7 +71,7 @@ public class FacultyController {
                 faculty.getAge(),faculty.getBirthdate(),faculty.getAddress(),faculty.getCity(),faculty.getState());
 
         model.addAttribute("PageName","FacultyProfile");
-        model.addAttribute("faculty",facultyPojo);
+        model.addAttribute("facultyPojo",facultyPojo);
 
         return "Template";
     }
@@ -80,19 +83,27 @@ public class FacultyController {
 
 //===============> Faculty profile update start ===============>
     @PostMapping("/profile/update")
-    public String facultyProfileUpdate(@ModelAttribute("faculty")FacultyPojo facultyPojo,@ModelAttribute("currentUser") Faculty faculty)
+    public String facultyProfileUpdate(@Validated(OnUpdate.class) @ModelAttribute("facultyPojo")FacultyPojo facultyPojo, BindingResult bindingResult, @ModelAttribute("currentUser") Faculty faculty, Model model)
     {
-        faculty.setName(facultyPojo.getName());
-        faculty.setAge(facultyPojo.getAge());
-        faculty.setBirthdate(facultyPojo.getBirthdate());
-        faculty.setCity(facultyPojo.getCity());
-        faculty.setState(facultyPojo.getState());
-        faculty.setAddress(facultyPojo.getAddress());
+        if(bindingResult.hasErrors())
+        {
+            model.addAttribute("PageName", "FacultyProfile");
+            return "Template";
+        }
+        else
+        {
+            faculty.setName(facultyPojo.getName());
+            faculty.setAge(facultyPojo.getAge());
+            faculty.setBirthdate(facultyPojo.getBirthdate());
+            faculty.setCity(facultyPojo.getCity());
+            faculty.setState(facultyPojo.getState());
+            faculty.setAddress(facultyPojo.getAddress());
 
-        serviceFacultyDao.saveFaculty(faculty);
+            serviceFacultyDao.saveFaculty(faculty);
 
 
-        return "redirect:/faculty/profile";
+            return "redirect:/faculty/profile";
+        }
     }
 //<============== Faculty profile update end <===============
 

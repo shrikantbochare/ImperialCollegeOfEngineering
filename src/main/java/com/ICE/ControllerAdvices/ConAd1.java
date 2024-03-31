@@ -8,7 +8,9 @@ import com.ICE.Service.ServiceStudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.thymeleaf.exceptions.TemplateInputException;
@@ -33,6 +35,8 @@ public class ConAd1 {
     }
 
 
+
+//    @PreAuthorize("isAuthenticated()")
     @ModelAttribute
     public void addCurrentUser(Model model, Principal p) {
         if (p != null) {
@@ -50,6 +54,7 @@ public class ConAd1 {
 
         }
         System.out.println("hello===========>");
+
     }
 
 
@@ -94,7 +99,7 @@ public class ConAd1 {
 
 
 
-// =============> Exception handler global Exception =================>
+ //=============> Exception handler global Exception =================>
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
     public String parentException(Exception e,Model model)
     {
@@ -115,5 +120,5 @@ public class ConAd1 {
         return "Template";
     }
 // <============= Exception handler TemplateInputException <=================
-
+//TemplateProcessingException
 }

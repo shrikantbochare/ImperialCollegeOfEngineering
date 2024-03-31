@@ -54,11 +54,12 @@
             </form>
         </div>
         <div class="col-md-8 ">
-            <form th:action="@{/faculty/profile/update}" method="post" th:object="${faculty}">
+            <form th:action="@{/faculty/profile/update}" method="post" th:object="${facultyPojo}">
                 <div class="info">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="name" placeholder="Full Name" th:field="*{name}">
                         <label for="name">Full Name</label>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="regNumber" placeholder="Registration Number" th:field="*{facultyId}" readonly>
@@ -71,22 +72,27 @@
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="age" placeholder="000" th:field="*{age}">
                         <label for="age">your age</label>
+                        <p th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></p>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="bdate" placeholder="00/0/0000" th:field="*{birthdate}">
-                        <label for="bdate">your birth date</label>
+                        <input type="date" class="form-control" id="birthdate" placeholder="00/0/0000" th:field="*{birthdate}"required>
+                        <label for="birthdate">your birth date</label>
+                        <p th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></p>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="city" placeholder="mumbai" th:field="*{city}">
                         <label for="city">your city</label>
+                        <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="state" placeholder="maharashtra" th:field="*{state}">
                         <label for="state">your state</label>
+                        <p th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></p>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="address" placeholder="something" th:field="*{address}">
                         <label for="address">your address</label>
+                        <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center align-items-center">

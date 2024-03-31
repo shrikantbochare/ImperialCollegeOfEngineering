@@ -41,14 +41,17 @@
             <div class="form-floating mb-2">
                 <input type="text" name="regNumber" id="regNumber" class="form-control" placeholder="BT24F06F006" th:field="*{universityNo}">
                 <label for="regNumber">Enter University Registration Number</label>
+                <p th:if="${#fields.hasErrors('universityNo')}" th:errors="*{universityNo}" class="text-danger">Error</p>
             </div>
             <div class="form-floating mb-2">
                 <input type="text" name="name" id="name" class="form-control" placeholder="FullName" th:field="*{name}">
                 <label for="name">Enter Your Full Name</label>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Error</p>
             </div>
             <div class="form-floating mb-2">
                 <input type="email" name="email" id="email" class="form-control" placeholder="example@gmail.com" th:field="*{email}">
                 <label for="email">Enter Your  Email</label>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger">Error</p>
             </div>
             <select class="form-select mb-2" aria-label="Default select example" name="department" th:field="*{department}">
                 <option th:value="Select_Year" selected>Select Department</option>
@@ -72,6 +75,7 @@
             <div class="form-floating">
                 <input type="password" name="password" id="password" class="form-control" placeholder="Password" th:field="*{password}">
                 <label for="password">Enter Password</label>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger">Error</p>
             </div>
             <div class="row mt-3">
                 <div class="col-6 text-center">
@@ -179,22 +183,26 @@
 <div class="row m-2" th:fragment="Faculty_registration2">
     <div class="col-md-6 offset-md-3 rounded loginContainer p-5">
         <h3 class="text-center text-Success">REGISTRATION</h3>
-        <form th:action="@{/home/faculty/registrationDetails}" method="post" th:object="${faculty}">
+        <form th:action="@{/home/faculty/registrationDetails}" method="post" th:object="${facultyPojo}">
             <div class="form-floating mb-2">
-                <input type="text" name="facId" id="facId" class="form-control" placeholder="BT24F06F006" th:field="*{facultyId}">
-                <label for="facId">Enter faculty Id</label>
+                <input type="text" name="facultyId" id="facultyId" class="form-control" placeholder="BT24F06F006" th:field="*{facultyId}">
+                <label for="facultyId">Enter faculty Id</label>
+                <p th:if="${#fields.hasErrors('facultyId')}" th:errors="*{facultyId}" class="text-warning"></p>
             </div>
             <div class="form-floating mb-2">
                 <input type="text" name="name" id="name" class="form-control" placeholder="FullName" th:field="*{name}">
                 <label for="name">Enter Your Full Name</label>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-warning"></p>
             </div>
             <div class="form-floating mb-2">
                 <input type="email" name="email" id="email" class="form-control" placeholder="example@gmail.com" th:field="*{email}">
                 <label for="email">Enter Your  Email</label>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-warning"></p>
             </div>
             <div class="form-floating">
                 <input type="password" name="password" id="password" class="form-control" placeholder="Password" th:field="*{password}">
                 <label for="password">Enter Password</label>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-warning"></p>
             </div>
             <div class="row mt-3">
                 <div class="col-6 text-center">
