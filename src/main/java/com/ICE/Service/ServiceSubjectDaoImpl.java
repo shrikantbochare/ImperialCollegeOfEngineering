@@ -5,6 +5,8 @@ import com.ICE.DAO.SubjectRepository;
 import com.ICE.Entities.Faculty;
 import com.ICE.Entities.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,8 +36,8 @@ public class ServiceSubjectDaoImpl implements ServiceSubjectDao{
 
 //===============> Get all subjects of a department start ===============>
     @Override
-    public List<Subject> getAllSubjectsOfDepartment(String department) {
-        return subjectRepository.findByDepartment(department);
+    public Page<Subject> getAllSubjectsOfDepartment(String department, Pageable pageable) {
+        return subjectRepository.findByDepartment(department,pageable);
     }
 //<============== Get all subjects of a department end <===============
 
@@ -91,8 +93,8 @@ public class ServiceSubjectDaoImpl implements ServiceSubjectDao{
 
 //===============> Get all subjects allocated to a faculty start ===============>
     @Override
-    public List<Subject> getSubjectsOfFaculty(Faculty faculty) {
-        return subjectRepository.findByFaculty(faculty);
+    public Page<Subject> getSubjectsOfFaculty(Faculty faculty, Pageable pageable) {
+        return subjectRepository.findByFaculty(faculty,pageable);
     }
 //<============== Get all subjects allocated to a faculty end <===============
 }

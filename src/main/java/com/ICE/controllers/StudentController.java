@@ -8,6 +8,10 @@ import com.ICE.Service.*;
 import com.ICE.Validation.OnUpdate;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -205,16 +209,48 @@ public class StudentController {
     {
         List<Subject> subjects = serviceStudent.subjectsAvailableForRegistration(student);
 
-        List<SubjectRegistrationRequest> requestsWithStatus = serviceSubjectRegistrationDao.getRequestOfStudent(student);
-
         model.addAttribute("PageName","StudentSubjects");
         model.addAttribute("subjects",subjects);
+        model.addAttribute("totalSubjects",subjects.size());
         model.addAttribute("registeredSubjects",student.getSubjects());
-        model.addAttribute("RegistrationStatus",requestsWithStatus);
 
         return "Template";
     }
 //<==============  Student subjects page end <===============
+
+
+
+
+
+//===============> Student subjects page start ===============>
+    @GetMapping("/subjects/registered")
+    public String registeredSubjects(Model model,@ModelAttribute("currentUser") Student student)
+    {
+        model.addAttribute("PageName","StudentRegisteredSubjects");
+        model.addAttribute("registeredSubjects",student.getSubjects());
+        model.addAttribute("totalSubjects",student.getSubjects().size());
+
+        return "Template";
+    }
+//<==============  Student subjects page end <===============
+
+
+
+
+
+//===============> Student Registration status page start ===============>
+    @GetMapping("/subjects/registration_status")
+    public String registrationStatus(Model model,@ModelAttribute("currentUser") Student student)
+    {
+        List<SubjectRegistrationRequest> requestsWithStatus = serviceSubjectRegistrationDao.getRequestOfStudent(student);
+
+        model.addAttribute("PageName","RegistrationStatus");
+        model.addAttribute("registrationStatus",requestsWithStatus);
+        model.addAttribute("totalSubjects",requestsWithStatus.size());
+
+        return "Template";
+    }
+//<==============  Student Registration status page end <===============
 
 
 
@@ -245,10 +281,15 @@ public class StudentController {
 
 //===============> Student exams view page start ===============>
     @GetMapping("/exams")
-    public String exams(Model model,@ModelAttribute("currentUser") Student student)
+    public String exams(@RequestParam("page") int page, Model model,@ModelAttribute("currentUser") Student student)
     {
-        List<Score> scores = serviceScoreDao.getScoresOfStudent(student);
+        Pageable pageable = PageRequest.of(page,5,Sort.by("subject.name"));
+        Page<Score> scores = serviceScoreDao.getScoresOfStudent(student,pageable);
+
         model.addAttribute("scores",scores);
+        model.addAttribute("pageNo",page);
+        model.addAttribute("pageUrl","student/exams");
+        model.addAttribute("totalPages",scores.getTotalPages());
         model.addAttribute("PageName","StudentExams");
         return "Template";
     }
@@ -260,11 +301,15 @@ public class StudentController {
 
 //===============> Student attendance view page start ===============>
     @GetMapping("/attendance")
-    public String attendance(Model model,@ModelAttribute("currentUser") Student student)
+    public String attendance(@RequestParam("page") int page, Model model,@ModelAttribute("currentUser") Student student)
     {
-        List<Attendance> attendances = serviceAttendanceDao.getAttendanceOfStudent(student);
+        Pageable pageable = PageRequest.of(page,5,Sort.by("subject.name"));
+        Page<Attendance> attendances = serviceAttendanceDao.getAttendanceOfStudent(student,pageable);
 
         model.addAttribute("attendances",attendances);
+        model.addAttribute("pageNo",page);
+        model.addAttribute("pageUrl","student/attendance");
+        model.addAttribute("totalPages",attendances.getTotalPages());
         model.addAttribute("PageName","StudentAttendance");
         return "Template";
     }
@@ -280,14 +325,31 @@ public class StudentController {
     {
         QueryPojo queryPojo = new QueryPojo();
 
-        List<Query> queries = serviceQueryDao.getQueriesOfStudent(student);
-
-        model.addAttribute("queries",queries);
         model.addAttribute("query",queryPojo);
         model.addAttribute("PageName","StudentQuery");
         return "Template";
     }
 //<============== Student query page end <===============
+
+
+
+
+
+//===============> Student query list page start ===============>
+    @GetMapping("/query/list")
+    public String queryList(@RequestParam("page") int page, Model model,@ModelAttribute("currentUser") Student student)
+    {
+        Pageable pageable = PageRequest.of(page,5,Sort.by("postedDate").descending());
+        Page<Query> queries = serviceQueryDao.getQueriesOfStudent(student,pageable);
+
+        model.addAttribute("queries",queries);
+        model.addAttribute("pageNo",page);
+        model.addAttribute("pageUrl","student/query/list");
+        model.addAttribute("totalPages",queries.getTotalPages());
+        model.addAttribute("PageName","StudentQueryList");
+        return "Template";
+    }
+//<============== Student query list  page end <===============
 
 
 

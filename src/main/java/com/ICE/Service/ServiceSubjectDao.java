@@ -2,6 +2,8 @@ package com.ICE.Service;
 
 import com.ICE.Entities.Faculty;
 import com.ICE.Entities.Subject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Set;
@@ -11,7 +13,7 @@ public interface ServiceSubjectDao {
 
     void save (Subject subject);
 
-    List<Subject> getAllSubjectsOfDepartment(String department);
+    Page<Subject> getAllSubjectsOfDepartment(String department,Pageable pageable);
 
 
     List<Subject> getAllSubjectsOfDepartmentNoFaculty(String department);
@@ -26,5 +28,5 @@ public interface ServiceSubjectDao {
     List<Subject> getSubjectsForThisSemester(String department,String course,String semester);
 
 
-    List<Subject> getSubjectsOfFaculty(Faculty faculty);
+    Page<Subject> getSubjectsOfFaculty(Faculty faculty, Pageable pageable);
 }

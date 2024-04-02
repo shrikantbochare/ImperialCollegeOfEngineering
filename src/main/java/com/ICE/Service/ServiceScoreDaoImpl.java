@@ -6,6 +6,8 @@ import com.ICE.Entities.Score;
 import com.ICE.Entities.Student;
 import com.ICE.Entities.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,8 +40,8 @@ public class ServiceScoreDaoImpl implements ServiceScoreDao{
 
 //===============> Get scores of a student for all subjects start ===============>
     @Override
-    public List<Score> getScoresOfStudent(Student student) {
-        return scoreRepository.findByStudent(student);
+    public Page<Score> getScoresOfStudent(Student student,Pageable pageable) {
+        return scoreRepository.findByStudent(student,pageable);
     }
 //<============== Get scores of a student for all subjects end <===============
 
@@ -49,8 +51,8 @@ public class ServiceScoreDaoImpl implements ServiceScoreDao{
 
 //===============> Get scores of a subject for all students start ===============>
     @Override
-    public List<Score> getScoreForSubject(Subject subject) {
-        return scoreRepository.findBySubject(subject);
+    public Page<Score> getScoreForSubject(Subject subject, Pageable pageable) {
+        return scoreRepository.findBySubject(subject,pageable);
     }
 //<============== Get scores of a subject for all students end <===============
 

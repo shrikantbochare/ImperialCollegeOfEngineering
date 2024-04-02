@@ -4,6 +4,8 @@ import com.ICE.Entities.Faculty;
 import com.ICE.Entities.Student;
 import com.ICE.Entities.Subject;
 import com.ICE.Entities.SubjectRegistrationRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +16,7 @@ public interface SubjectRegistrationRepository  extends JpaRepository<SubjectReg
 
 
     @Query("Select r from SubjectRegistrationRequest r where r.status='Pending' And r.subject.faculty=:data")
-    List<SubjectRegistrationRequest> findByFaculty(@Param("data")Faculty faculty);
+    Page<SubjectRegistrationRequest> findByFaculty(@Param("data")Faculty faculty, Pageable pageable);
 
 
     void deleteByStudentAndSubject(Student student, Subject Subject);

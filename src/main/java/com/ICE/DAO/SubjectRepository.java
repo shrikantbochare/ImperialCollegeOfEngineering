@@ -2,6 +2,8 @@ package com.ICE.DAO;
 
 import com.ICE.Entities.Faculty;
 import com.ICE.Entities.Subject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +13,7 @@ import java.util.Set;
 
 public interface SubjectRepository extends JpaRepository<Subject,Integer> {
 
-    List<Subject> findByDepartment(String department);
+    Page<Subject> findByDepartment(String department, Pageable pageable);
 
     List<Subject> findByDepartmentAndFacultyIsNull( String department);
 
@@ -20,5 +22,5 @@ public interface SubjectRepository extends JpaRepository<Subject,Integer> {
     List<Subject> findByDepartmentAndCourseAndSemesterAndFacultyIsNotNull(String department,String course,String semester);
 
 
-    List<Subject> findByFaculty(Faculty faculty);
+    Page<Subject> findByFaculty(Faculty faculty, Pageable pageable);
 }

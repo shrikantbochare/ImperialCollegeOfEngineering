@@ -6,6 +6,8 @@ import com.ICE.Entities.Faculty;
 import com.ICE.Entities.Student;
 import com.ICE.Entities.Subject;
 import com.ICE.Entities.SubjectRegistrationRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,8 +52,8 @@ public class ServiceSubjectRegistrationDaoImpl implements ServiceSubjectRegistra
 
 //===============> Get requests for a faculty start ===============>
     @Override
-    public List<SubjectRegistrationRequest> getRequestsForFaculty(Faculty faculty) {
-        return subjectRegistrationRepository.findByFaculty(faculty);
+    public Page<SubjectRegistrationRequest> getRequestsForFaculty(Faculty faculty, Pageable pageable) {
+        return subjectRegistrationRepository.findByFaculty(faculty,pageable);
     }
 //<============== Get requests for a faculty end <===============
 

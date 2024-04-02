@@ -6,6 +6,8 @@ import com.ICE.Entities.Attendance;
 import com.ICE.Entities.Student;
 import com.ICE.Entities.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,8 +43,8 @@ public class ServiceAttendanceDaoImpl implements ServiceAttendanceDao{
 //===============> Get attendance for all subjects of a student start ===============>
 
     @Override
-    public List<Attendance> getAttendanceOfStudent(Student student) {
-        return attendanceRepository.findByStudent(student);
+    public Page<Attendance> getAttendanceOfStudent(Student student, Pageable pageable) {
+        return attendanceRepository.findByStudent(student,pageable);
     }
 //<============== Get attendance for all subjects of a student end <===============
 
@@ -52,8 +54,8 @@ public class ServiceAttendanceDaoImpl implements ServiceAttendanceDao{
 
 //===============> Get attendance for all students of a subject start ===============>
     @Override
-    public List<Attendance> getAttendanceOfSubject(Subject subject) {
-        return attendanceRepository.findBySubject(subject);
+    public Page<Attendance> getAttendanceOfSubject(Subject subject, Pageable pageable) {
+        return attendanceRepository.findBySubject(subject,pageable);
     }
 //<============== Get attendance for all students of a subject end <===============
 

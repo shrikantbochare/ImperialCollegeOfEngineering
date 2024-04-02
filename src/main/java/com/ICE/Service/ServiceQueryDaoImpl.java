@@ -6,6 +6,8 @@ import com.ICE.Entities.Faculty;
 import com.ICE.Entities.Query;
 import com.ICE.Entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,8 +41,8 @@ public class ServiceQueryDaoImpl implements ServiceQueryDao{
 
 //===============> Get queries of student start ===============>
     @Override
-    public List<Query> getQueriesOfStudent(Student student) {
-        return queryRepository.findByStudent(student);
+    public Page<Query> getQueriesOfStudent(Student student, Pageable pageable) {
+        return queryRepository.findByStudent(student,pageable);
     }
 //<============== Get queries of student  end <===============
 
@@ -76,8 +78,8 @@ public class ServiceQueryDaoImpl implements ServiceQueryDao{
 //===============> Get resolved queries of faculty  start ===============>
 
     @Override
-    public List<Query> getQueriesOfFacultyWithResolved(Faculty faculty, String status) {
-        return queryRepository.findByFacultyAndStatus(faculty,"Resolved");
+    public Page<Query> getQueriesOfFacultyWithResolved(Faculty faculty, String status,Pageable pageable) {
+        return queryRepository.findByFacultyAndStatus(faculty,"Resolved",pageable);
     }
 //<============== Get resolved queries of faculty  end <===============
 
@@ -88,8 +90,8 @@ public class ServiceQueryDaoImpl implements ServiceQueryDao{
 //===============> Get pending queries of faculty  start ===============>
 
     @Override
-    public List<Query> getQueriesOfFacultyWithPending(Faculty faculty, String status) {
-        return queryRepository.findByFacultyAndStatus(faculty,"Pending");
+    public Page<Query> getQueriesOfFacultyWithPending(Faculty faculty, String status,Pageable pageable) {
+        return queryRepository.findByFacultyAndStatus(faculty,"Pending",pageable);
     }
 //<============== Get pending queries of faculty end <===============
 

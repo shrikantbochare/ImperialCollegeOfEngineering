@@ -162,6 +162,18 @@
 
 
 
+    <div th:if="${PageName == 'StudentRegisteredSubjects'}">
+      <div th:replace="~{Fragments/StudentFragments :: StudentRegisteredSubjects}"></div>
+    </div>
+
+
+
+    <div th:if="${PageName == 'RegistrationStatus'}">
+      <div th:replace="~{Fragments/StudentFragments :: RegistrationStatus}"></div>
+    </div>
+
+
+
     <div th:if="${PageName == 'StudentExams'}">
       <div th:replace="~{Fragments/StudentFragments :: StudentExams}"></div>
     </div>
@@ -178,6 +190,11 @@
       <div th:replace="~{Fragments/StudentFragments :: StudentQuery}"></div>
     </div>
 
+
+
+    <div th:if="${PageName == 'StudentQueryList'}">
+      <div th:replace="~{Fragments/StudentFragments :: StudentQueryList}"></div>
+    </div>
 
 
     <div th:if="${PageName == 'viewQuery'}">
@@ -236,6 +253,12 @@
 
     <div th:if="${PageName == 'StudentQueriesView'}">
       <div th:replace="~{Fragments/FacultyFragments :: StudentQueriesView}"></div>
+    </div>
+
+
+
+    <div th:if="${PageName == 'StudentResolvedQueriesView'}">
+      <div th:replace="~{Fragments/FacultyFragments :: StudentResolvedQueriesView}"></div>
     </div>
 
 

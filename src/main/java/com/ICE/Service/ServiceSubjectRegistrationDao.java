@@ -5,6 +5,8 @@ import com.ICE.Entities.Faculty;
 import com.ICE.Entities.Student;
 import com.ICE.Entities.Subject;
 import com.ICE.Entities.SubjectRegistrationRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ public interface ServiceSubjectRegistrationDao {
     void deleteSubjectRegistrationRequest(Student student, Subject subject);
 
 
-    List<SubjectRegistrationRequest>  getRequestsForFaculty(Faculty faculty);
+    Page<SubjectRegistrationRequest> getRequestsForFaculty(Faculty faculty, Pageable pageable);
 
 
     SubjectRegistrationRequest getRequestOfStudentForSubject(Student student, Subject subject);

@@ -4,6 +4,8 @@ package com.ICE.Service;
 import com.ICE.DAO.StudentRepository;
 import com.ICE.Entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -56,5 +58,16 @@ public class ServiceStudentDaoImpl implements ServiceStudentDao{
         Object object = value.orElse(null);
         return object;
     }
+//<============== Get the student by universityNo end <===============
+
+
+
+
+
+//===============> Get the student by universityNo start ===============>
+//    @Override
+//    public Page<Student> getAllStudentsOfSubject(int id, Pageable pageable) {
+//        return studentRepository.findBySubjectId(id,pageable);
+//    }
 //<============== Get the student by universityNo end <===============
 }

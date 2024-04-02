@@ -3,6 +3,8 @@ package com.ICE.Service;
 import com.ICE.Entities.Score;
 import com.ICE.Entities.Student;
 import com.ICE.Entities.Subject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -12,9 +14,9 @@ public interface ServiceScoreDao {
     void saveScore(Score score);
 
 
-    List<Score> getScoresOfStudent(Student student);
+    Page<Score> getScoresOfStudent(Student student,Pageable pageable);
 
-    List<Score> getScoreForSubject(Subject subject);
+    Page<Score> getScoreForSubject(Subject subject, Pageable pageable);
 
     Score getScoreById(int id);
 

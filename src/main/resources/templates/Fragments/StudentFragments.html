@@ -16,8 +16,8 @@
     <h3 class="text-center text-dark">MENU</h3>
     <div class="d-flex justify-content-center align-items-center flex-wrap">
         <div class="text-center mx-1 mb-1"><a th:href="@{/student/subjects}" class="btn btn-success">Subjects</a></div>
-        <div class="text-center mx-1 mb-1"><a th:href="@{/student/exams}" class="btn btn-success">Exams</a></div>
-        <div class="text-center mx-1 mb-1"><a th:href="@{/student/attendance}" class="btn btn-success">Attendance</a></div>
+        <div class="text-center mx-1 mb-1"><a th:href="@{/student/exams(page=0)}" class="btn btn-success">Exams</a></div>
+        <div class="text-center mx-1 mb-1"><a th:href="@{/student/attendance(page=0)}" class="btn btn-success">Attendance</a></div>
         <div class="text-center mx-1 mb-1"><a th:href="@{/student/query}" class="btn btn-success">Query</a></div>
     </div>
 </div>
@@ -186,35 +186,54 @@
     <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
     <hr>
     <p class="text-warning bg-dark mt-1">&nbsp; Note : You can register up to 6 subjects for this semester.</p>
-        <div class="table-responsive">
-        <h3 class="text-center text-primary">AVAILABLE SUBJECTS</h3>
-        <table class="m-2 table table-bordered">
-            <thead>
-            <tr class="text-center">
-                <th scope="col">Sr. No.</th>
-                <th scope="col">Name</th>
-                <th scope="col">Id</th>
-                <th scope="col">Credits</th>
-                <th scope="col">Teacher</th>
-                <th scope="col">Register</th>
-            </tr>
-            </thead>
-            <tbody class="text-center">
-            <tr th:each="subject,iteration : ${subjects}">
-                <td th:text="${iteration.count}">1</td>
-                <td th:text="${subject.name}">CMS</td>
-                <td th:text="${subject.subId}">IT002</td>
-                <td th:text="${subject.credits}">4</td>
-                <td ><a class="text-decoration-none " th:href="@{/profile/faculty(id=${subject.faculty.id})}" th:text="${subject.faculty.name}"></a></td>
-                <td ><a th:href="@{/student/subjects/register(sId=${subject.id})}" class="btn btn-primary">Add</a></td>
-            </tr>
-            </tbody>
-        </table>
+    <h3 class="text-center text-primary m-1">AVAILABLE SUBJECTS</h3>
+    <div th:if="${totalSubjects != 0 }" class="table-responsive">
+        <div>
+            <table class="m-2 table table-bordered">
+                <thead>
+                <tr class="text-center">
+                    <th scope="col">Sr. No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Credits</th>
+                    <th scope="col">Teacher</th>
+                    <th scope="col">Register</th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                <tr th:each="subject,iteration : ${subjects}">
+                    <td th:text="${iteration.count}">1</td>
+                    <td th:text="${subject.name}">CMS</td>
+                    <td th:text="${subject.subId}">IT002</td>
+                    <td th:text="${subject.credits}">4</td>
+                    <td ><a class="text-decoration-none " th:href="@{/profile/faculty(id=${subject.faculty.id})}" th:text="${subject.faculty.name}"></a></td>
+                    <td ><a th:href="@{/student/subjects/register(sId=${subject.id})}" class="btn btn-primary">Add</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <br>
+    <div th:unless="${totalSubjects != 0}">
+        <h2 class="text-center text-success">Nothing to show....</h2>
+    </div>
     <hr>
-    <div class="mt-2 table-responsive">
-        <h3 class="text-center text-primary">REGISTERED SUBJECTS</h3>
+    <div class="text-center m-1">
+        <a class="btn btn-success" th:href="@{/student/subjects/registered}">Registered Subjects</a>
+        <a class="btn btn-success" th:href="@{/student/subjects/registration_status}">Registration Status</a>
+    </div>
+</div>
+<!--Student Subject fragment End-->
+
+
+
+
+
+<!--Student Registered Subject fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="StudentRegisteredSubjects">
+    <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
+    <hr>
+    <h3 class="text-center text-primary m-1">REGISTERED SUBJECTS</h3>
+    <div th:if="${totalSubjects != 0}" class="mt-2 table-responsive">
         <table class="m-2 table table-bordered">
             <thead>
             <tr class="text-center">
@@ -236,10 +255,28 @@
             </tbody>
         </table>
     </div>
-    <br>
+    <div th:unless="${totalSubjects != 0}">
+        <h2 class="text-center text-success">Nothing to show....</h2>
+    </div>
     <hr>
-    <div class="mt-2 table-responsive">
-        <h3 class="text-center text-primary">SUBJECT REGISTRATION STATUS</h3>
+    <div class="text-center m-1">
+        <a class="btn btn-success" th:href="@{/student/subjects}">Available Subjects</a>
+        <a class="btn btn-success" th:href="@{/student/subjects/registration_status}">Registration Status</a>
+    </div>
+</div>
+<!--Student Registered Subject fragment End-->
+
+
+
+
+
+
+<!--Student Registration status fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="RegistrationStatus">
+    <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
+    <hr>
+    <h3 class="text-center text-primary m-1">SUBJECT REGISTRATION STATUS</h3>
+    <div th:if="${totalSubjects != 0}" class="mt-2 table-responsive">
         <table class="m-2 table table-bordered">
             <thead>
             <tr class="text-center">
@@ -252,7 +289,7 @@
             </tr>
             </thead>
             <tbody class="text-center">
-            <tr th:each="request,iteration : ${RegistrationStatus}">
+            <tr th:each="request,iteration : ${registrationStatus}">
                 <td th:text="${iteration.count}">1</td>
                 <td th:text="${request.subject.name}">CMS</td>
                 <td th:text="${request.subject.subId}">IT002</td>
@@ -263,8 +300,16 @@
             </tbody>
         </table>
     </div>
+    <div th:unless="${totalSubjects != 0}">
+        <h2 class="text-center text-success">Nothing to show....</h2>
+    </div>
+    <hr>
+    <div class="text-center m-1">
+        <a class="btn btn-success" th:href="@{/student/subjects}">Available Subjects</a>
+        <a class="btn btn-success" th:href="@{/student/subjects/registered}">Registered Subjects</a>
+    </div>
 </div>
-<!--Student Subject fragment End-->
+<!--Student Registration status  fragment End-->
 
 
 
@@ -274,34 +319,40 @@
 <div class="divContainer m-4 p-3" th:fragment="StudentExams">
     <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
     <hr>
-    <div class="table-responsive mt-1">
-        <h3 class="text-center text-primary">EXAM DATA</h3>
-        <table class="m-2 table table-bordered">
-            <thead>
-            <tr class="text-center">
-                <th scope="col">Sr. No.</th>
-                <th scope="col">Subject Name</th>
-                <th scope="col">Subject Id</th>
-                <th scope="col">Class Test 1<br> <span class="fw-lighter fs-6">Out Of 15</span></th>
-                <th scope="col">Class Test 2<br> <span class="fw-lighter fs-6">Out Of 15</span></th>
-                <th scope="col">Internal<br> <span class="fw-lighter fs-6">Out Of 10</span></th>
-                <th scope="col">End Semester<br> <span class="fw-lighter fs-6">Out Of 60</span></th>
-                <th scope="col">Grade</th>
-            </tr>
-            </thead>
-            <tbody class="text-center">
-            <tr th:each="score,index :${scores}">
-                <td th:text="${index.count}">1</td>
-                <td th:text="${score.subject.name}">CMS</td>
-                <td th:text="${score.subject.subId}">IT0002</td>
-                <td th:text="${score.ct1}">13</td>
-                <td th:text="${score.ct2}">12</td>
-                <td th:text="${score.internal}">9</td>
-                <td th:text="${score.endSem}">45</td>
-                <td th:text="${score.grade}">A</td>
-            </tr>
-            </tbody>
-        </table>
+    <h3 class="text-center text-primary m-1">EXAM DATA</h3>
+    <div th:if="${totalSubjects != 0}">
+        <div class="table-responsive mt-1">
+            <table class="m-2 table table-bordered">
+                <thead>
+                <tr class="text-center">
+                    <th scope="col">Sr. No.</th>
+                    <th scope="col">Subject Name</th>
+                    <th scope="col">Subject Id</th>
+                    <th scope="col">Class Test 1<br> <span class="fw-lighter fs-6">Out Of 15</span></th>
+                    <th scope="col">Class Test 2<br> <span class="fw-lighter fs-6">Out Of 15</span></th>
+                    <th scope="col">Internal<br> <span class="fw-lighter fs-6">Out Of 10</span></th>
+                    <th scope="col">End Semester<br> <span class="fw-lighter fs-6">Out Of 60</span></th>
+                    <th scope="col">Grade</th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                <tr th:each="score,index :${scores}">
+                    <td th:text="${index.count}">1</td>
+                    <td th:text="${score.subject.name}">CMS</td>
+                    <td th:text="${score.subject.subId}">IT0002</td>
+                    <td th:text="${score.ct1}">13</td>
+                    <td th:text="${score.ct2}">12</td>
+                    <td th:text="${score.internal}">9</td>
+                    <td th:text="${score.endSem}">45</td>
+                    <td th:text="${score.grade}">A</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:replace="~{Fragments/FacultyFragments :: FacultyPagination}"></div>
+    </div>
+    <div th:unless="${totalSubjects != 0}">
+        <h2 class="text-center text-success">Nothing to show....</h2>
     </div>
 </div>
 <!--Student exam fragment End-->
@@ -314,34 +365,40 @@
 <div class="divContainer m-4 p-3" th:fragment="StudentAttendance">
     <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
     <hr>
-    <div class="table-responsive mt-1">
-        <h3 class="text-center text-primary">ATTENDANCE DATA</h3>
-        <table class="m-2 table table-bordered">
-            <thead>
-            <tr class="text-center">
-                <th scope="col">Sr. No.</th>
-                <th scope="col">Subject Name</th>
-                <th scope="col">Subject Id</th>
-                <th scope="col">Total Classes</th>
-                <th scope="col">Classes Attended</th>
-                <th scope="col">% Attendance</th>
-                <th scope="col">Updated On</th>
-                <th scope="col">Updated By</th>
-            </tr>
-            </thead>
-            <tbody class="text-center">
-            <tr th:each="attendance,index : ${attendances}">
-                <td th:text="${index.count}">1</td>
-                <td th:text="${attendance.subject.name}">CMS</td>
-                <td th:text="${attendance.subject.subId}">IT0002</td>
-                <td th:text="${attendance.totalClasses}">13</td>
-                <td th:text="${attendance.presentClasses}">12</td>
-                <td th:text="${attendance.presentPercentage}">80</td>
-                <td th:text="${attendance.updatedDate}">04/02/2024</td>
-                <td ><a class="text-decoration-none " th:href="@{/profile/faculty(id=${attendance.subject.faculty.id})}" th:text="${attendance.subject.faculty.name}"></a></td>
-            </tr>
-            </tbody>
-        </table>
+    <h3 class="text-center text-primary m-1">ATTENDANCE DATA</h3>
+    <div th:if="${totalSubjects != 0}">
+        <div class="table-responsive mt-1">
+            <table class="m-2 table table-bordered">
+                <thead>
+                <tr class="text-center">
+                    <th scope="col">Sr. No.</th>
+                    <th scope="col">Subject Name</th>
+                    <th scope="col">Subject Id</th>
+                    <th scope="col">Total Classes</th>
+                    <th scope="col">Classes Attended</th>
+                    <th scope="col">% Attendance</th>
+                    <th scope="col">Updated On</th>
+                    <th scope="col">Updated By</th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                <tr th:each="attendance,index : ${attendances}">
+                    <td th:text="${index.count}">1</td>
+                    <td th:text="${attendance.subject.name}">CMS</td>
+                    <td th:text="${attendance.subject.subId}">IT0002</td>
+                    <td th:text="${attendance.totalClasses}">13</td>
+                    <td th:text="${attendance.presentClasses}">12</td>
+                    <td th:text="${attendance.presentPercentage}">80</td>
+                    <td th:text="${attendance.updatedDate}">04/02/2024</td>
+                    <td ><a class="text-decoration-none " th:href="@{/profile/faculty(id=${attendance.subject.faculty.id})}" th:text="${attendance.subject.faculty.name}"></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:replace="~{Fragments/FacultyFragments :: FacultyPagination}"></div>
+    </div>
+    <div th:unless="${totalSubjects != 0}">
+        <h2 class="text-center text-success">Nothing to show....</h2>
     </div>
 </div>
 <!--Student Attendance fragment End-->
@@ -378,31 +435,51 @@
 
     </div>
     <hr>
-    <div class="table-responsive">
-        <h3 class="text-center text-primary">QUERY DATA</h3>
-        <table class="m-2 table table-bordered">
-            <thead>
-            <tr class="text-center">
-                <th scope="col">Sr. No.</th>
-                <th scope="col">Query Subject</th>
-                <th scope="col">Raised On</th>
-                <th scope="col">Status</th>
-                <th scope="col">Resolved on</th>
-            </tr>
-            </thead>
-            <tbody class="text-center">
-            <tr th:each="query,item : ${queries}">
-                <td th:text="${item.count}">1</td>
-                <td ><a th:href="@{/student/query/view(qId=${query.id})}" class="text-decoration-none" th:text="${query.title}">CMS</a></td>
-                <td th:text="${query.postedDate}">IT0002</td>
-                <td th:text="${query.status}">13</td>
-                <td th:text="${query.resolvedDate}">12</td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="text-center m-1">
+        <a class="btn btn-success" th:href="@{/student/query/list(page=0)}">All Queries</a>
     </div>
 </div>
 <!--Student query fragment End-->
+
+
+
+
+
+<!--Student query list fragment Start-->
+<div class="divContainer m-4 p-3" th:fragment="StudentQueryList">
+    <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
+    <hr>
+    <h3 class="text-center text-primary m-1">QUERY DATA</h3>
+    <div  th:if="${totalSubjects != 0}">
+        <div class="table-responsive">
+            <table class="m-2 table table-bordered">
+                <thead>
+                <tr class="text-center">
+                    <th scope="col">Sr. No.</th>
+                    <th scope="col">Query Subject</th>
+                    <th scope="col">Raised On</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Resolved on</th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                <tr th:each="query,item : ${queries}">
+                    <td th:text="${item.count}">1</td>
+                    <td ><a th:href="@{/student/query/view(qId=${query.id})}" class="text-decoration-none" th:text="${query.title}">CMS</a></td>
+                    <td th:text="${query.postedDate}">IT0002</td>
+                    <td th:text="${query.status}">13</td>
+                    <td th:text="${query.resolvedDate}">12</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:replace="~{Fragments/FacultyFragments :: FacultyPagination}"></div>
+    </div>
+    <div th:unless="${totalSubjects != 0}">
+        <h2 class="text-center text-success">Nothing to show....</h2>
+    </div>
+</div>
+<!--Student query list fragment End-->
 
 
 
