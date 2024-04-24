@@ -1,6 +1,7 @@
 package com.ICE.controllers;
 
 import com.ICE.DAO.FacultyRepository;
+import com.ICE.DAO.ProfilePicRepository;
 import com.ICE.Entities.*;
 import com.ICE.Pojo.FacultyPojo;
 import com.ICE.Pojo.QueryPojo;
@@ -73,6 +74,7 @@ public class FacultyController {
     {
         FacultyPojo facultyPojo = new FacultyPojo(faculty.getName(),faculty.getFacultyId(),faculty.getEmail(),faculty.getPassword(),
                 faculty.getAge(),faculty.getBirthdate(),faculty.getAddress(),faculty.getCity(),faculty.getState());
+
 
         model.addAttribute("PageName","FacultyProfile");
         model.addAttribute("facultyPojo",facultyPojo);
@@ -318,12 +320,13 @@ public class FacultyController {
 //        Pageable pageable = PageRequest.of(page,5, Sort.by("name"));
 //        Page<Student> students = serviceStudentDao.getAllStudentsOfSubject(id,pageable);
 //
-//        model.addAttribute("subjectName",subject);
-//        model.addAttribute("students",students);
-//        model.addAttribute("PageName","facultySubjectStudentList");
-//        model.addAttribute("pageUrl","faculty/subjects/list");
-//        model.addAttribute("pageNo", page);
-//        model.addAttribute("totalPages",students.getTotalPages());
+        List<Student> students = subject.getStudents();
+        model.addAttribute("subjectName",subject);
+        model.addAttribute("students",students);
+        model.addAttribute("PageName","facultySubjectStudentList");
+        model.addAttribute("pageUrl","faculty/subjects/list");
+        model.addAttribute("pageNo", page);
+        model.addAttribute("totalPages",students.size());
 
         return "Template";
     }

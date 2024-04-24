@@ -211,7 +211,7 @@ public class StudentController {
 
         model.addAttribute("PageName","StudentSubjects");
         model.addAttribute("subjects",subjects);
-        model.addAttribute("totalSubjects",subjects.size());
+        model.addAttribute("totalPages",subjects.size());
         model.addAttribute("registeredSubjects",student.getSubjects());
 
         return "Template";
@@ -228,7 +228,7 @@ public class StudentController {
     {
         model.addAttribute("PageName","StudentRegisteredSubjects");
         model.addAttribute("registeredSubjects",student.getSubjects());
-        model.addAttribute("totalSubjects",student.getSubjects().size());
+        model.addAttribute("totalPages",student.getSubjects().size());
 
         return "Template";
     }
@@ -246,7 +246,7 @@ public class StudentController {
 
         model.addAttribute("PageName","RegistrationStatus");
         model.addAttribute("registrationStatus",requestsWithStatus);
-        model.addAttribute("totalSubjects",requestsWithStatus.size());
+        model.addAttribute("totalPages",requestsWithStatus.size());
 
         return "Template";
     }

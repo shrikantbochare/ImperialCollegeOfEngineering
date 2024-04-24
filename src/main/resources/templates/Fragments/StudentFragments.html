@@ -187,7 +187,7 @@
     <hr>
     <p class="text-warning bg-dark mt-1">&nbsp; Note : You can register up to 6 subjects for this semester.</p>
     <h3 class="text-center text-primary m-1">AVAILABLE SUBJECTS</h3>
-    <div th:if="${totalSubjects != 0 }" class="table-responsive">
+    <div th:if="${totalPages != 0 }" class="table-responsive">
         <div>
             <table class="m-2 table table-bordered">
                 <thead>
@@ -213,7 +213,7 @@
             </table>
         </div>
     </div>
-    <div th:unless="${totalSubjects != 0}">
+    <div th:unless="${totalPages != 0}">
         <h2 class="text-center text-success">Nothing to show....</h2>
     </div>
     <hr>
@@ -233,7 +233,7 @@
     <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
     <hr>
     <h3 class="text-center text-primary m-1">REGISTERED SUBJECTS</h3>
-    <div th:if="${totalSubjects != 0}" class="mt-2 table-responsive">
+    <div th:if="${totalPages != 0}" class="mt-2 table-responsive">
         <table class="m-2 table table-bordered">
             <thead>
             <tr class="text-center">
@@ -255,7 +255,7 @@
             </tbody>
         </table>
     </div>
-    <div th:unless="${totalSubjects != 0}">
+    <div th:unless="${totalPages != 0}">
         <h2 class="text-center text-success">Nothing to show....</h2>
     </div>
     <hr>
@@ -276,7 +276,7 @@
     <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
     <hr>
     <h3 class="text-center text-primary m-1">SUBJECT REGISTRATION STATUS</h3>
-    <div th:if="${totalSubjects != 0}" class="mt-2 table-responsive">
+    <div th:if="${totalPages != 0}" class="mt-2 table-responsive">
         <table class="m-2 table table-bordered">
             <thead>
             <tr class="text-center">
@@ -300,7 +300,7 @@
             </tbody>
         </table>
     </div>
-    <div th:unless="${totalSubjects != 0}">
+    <div th:unless="${totalPages != 0}">
         <h2 class="text-center text-success">Nothing to show....</h2>
     </div>
     <hr>
@@ -320,7 +320,7 @@
     <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
     <hr>
     <h3 class="text-center text-primary m-1">EXAM DATA</h3>
-    <div th:if="${totalSubjects != 0}">
+    <div th:if="${totalPages != 0}">
         <div class="table-responsive mt-1">
             <table class="m-2 table table-bordered">
                 <thead>
@@ -351,7 +351,7 @@
         </div>
         <div th:replace="~{Fragments/FacultyFragments :: FacultyPagination}"></div>
     </div>
-    <div th:unless="${totalSubjects != 0}">
+    <div th:unless="${totalPages != 0}">
         <h2 class="text-center text-success">Nothing to show....</h2>
     </div>
 </div>
@@ -366,7 +366,7 @@
     <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
     <hr>
     <h3 class="text-center text-primary m-1">ATTENDANCE DATA</h3>
-    <div th:if="${totalSubjects != 0}">
+    <div th:if="${totalPages != 0}">
         <div class="table-responsive mt-1">
             <table class="m-2 table table-bordered">
                 <thead>
@@ -397,7 +397,7 @@
         </div>
         <div th:replace="~{Fragments/FacultyFragments :: FacultyPagination}"></div>
     </div>
-    <div th:unless="${totalSubjects != 0}">
+    <div th:unless="${totalPages != 0}">
         <h2 class="text-center text-success">Nothing to show....</h2>
     </div>
 </div>
@@ -450,7 +450,7 @@
     <div th:replace="~{Fragments/StudentFragments :: StudentMenu}"></div>
     <hr>
     <h3 class="text-center text-primary m-1">QUERY DATA</h3>
-    <div  th:if="${totalSubjects != 0}">
+    <div  th:if="${totalPages != 0}">
         <div class="table-responsive">
             <table class="m-2 table table-bordered">
                 <thead>
@@ -475,7 +475,7 @@
         </div>
         <div th:replace="~{Fragments/FacultyFragments :: FacultyPagination}"></div>
     </div>
-    <div th:unless="${totalSubjects != 0}">
+    <div th:unless="${totalPages != 0}">
         <h2 class="text-center text-success">Nothing to show....</h2>
     </div>
 </div>

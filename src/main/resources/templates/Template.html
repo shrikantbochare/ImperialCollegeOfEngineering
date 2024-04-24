@@ -54,12 +54,12 @@
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">DEPARTMENTS
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a th:href="@{/home/dept/ce}" class="nav-link">Civil Engineering Department</a></li>
-                  <li><a th:href="@{/home/dept/ee}" class="nav-link">Electrical Engineering Department</a></li>
-                  <li><a th:href="@{/home/dept/me}" class="nav-link">Mechanical Engineering Department</a></li>
-                  <li><a th:href="@{/home/dept/etc}" class="nav-link">Electronics & Telecommunication</a></li>
-                  <li><a th:href="@{/home/dept/cse}" class="nav-link">Computer Science & Engineering </a></li>
-                  <li><a th:href="@{/home/dept/it}" class="nav-link">Information Technology </a></li>
+                  <li><a th:href="@{/home/dept/Civil_Engineering}" class="nav-link">Civil Engineering Department</a></li>
+                  <li><a th:href="@{/home/dept/Electrical_Engineering}" class="nav-link">Electrical Engineering Department</a></li>
+                  <li><a th:href="@{/home/dept/Mechanical_Engineering}" class="nav-link">Mechanical Engineering Department</a></li>
+                  <li><a th:href="@{/home/dept/Electronics_Engineering}" class="nav-link">Electronics & Telecommunication</a></li>
+                  <li><a th:href="@{/home/dept/Computer_Science_Engineering}" class="nav-link">Computer Science & Engineering </a></li>
+                  <li><a th:href="@{/home/dept/Information_Technology}" class="nav-link">Information Technology </a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -221,6 +221,10 @@
 
     <div th:if="${PageName == 'FacultySubjects'}">
       <div th:replace="~{Fragments/FacultyFragments :: FacultySubjects}"></div>
+    </div>
+
+    <div th:if="${PageName == 'facultySubjectStudentList'}">
+      <div th:replace="~{Fragments/FacultyFragments :: facultySubjectStudentList}"></div>
     </div>
 
 

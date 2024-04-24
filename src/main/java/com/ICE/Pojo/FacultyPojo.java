@@ -14,7 +14,7 @@ public class FacultyPojo {
             " with minimum size of 5 characters", groups = {OnCreate.class, OnUpdate.class})
     private String name;
 
-    @Pattern(regexp = "^(FIT|FCS|FCE|FME|FEE|FET)\\\\d{6}$\\n" , message = "Faculty Id must start with FIT or FCS or FCE or FME or FEE or FET " +
+    @Pattern(regexp = "^(FIT|FCS|FCE|FME|FEE|FET)\\d{6}$" , message = "Faculty Id must start with FIT or FCS or FCE or FME or FEE or FET " +
             "followed by 6 digit number",  groups = {OnCreate.class})
     private String facultyId;
 
