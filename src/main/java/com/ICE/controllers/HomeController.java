@@ -11,6 +11,7 @@ import com.ICE.Validation.OnCreate;
 import jakarta.validation.Valid;
 import org.hibernate.validator.internal.engine.groups.Group;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -168,9 +169,10 @@ public class HomeController {
 
 // =============> loginSuccess handler Start ==============>
     @GetMapping("/loginSuccess")
-    public String loginSuccess(Principal p,@ModelAttribute("currentUser") Object object)
+    public String loginSuccess(Principal p)
     {
-        if(object instanceof Student)
+        String username = p.getName();
+        if(username.startsWith("BTgit "))
         {
             return "redirect:/student/profile";
         }
