@@ -172,7 +172,7 @@ public class HomeController {
     public String loginSuccess(Principal p)
     {
         String username = p.getName();
-        if(username.startsWith("BTgit "))
+        if(username.startsWith("BT"))
         {
             return "redirect:/student/profile";
         }
