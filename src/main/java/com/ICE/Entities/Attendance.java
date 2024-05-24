@@ -18,7 +18,7 @@ public class Attendance {
     private int presentClasses;
 
 
-    private int presentPercentage;
+    private float presentPercentage;
 
     private Date updatedDate;
 
@@ -73,11 +73,11 @@ public class Attendance {
         this.presentClasses = presentClasses;
     }
 
-    public int getPresentPercentage() {
+    public float getPresentPercentage() {
         return presentPercentage;
     }
 
-    public void setPresentPercentage(int presentPercentage) {
+    public void setPresentPercentage(float presentPercentage) {
         this.presentPercentage = presentPercentage;
     }
 

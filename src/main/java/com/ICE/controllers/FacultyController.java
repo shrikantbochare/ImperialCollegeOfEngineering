@@ -409,14 +409,12 @@ public class FacultyController {
     @PostMapping("/subjects/attendance/update/process/{page}")
     public String updateSubjectAttendance2(@ModelAttribute("attendance") Attendance attendance,@PathVariable int page)
     {
-        System.out.println("start");
         Attendance oldAttendance = serviceAttendanceDao.getAttendanceById(attendance.getId());
         oldAttendance.setPresentClasses(attendance.getPresentClasses());
         oldAttendance.setTotalClasses(attendance.getTotalClasses());
         oldAttendance.setUpdatedDate(service1.getTodayDate());
 
         serviceAttendanceDao.saveAttendance(oldAttendance);
-        System.out.println("start2");
         return "redirect:/faculty/attendance/update?page="+page+"&subject="+ oldAttendance.getSubject().getId();
     }
 //<============== Faculty attendance update  end <===============
